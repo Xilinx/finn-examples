@@ -63,9 +63,7 @@ setup(name=module_name,
       install_requires=[
           "pynq>=2.5.1",
           "jupyter",
-          "jupyterlab",
-          "plotly",
-          "lz4"
+          "plotly"
       ],
       extras_require={
           ':python_version<"3.6"': [
