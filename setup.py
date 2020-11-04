@@ -72,12 +72,6 @@ setup(name=module_name,
               'matplotlib'
           ]
       },
-      entry_points={
-          "pynq.notebooks": [
-              "minst_test = {}.notebooks.mnist.mnist_test".format(
-                  module_name)
-          ]
-      },
       cmdclass={"build_py": build_py},
       license="Apache License 2.0"
       )
