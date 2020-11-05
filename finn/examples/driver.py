@@ -217,9 +217,9 @@ class FINNExampleOverlay(DefaultOverlay):
         res["throughput[images/s]"] = self.batch_size / runtime
         res["DRAM_in_bandwidth[Mb/s]"] = np.prod(self.ishape_packed)*0.000001 / runtime
         res["DRAM_out_bandwidth[Mb/s]"] = np.prod(self.oshape_packed)*0.000001 / runtime
-        if platform != "alveo":
+        if self.platform != "alveo":
             res["fclk[mhz]"] = Clocks.fclk0_mhz
         else:
-            res["fclk[mhz]"] = finnDriver.fclk_mhz
+            res["fclk[mhz]"] = self.fclk_mhz
         res["batch_size"] = self.batch_size
         return res
