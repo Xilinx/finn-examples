@@ -26,17 +26,18 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from finn.examples.driver import FINNExampleOverlay
+from finn_examples.driver import FINNExampleOverlay
 from finn.core.datatype import DataType
 import pkg_resources as pk
 
 def tfc_w1a1_mnist():
     # TODO make dependent on edge/pcie
+    board = "Pynq-Z1"
     platform = "zynq-iodma"
     model_name = "tfc-w1a1"
     ext = "bit"
     bitfile = "%s.%s" % (model_name, ext)
-    filename = pk.resource_filename("finn.examples", "bitfiles/%s" % bitfile)
+    filename = pk.resource_filename("finn_examples", "bitfiles/%s" % (bitfile))
     io_shape_dict = {
         "idt" : DataType.UINT8,
         "odt" : DataType.UINT8,

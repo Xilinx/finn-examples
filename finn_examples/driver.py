@@ -26,7 +26,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from pynq import DefaultOverlay, allocate
+from pynq import Overlay, allocate
 import pkg_resources as pk
 import argparse
 import os
@@ -38,10 +38,12 @@ from finn.util.data_packing import (
 )
 from pynq.ps import Clocks
 
-class FINNExampleOverlay(DefaultOverlay):
+class FINNExampleOverlay(Overlay):
     def __init__(self, bitfile_name, platform, io_shape_dict, batch_size=1, fclk_mhz=100.0, download=None):
         super().__init__(bitfile_name, download)
         self._io_shape_dict = io_shape_dict
+        self.ibuf_packed_device = None
+        self.obuf_packed_device = None
         self.platform = platform
         self.batch_size = batch_size
         self.fclk_mhz = fclk_mhz
@@ -117,8 +119,10 @@ class FINNExampleOverlay(DefaultOverlay):
     def batch_size(self, value):
         self._batch_size = value
         # free the old buffers
-        self.ibuf_packed_device.freebuffer()
-        self.obuf_packed_device.freebuffer()
+        if self.ibuf_packed_device is not None:
+            self.ibuf_packed_device.freebuffer()
+        if self.obuf_packed_device is not None:
+            self.obuf_packed_device.freebuffer()
         if self.platform == "alveo":
             self.ibuf_packed_device = allocate(shape=self.ishape_packed, dtype=np.uint8)
             self.obuf_packed_device = allocate(shape=self.oshape_packed, dtype=np.uint8)
@@ -195,11 +199,11 @@ class FINNExampleOverlay(DefaultOverlay):
         """Given input numpy array, first perform necessary packing and copying
         to device buffers, execute on accelerator, then unpack output and return
         output numpy array from accelerator."""
-        ibuf_folded = self.fold_input(ibuf_normal)
+        ibuf_folded = self.fold_input(input_npy)
         ibuf_packed = self.pack_input(ibuf_folded)
         self.copy_input_data_to_device(ibuf_packed)
         self.execute_on_buffers()
-        obuf_packed = np.empty_like(finnDriver.obuf_packed_device)
+        obuf_packed = np.empty_like(self.obuf_packed_device)
         self.copy_output_data_from_device(obuf_packed)
         obuf_folded = self.unpack_output(obuf_packed)
         obuf_normal = self.unfold_output(obuf_folded)
