@@ -14,6 +14,8 @@
 
 from setuptools import setup, find_packages
 import os
+# TODO for zynq only:
+os.environ.pop('XILINX_XRT', None)
 from pynq.utils import build_py
 
 
@@ -39,8 +41,9 @@ def extend_package(path):
 with open("README.md", encoding="utf-8") as fh:
     readme_lines = fh.readlines()[4:]
 long_description = ("".join(readme_lines))
+extend_package(os.path.join(module_name, "bitfiles"))
+#import pdb; pdb.set_trace()
 
-extend_package(os.path.join(module_name, "notebooks"))
 setup(name=module_name,
       version="1.0.0",
       description="FINN Examples on PYNQ for Zynq and Alveo",
