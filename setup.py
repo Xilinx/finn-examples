@@ -57,9 +57,6 @@ setup(name=module_name,
       package_data={
           "": data_files,
       },
-      dependency_links=[
-          "https://github.com/fbcotter/dataset_loading/tarball/master#egg=dataset_loading"
-      ],
       python_requires=">=3.5.2",
       # keeping 'setup_requires' only for readability - relying on
       # pyproject.toml and PEP 517/518
@@ -68,7 +65,7 @@ setup(name=module_name,
       ],
       install_requires=[
           "pynq>=2.5.1",
-          "dataset_loading"
+          "dataset_loading @ git+https://github.com/fbcotter/dataset_loading#egg=dataset_loading"
       ],
       extras_require={
           ':python_version<"3.6"': [
