@@ -42,7 +42,7 @@ with open("README.md", encoding="utf-8") as fh:
     readme_lines = fh.readlines()[4:]
 long_description = ("".join(readme_lines))
 extend_package(os.path.join(module_name, "bitfiles"))
-#import pdb; pdb.set_trace()
+extend_package(os.path.join(module_name, "notebooks"))
 
 setup(name=module_name,
       version="1.0.0",
@@ -73,6 +73,12 @@ setup(name=module_name,
           ],
           ':python_version>="3.6"': [
               'matplotlib'
+          ]
+      },
+      entry_points={
+          "pynq.notebooks": [
+              "finn_examples = {}.notebooks".format(
+                  module_name)
           ]
       },
       cmdclass={"build_py": build_py},
