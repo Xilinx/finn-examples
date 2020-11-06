@@ -16,7 +16,8 @@ from setuptools import setup, find_packages
 import os
 # TODO for zynq only:
 os.environ.pop('XILINX_XRT', None)
-from pynq.utils import build_py
+from pynq.utils import build_py as _build_py
+from distutils.command.build import build as dist_build
 
 
 __author__ = "Yaman Umuroglu"
@@ -28,6 +29,33 @@ __email__ = "yamanu@xilinx.com"
 module_name = "finn_examples"
 data_files = []
 
+
+class _unzip_overlays(dist_build):
+    """Custom distutils command to unzip downloaded overlays."""
+    description = "Unzip downloaded overlays"
+    user_options = []
+    boolean_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        cmd = self.get_finalized_command("build_py")
+        print("Running unzip_overlays..")
+        for package, _, build_dir, _ in cmd.data_files:
+            if "." not in package:  # sub-packages are skipped
+                print(build_dir)
+
+class build_py(_build_py):
+    """Overload the PYNQ 'build_py' command to also call the
+    command 'unzip_overlays'.
+    """
+    def run(self):
+        super().run()
+        self.run_command("unzip_overlays")
 
 def extend_package(path):
     if os.path.isdir(path):
@@ -82,6 +110,6 @@ setup(name=module_name,
                   module_name)
           ]
       },
-      cmdclass={"build_py": build_py},
+      cmdclass={"build_py": build_py, "unzip_overlays": _unzip_overlays},
       license="Apache License 2.0"
       )
