@@ -44,6 +44,17 @@ _mnist_fc_io_shape_dict = {
     "oshape_packed" : (1, 1, 1),
 }
 
+_cifar10_cnv_io_shape_dict = {
+    "idt" : DataType.UINT8,
+    "odt" : DataType.UINT8,
+    "ishape_normal" : (1, 32, 32, 3),
+    "oshape_normal" : (1, 1),
+    "ishape_folded" : (1, 1, 32, 32, 1, 3),
+    "oshape_folded" : (1, 1, 1),
+    "ishape_packed" : (1, 1, 32, 32, 1, 3),
+    "oshape_packed" : (1, 1, 1),
+}
+
 # from https://github.com/Xilinx/PYNQ-HelloWorld/blob/master/setup.py
 # get current platform: either edge or pcie
 def get_edge_or_pcie():
