@@ -14,8 +14,6 @@
 
 from setuptools import setup, find_packages
 import os
-# TODO for zynq only:
-os.environ.pop('XILINX_XRT', None)
 from pynq.utils import build_py as _build_py
 from distutils.command.build import build as dist_build
 import zipfile
@@ -49,7 +47,6 @@ class _unzip_overlays(dist_build):
 
     def run(self):
         cmd = self.get_finalized_command("build_py")
-        print("Running unzip_overlays..")
         for package, f, build_dir, _ in cmd.data_files:
             for (dirpath, dirnames, filenames) in os.walk(build_dir):
                 for f in filenames:
