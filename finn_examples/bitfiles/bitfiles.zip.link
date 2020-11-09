@@ -2,5 +2,13 @@
     "Pynq-Z1": {
         "url": "https://github.com/maltanar/finn-examples/releases/download/test4/Pynq-Z1.zip",
         "md5sum": "04f4887540a2156bd2886c9bb2bb2ff6"
+    },
+    "Ultra96": {
+        "url": "https://github.com/maltanar/finn-examples/releases/download/test4/Ultra96.zip",
+        "md5sum": "59598d7f36ffdc74a0a0262f5b67423c"
+    },
+    "xilinx_u250_xdma_201830_2": {
+        "url": "https://github.com/maltanar/finn-examples/releases/download/test4/xilinx_u250_xdma_201830_2.zip",
+        "md5sum": "1e47af8231962cafb86ce0c8916b9ec9"
     }
 }
