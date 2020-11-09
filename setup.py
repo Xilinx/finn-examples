@@ -99,6 +99,7 @@ setup(name=module_name,
       ],
       install_requires=[
           "pynq>=2.5.1",
+          "finn-base @ git+https://github.com/Xilinx/finn-base#egg=finn-base",
           "dataset_loading @ git+https://github.com/fbcotter/dataset_loading#egg=dataset_loading"
       ],
       extras_require={
