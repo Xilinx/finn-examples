@@ -3,6 +3,8 @@ overlays/_xo*
 overlays/.Xil
 overlays/.src
 overlays/*.xclbin
+build/bnn-pynq/models/*.onnx
+*.zip
 *.log
 *.jou
 *.info
