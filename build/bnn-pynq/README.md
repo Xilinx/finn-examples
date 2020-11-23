@@ -13,10 +13,11 @@ as building the full cross product can take several days to finish.**
 0. Ensure you have performed the *Setup* steps in the top-level README for setting up the FINN requirements and environment variables.
 
 1. Download the pretrained BNN-PYNQ ONNX models from the releases page, and extract
-the zipfile under `bnn-pynq/models`. You should have e.g. `bnn-pynq/models∕cnv_w2a2.onnx`
+the zipfile under `bnn-pynq/models`. You should have e.g. `bnn-pynq/models∕cnv-w2a2.onnx`.
+You can use the provided `bnn-pynq/models/download_bnn_pynq_models.sh` script for this.
 
-2. Edit the `bnn-pynq/build.py` to restrict the `networks` and `platforms` variables to
-the ones that you are interested in, e.g. `networks=["cnv_w2a2"]` and
+2. Edit the `bnn-pynq/build.py` to restrict the `models` and `platforms` variables to
+the ones that you are interested in, e.g. `models=["cnv_w2a2"]` and
 `platforms=["Pynq-Z1", "U250"]`. You can also change the other build
 configuration options, see the [FINN docs](https://finn-dev.readthedocs.io/en/latest/source_code/finn.util.html#finn.util.build_dataflow.DataflowBuildConfig)
 for a full explanation.

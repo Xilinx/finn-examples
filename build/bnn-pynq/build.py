@@ -5,7 +5,7 @@ models = [
     "cnv-w1a1", "cnv-w1a2", "cnv-w2a2",
 ]
 
-platforms = ["Pynq-Z1", "Ultra96", "ZCU104", "U250"]
+platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
 
 for model_name in models:
     for platform_name in platforms:
