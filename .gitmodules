@@ -1,3 +1,0 @@
-[submodule "build/finn"]
-	path = build/finn
-	url = https://github.com/Xilinx/finn
