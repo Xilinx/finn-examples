@@ -41,8 +41,8 @@ synth_clk_period_ns = 3.0
 
 mobilenet_build_steps = [
     step_mobilenet_streamline,
-    step_mobilenet_convert_to_hls_layers,
     step_mobilenet_lower_convs,
+    step_mobilenet_convert_to_hls_layers,
     "step_create_dataflow_partition",
     "step_apply_folding_config",
     "step_hls_ipgen",
