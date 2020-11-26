@@ -46,6 +46,7 @@ CLONE_TO=$SCRIPTPATH/$REPO_DIR
 if [ ! -d "$CLONE_TO" ]; then
   git clone $REPO_URL $CLONE_TO
 fi
+git -C $CLONE_TO pull
 # checkout the expected commit
 git -C $CLONE_TO checkout $REPO_COMMIT
 # verify
