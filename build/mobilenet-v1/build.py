@@ -27,12 +27,14 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import finn.util.build_dataflow as build
+
 # custom steps for mobilenetv1
 from custom_steps import (
     step_mobilenet_streamline,
     step_mobilenet_convert_to_hls_layers,
-    step_mobilenet_lower_convs
+    step_mobilenet_lower_convs,
 )
+
 model_name = "mobilenetv1-w4a4"
 board = "U250"
 synth_clk_period_ns = 3.0
@@ -40,7 +42,8 @@ synth_clk_period_ns = 3.0
 mobilenet_build_steps = [
     step_mobilenet_streamline,
     step_mobilenet_convert_to_hls_layers,
-    step_create_dataflow_partition,
+    step_mobilenet_lower_convs,
+    "step_create_dataflow_partition",
     "step_apply_folding_config",
     "step_hls_ipgen",
     "step_auto_set_fifo_depths",
@@ -51,21 +54,21 @@ mobilenet_build_steps = [
 
 cfg = build.DataflowBuildConfig(
     steps=mobilenet_build_steps,
-    output_dir = "output_%s_%s" % (model_name, board),
-    folding_config_file = "folding_config/%s_folding_config.json" % board,
-    synth_clk_period_ns = synth_clk_period_ns,
-    board = board,
-    shell_flow_type = build.ShellFlowType.VITIS_ALVEO,
+    output_dir="output_%s_%s" % (model_name, board),
+    folding_config_file="folding_config/%s_folding_config.json" % board,
+    synth_clk_period_ns=synth_clk_period_ns,
+    board=board,
+    shell_flow_type=build.ShellFlowType.VITIS_ALVEO,
     # folding config comes with FIFO depths already
-    auto_fifo_depths = False,
+    auto_fifo_depths=False,
     # use URAM for large FIFOs
-    large_fifo_mem_style = build.LargeFIFOMemStyle.URAM,
+    large_fifo_mem_style=build.LargeFIFOMemStyle.URAM,
     # enable extra performance optimizations (physopt)
-    vitis_opt_strategy = build.VitisOptStrategyCfg.PERFORMANCE_BEST,
-    generate_outputs = [
+    vitis_opt_strategy=build.VitisOptStrategyCfg.PERFORMANCE_BEST,
+    generate_outputs=[
         build.DataflowOutputType.PYNQ_DRIVER,
         build.DataflowOutputType.STITCHED_IP,
-        build.DataflowOutputType.BITFILE
+        build.DataflowOutputType.BITFILE,
     ],
 )
 model_file = "models/%s_pre_post_tidy.onnx" % model_name

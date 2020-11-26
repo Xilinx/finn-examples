@@ -26,20 +26,27 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from pynq import Overlay, allocate
-import pkg_resources as pk
-import argparse
-import os
 import numpy as np
 import time
-from finn.util.data_packing import (
-    finnpy_to_packed_bytearray,
-    packed_bytearray_to_finnpy
-)
+from pynq import Overlay, allocate
 from pynq.ps import Clocks
 
+from finn.util.data_packing import (
+    finnpy_to_packed_bytearray,
+    packed_bytearray_to_finnpy,
+)
+
+
 class FINNExampleOverlay(Overlay):
-    def __init__(self, bitfile_name, platform, io_shape_dict, batch_size=1, fclk_mhz=100.0, download=None):
+    def __init__(
+        self,
+        bitfile_name,
+        platform,
+        io_shape_dict,
+        batch_size=1,
+        fclk_mhz=100.0,
+        download=None,
+    ):
         super().__init__(bitfile_name, download)
         self._io_shape_dict = io_shape_dict
         self.ibuf_packed_device = None
@@ -64,8 +71,12 @@ class FINNExampleOverlay(Overlay):
             self.ibuf_packed_device = allocate(shape=self.ishape_packed, dtype=np.uint8)
             self.obuf_packed_device = allocate(shape=self.oshape_packed, dtype=np.uint8)
         else:
-            self.ibuf_packed_device = allocate(shape=self.ishape_packed, dtype=np.uint8, cacheable=True)
-            self.obuf_packed_device = allocate(shape=self.oshape_packed, dtype=np.uint8, cacheable=True)
+            self.ibuf_packed_device = allocate(
+                shape=self.ishape_packed, dtype=np.uint8, cacheable=True
+            )
+            self.obuf_packed_device = allocate(
+                shape=self.oshape_packed, dtype=np.uint8, cacheable=True
+            )
 
     @property
     def idt(self):
@@ -127,8 +138,12 @@ class FINNExampleOverlay(Overlay):
             self.ibuf_packed_device = allocate(shape=self.ishape_packed, dtype=np.uint8)
             self.obuf_packed_device = allocate(shape=self.oshape_packed, dtype=np.uint8)
         else:
-            self.ibuf_packed_device = allocate(shape=self.ishape_packed, dtype=np.uint8, cacheable=True)
-            self.obuf_packed_device = allocate(shape=self.oshape_packed, dtype=np.uint8, cacheable=True)
+            self.ibuf_packed_device = allocate(
+                shape=self.ishape_packed, dtype=np.uint8, cacheable=True
+            )
+            self.obuf_packed_device = allocate(
+                shape=self.oshape_packed, dtype=np.uint8, cacheable=True
+            )
 
     def fold_input(self, ibuf_normal):
         """Reshapes input in desired shape.
@@ -152,7 +167,11 @@ class FINNExampleOverlay(Overlay):
         """Unpacks the packed output buffer from accelerator.
         Gets packed output and returns output data in folded shape."""
         obuf_folded = packed_bytearray_to_finnpy(
-            obuf_packed, self.odt, self.oshape_folded, reverse_endian=True, reverse_inner=True
+            obuf_packed,
+            self.odt,
+            self.oshape_folded,
+            reverse_endian=True,
+            reverse_inner=True,
         )
         return obuf_folded
 
@@ -179,9 +198,9 @@ class FINNExampleOverlay(Overlay):
         if self.platform == "zynq-iodma":
             # manually launch IODMAs since signatures are missing
             self.idma.write(0x10, self.ibuf_packed_device.device_address)
-            self.idma.write(0x1c, self.batch_size)
+            self.idma.write(0x1C, self.batch_size)
             self.odma.write(0x10, self.obuf_packed_device.device_address)
-            self.odma.write(0x1c, self.batch_size)
+            self.odma.write(0x1C, self.batch_size)
             self.idma.write(0x00, 1)
             self.odma.write(0x00, 1)
             # wait until output IODMA is finished
@@ -189,7 +208,7 @@ class FINNExampleOverlay(Overlay):
             while status & 0x2 == 0:
                 status = self.odma.read(0x00)
         elif self.platform == "alveo":
-            idma_handle = self.idma.start_sw(self.ibuf_packed_device, self.batch_size)
+            self.idma.start_sw(self.ibuf_packed_device, self.batch_size)
             odma_handle = self.odma.start_sw(self.obuf_packed_device, self.batch_size)
             odma_handle.wait()
         else:
@@ -212,15 +231,19 @@ class FINNExampleOverlay(Overlay):
     def throughput_test(self):
         "Run accelerator with empty inputs to measure throughput and other metrics."
         # dictionary for results of throughput test
-        res={}
+        res = {}
         start = time.time()
         self.execute_on_buffers()
         end = time.time()
         runtime = end - start
-        res["runtime[ms]"] = runtime*1000
+        res["runtime[ms]"] = runtime * 1000
         res["throughput[images/s]"] = self.batch_size / runtime
-        res["DRAM_in_bandwidth[Mb/s]"] = np.prod(self.ishape_packed)*0.000001 / runtime
-        res["DRAM_out_bandwidth[Mb/s]"] = np.prod(self.oshape_packed)*0.000001 / runtime
+        res["DRAM_in_bandwidth[Mb/s]"] = (
+            np.prod(self.ishape_packed) * 0.000001 / runtime
+        )
+        res["DRAM_out_bandwidth[Mb/s]"] = (
+            np.prod(self.oshape_packed) * 0.000001 / runtime
+        )
         if self.platform != "alveo":
             res["fclk[mhz]"] = Clocks.fclk0_mhz
         else:

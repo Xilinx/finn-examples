@@ -42,6 +42,9 @@ from finn.transformation.general import (
 )
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
 from finn.transformation.infer_shapes import InferShapes
+from finn.transformation.change_datalayout import ChangeDataLayoutQuantAvgPool2d
+from finn.transformation.infer_datatypes import InferDataTypes
+
 
 def step_mobilenet_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(Streamline())

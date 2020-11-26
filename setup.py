@@ -12,12 +12,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-from setuptools import setup, find_packages
-import os
-from pynq.utils import build_py as _build_py
-from distutils.command.build import build as dist_build
-import zipfile
+from setuptools import find_packages, setup
 
+import os
+import zipfile
+from distutils.command.build import build as dist_build
+from pynq.utils import build_py as _build_py
 
 __author__ = "Yaman Umuroglu"
 __copyright__ = "Copyright 2020, Xilinx"
@@ -28,13 +28,16 @@ __email__ = "yamanu@xilinx.com"
 module_name = "finn_examples"
 data_files = []
 
+
 def unzip_to_same_folder(zipfile_path):
     dir_path = os.path.dirname(os.path.realpath(zipfile_path))
-    with zipfile.ZipFile(zipfile_path, 'r') as zip_ref:
+    with zipfile.ZipFile(zipfile_path, "r") as zip_ref:
         zip_ref.extractall(dir_path)
+
 
 class _unzip_overlays(dist_build):
     """Custom distutils command to unzip downloaded overlays."""
+
     description = "Unzip downloaded overlays"
     user_options = []
     boolean_options = []
@@ -55,68 +58,66 @@ class _unzip_overlays(dist_build):
                         print("Extracting " + zip_path)
                         unzip_to_same_folder(zip_path)
 
+
 class build_py(_build_py):
     """Overload the PYNQ 'build_py' command to also call the
     command 'unzip_overlays'.
     """
+
     def run(self):
         super().run()
         self.run_command("unzip_overlays")
 
+
 def extend_package(path):
     if os.path.isdir(path):
         data_files.extend(
-            [os.path.join("..", root, f)
-             for root, _, files in os.walk(path) for f in files]
+            [
+                os.path.join("..", root, f)
+                for root, _, files in os.walk(path)
+                for f in files
+            ]
         )
     elif os.path.isfile(path):
         data_files.append(os.path.join("..", path))
 
+
 with open("README.md", encoding="utf-8") as fh:
     readme_lines = fh.readlines()[4:]
-long_description = ("".join(readme_lines))
+long_description = "".join(readme_lines)
 extend_package(os.path.join(module_name, "bitfiles"))
 extend_package(os.path.join(module_name, "notebooks"))
 
-setup(name=module_name,
-      version="1.0.0",
-      description="FINN Examples on PYNQ for Zynq and Alveo",
-      long_description=long_description,
-      long_description_content_type="text/markdown",
-      author="Yaman Umuroglu",
-      author_email="yamanu@xilinx.com",
-      url="https://github.com/Xilinx/finn-examples",
-      packages=find_packages(),
-      download_url="https://github.com/Xilinx/finn-examples",
-      package_data={
-          "": data_files,
-      },
-      python_requires=">=3.5.2",
-      # keeping 'setup_requires' only for readability - relying on
-      # pyproject.toml and PEP 517/518
-      setup_requires=[
-          "pynq>=2.5.1"
-      ],
-      install_requires=[
-          "pynq>=2.5.1",
-          "finn-base @ git+https://github.com/Xilinx/finn-base#egg=finn-base",
-          "dataset_loading @ git+https://github.com/fbcotter/dataset_loading#egg=dataset_loading"
-      ],
-      extras_require={
-          ':python_version<"3.6"': [
-              'matplotlib<3.1',
-              'ipython==7.9'
-          ],
-          ':python_version>="3.6"': [
-              'matplotlib'
-          ]
-      },
-      entry_points={
-          "pynq.notebooks": [
-              "finn_examples = {}.notebooks".format(
-                  module_name)
-          ]
-      },
-      cmdclass={"build_py": build_py, "unzip_overlays": _unzip_overlays},
-      license="Apache License 2.0"
-      )
+setup(
+    name=module_name,
+    version="1.0.0",
+    description="FINN Examples on PYNQ for Zynq and Alveo",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    author="Yaman Umuroglu",
+    author_email="yamanu@xilinx.com",
+    url="https://github.com/Xilinx/finn-examples",
+    packages=find_packages(),
+    download_url="https://github.com/Xilinx/finn-examples",
+    package_data={
+        "": data_files,
+    },
+    python_requires=">=3.5.2",
+    # keeping 'setup_requires' only for readability - relying on
+    # pyproject.toml and PEP 517/518
+    setup_requires=["pynq>=2.5.1"],
+    install_requires=[
+        "pynq>=2.5.1",
+        "finn-base @ git+https://github.com/Xilinx/finn-base#egg=finn-base",
+        "dataset_loading @ git+https://github.com/fbcotter/dataset_loading#egg=dataset_loading",  # noqa
+    ],
+    extras_require={
+        ':python_version<"3.6"': ["matplotlib<3.1", "ipython==7.9"],
+        ':python_version>="3.6"': ["matplotlib"],
+    },
+    entry_points={
+        "pynq.notebooks": ["finn_examples = {}.notebooks".format(module_name)]
+    },
+    cmdclass={"build_py": build_py, "unzip_overlays": _unzip_overlays},
+    license="Apache License 2.0",
+)

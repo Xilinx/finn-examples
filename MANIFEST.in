@@ -2,4 +2,3 @@ include pyproject.toml
 include *.md
 include LICENSE
 recursive-include finn_examples/notebooks *
-
