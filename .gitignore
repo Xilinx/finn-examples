@@ -12,3 +12,4 @@ build/finn
 *.pb
 *.link_summary
 *.onnx
+*.pyc
