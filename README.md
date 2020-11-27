@@ -22,7 +22,7 @@ Both PYNQ on Zynq and Alveo are supported.
 On your PYNQ board or Alveo server, install the `finn-examples` package using `pip`:
 
 ```shell
-pip3 install git+https://github.com/Xilinx/finn-examples.git`
+pip3 install git+https://github.com/Xilinx/finn-examples.git
 ```
 
 Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command:
@@ -50,9 +50,9 @@ dummy_out = accel.execute(dummy_in)
 ##  Example Neural Network Accelerators
 | Dataset                                                        | Topology                | Quantization                                               | Supported boards |
 |----------------------------------------------------------------|-------------------------|------------------------------------------------------------|------------------|
-| <img src="docs/img/cifar-10.png" width="200"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | all              |
-| <img src="docs/img/mnist.jpg" width="200"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              |
-| <img src="docs/img/imagenet.jpg" width="200"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250       |
+| <img src="docs/img/cifar-10.png" width="150"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | all              |
+| <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              |
+| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250       |
 
 ## Supported Boards
 
