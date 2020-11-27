@@ -26,7 +26,7 @@ for a full explanation.
 are configured by the `bnn-pynq/_folding_config/<topology>_folding_config.json` files.
 
 4. Launch the build as follows:
-```
+```shell
 # update this according to where you cloned this repo:
 FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule

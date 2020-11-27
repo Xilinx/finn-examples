@@ -26,7 +26,7 @@ the zipfile under `mobilenet-v1/models`. You should have e.g. `mobilenetv1/model
 You can use the provided `mobilenet-v1/models/download_mobilenet.sh` script for this.
 
 2. Launch the build as follows:
-```
+```SHELL
 # update this according to where you cloned this repo:
 FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule

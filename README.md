@@ -12,11 +12,7 @@ generating dataflow-style architectures customized for each network.
 The examples here come with
 pre-built bitfiles, PYNQ Python drivers and Jupyter notebooks to get started,
 and you can rebuild them from source.
-
-
-
-
-
+Both PYNQ on Zynq and Alveo are supported.
 
 ## Quickstart
 
@@ -25,13 +21,13 @@ and you can rebuild them from source.
 
 On your PYNQ board or Alveo server, install the `finn-examples` package using `pip`:
 
-```
+```shell
 pip3 install git+https://github.com/Xilinx/finn-examples.git`
 ```
 
 Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command:
 
-```
+```shell
 # on PYNQ boards, first cd /home/xilinx/jupyter_notebooks
 pynq get-notebooks -p .
 ```
@@ -39,7 +35,7 @@ pynq get-notebooks -p .
 You can now navigate the provided Jupyter notebook examples, or just use the
 provided accelerators as part of your own Python program:
 
-```
+```python
 from finn_examples import models
 import numpy as np
 

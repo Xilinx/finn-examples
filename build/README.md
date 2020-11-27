@@ -9,11 +9,8 @@ Rebuilding uses the [FINN compiler](https://github.com/Xilinx/finn) and must hap
 
 ## Setup
 
-1. Make sure you have cloned the `finn-examples` repo using the `--recursive` option,
-so that the included git submodules are also pulled at checkout.
-In case you haven't, you can check them out at a later stage by typing:
-
-  ```git submodule update --init --recursive```
+1. Run the `get-finn.sh` under this directory to clone FINN at the appropriate commit. Note that you may have
+to do this again in the future when the `finn-examples` repo gets updated and requires FINN at a newer commit.
 
 2. Ensure you have the [requirements](https://finn.readthedocs.io/en/latest/getting_started.html#requirements) for FINN installed, which includes
 Docker community edition `docker-ce`.
@@ -33,7 +30,7 @@ All examples in this repo use the same Python PYNQ driver, located under
 accelerator that doesn't use external weights, the only thing that needs to be
 specified is the configuration for the input and output tensors in the `io_shape_dict`. Have a look at `finn_examples/models.py` to see how this is done for the example models in this repo:
 
-```
+```python
 _cifar10_cnv_io_shape_dict = {
     # FINN DataType for input and output tensors
     "idt" : DataType.UINT8,
