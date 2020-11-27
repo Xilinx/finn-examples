@@ -52,3 +52,18 @@ _cifar10_cnv_io_shape_dict = {
 ```
 
 Instead of using the `driver.py` provided in the repo, you can also use the generated driver under the output folder.
+
+## Building Vivado IP instead of bitfiles
+
+It's possible to build the examples here as Vivado IP to target any Xilinx FPGA
+of sufficient size, and integrate the generated IP into any Vivado IPI design
+using AXI Stream interfaces.
+To do this, you'll need to launch the build for the example(s) you are interested
+in as described above, but with the `DataflowOutputType.STITCHED_IP` as
+part of the `DataflowBuildConfig.generate_outputs` list in the build script,
+and customize the `DataflowBuildConfig.fpga_part` to reflect the desired Xilinx
+FPGA part number.
+You can also remove the `DataflowOutputType.BITFILE` from the outputs list to
+to avoid building the bitfile itself.
+The generated IP can be found in the outputs folder, under the `stitched_ip`
+subfolder.
