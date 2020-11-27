@@ -46,7 +46,7 @@ mobilenet_build_steps = [
     "step_create_dataflow_partition",
     "step_apply_folding_config",
     "step_hls_ipgen",
-    "step_auto_set_fifo_depths",
+    "step_set_fifo_depths",
     "step_create_stitched_ip",
     "step_make_pynq_driver",
     "step_synthesize_bitfile",
