@@ -1,3 +1,5 @@
+*This repo is currently under construction. Expected official release will be in late December 2020.*
+
 ## <img src=https://raw.githubusercontent.com/Xilinx/finn/master/docs/img/finn-logo.png width=128/> Dataflow Accelerator Examples
 *for PYNQ on Zynq and Alveo*
 
