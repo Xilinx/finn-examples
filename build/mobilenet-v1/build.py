@@ -26,7 +26,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import finn.util.build_dataflow as build
+import finn.builder.build_dataflow as build
+import finn.builder.build_dataflow_config as build_cfg
 
 # custom steps for mobilenetv1
 from custom_steps import (
@@ -52,23 +53,24 @@ mobilenet_build_steps = [
     "step_synthesize_bitfile",
 ]
 
-cfg = build.DataflowBuildConfig(
+cfg = build_cfg.DataflowBuildConfig(
     steps=mobilenet_build_steps,
     output_dir="output_%s_%s" % (model_name, board),
     folding_config_file="folding_config/%s_folding_config.json" % board,
     synth_clk_period_ns=synth_clk_period_ns,
     board=board,
-    shell_flow_type=build.ShellFlowType.VITIS_ALVEO,
+    shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
     # folding config comes with FIFO depths already
     auto_fifo_depths=False,
     # use URAM for large FIFOs
-    large_fifo_mem_style=build.LargeFIFOMemStyle.URAM,
+    large_fifo_mem_style=build_cfg.LargeFIFOMemStyle.URAM,
     # enable extra performance optimizations (physopt)
-    vitis_opt_strategy=build.VitisOptStrategyCfg.PERFORMANCE_BEST,
+    vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
     generate_outputs=[
-        build.DataflowOutputType.PYNQ_DRIVER,
-        build.DataflowOutputType.STITCHED_IP,
-        build.DataflowOutputType.BITFILE,
+        build_cfg.DataflowOutputType.PYNQ_DRIVER,
+        build_cfg.DataflowOutputType.STITCHED_IP,
+        build_cfg.DataflowOutputType.BITFILE,
+        build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
     ],
 )
 model_file = "models/%s_pre_post_tidy.onnx" % model_name
