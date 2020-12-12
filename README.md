@@ -21,7 +21,14 @@ Both PYNQ on Zynq and Alveo are supported.
 
 *For Alveo we recommend setting up everything inside a virtualenv as described [here](https://pynq.readthedocs.io/en/v2.6.1/getting_started/alveo_getting_started.html?highlight=alveo#install-conda).*
 
-On your PYNQ board or Alveo server, install the `finn-examples` package using `pip`:
+First, ensure that your `pip` and `setuptools` installations are up-to-date
+on your PYNQ board or Alveo server:
+
+```shell
+python3 -m pip install --upgrade pip setuptools
+```
+
+Install the `finn-examples` package using `pip`:
 
 ```shell
 pip3 install git+https://github.com/Xilinx/finn-examples.git
