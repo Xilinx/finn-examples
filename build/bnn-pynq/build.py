@@ -27,5 +27,5 @@ for model_name in models:
             ],
             save_intermediate_models=True,
         )
-        model_file = "models/%s_pre_post.onnx" % model_name
+        model_file = "models/%s.onnx" % model_name
         build.build_dataflow_cfg(model_file, cfg)
