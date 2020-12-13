@@ -1,14 +1,17 @@
 {
     "Pynq-Z1": {
-        "url": "https://github.com/maltanar/finn-examples/releases/download/test4/Pynq-Z1.zip",
-        "md5sum": "04f4887540a2156bd2886c9bb2bb2ff6"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/Pynq-Z1.zip"
+    },
+    "Pynq-Z2": {
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/Pynq-Z2.zip"
     },
     "Ultra96": {
-        "url": "https://github.com/maltanar/finn-examples/releases/download/test4/Ultra96.zip",
-        "md5sum": "59598d7f36ffdc74a0a0262f5b67423c"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/Ultra96.zip"
+    },
+    "ZCU104": {
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/ZCU104.zip"
     },
     "xilinx_u250_xdma_201830_2": {
-        "url": "https://github.com/maltanar/finn-examples/releases/download/test4/xilinx_u250_xdma_201830_2.zip",
-        "md5sum": "969add75f1f7234adf3ae0892d0b1f5f"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/xilinx_u250_xdma_201830_2.zip"
     }
 }
