@@ -46,12 +46,15 @@ mobilenet_build_steps = [
     step_mobilenet_convert_to_hls_layers,
     "step_create_dataflow_partition",
     "step_apply_folding_config",
+    "step_generate_estimate_reports",
     "step_hls_ipgen",
     "step_set_fifo_depths",
     "step_create_stitched_ip",
     "step_make_pynq_driver",
     "step_synthesize_bitfile",
+    "step_deployment_package",
 ]
+
 
 cfg = build_cfg.DataflowBuildConfig(
     steps=mobilenet_build_steps,
@@ -62,13 +65,11 @@ cfg = build_cfg.DataflowBuildConfig(
     shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
     # folding config comes with FIFO depths already
     auto_fifo_depths=False,
-    # use URAM for large FIFOs
-    large_fifo_mem_style=build_cfg.LargeFIFOMemStyle.URAM,
     # enable extra performance optimizations (physopt)
     vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
     generate_outputs=[
         build_cfg.DataflowOutputType.PYNQ_DRIVER,
-        build_cfg.DataflowOutputType.STITCHED_IP,
+        build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
         build_cfg.DataflowOutputType.BITFILE,
         build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
     ],

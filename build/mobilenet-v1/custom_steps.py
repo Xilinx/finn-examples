@@ -26,7 +26,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from finn.core.modelwrapper import ModelWrapper
-from finn.util.build_dataflow import DataflowBuildConfig
+from finn.builder.build_dataflow_config import DataflowBuildConfig
 from finn.transformation.streamline import Streamline
 from finn.transformation.double_to_single_float import DoubleToSingleFloat
 import finn.transformation.streamline.absorb as absorb
@@ -78,6 +78,7 @@ def step_mobilenet_lower_convs(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(GiveReadableTensorNames())
     model = model.transform(InferDataTypes())
     model = model.transform(RoundAndClipThresholds())
+    model = model.transform(InferDataLayouts())
     return model
 
 
