@@ -38,7 +38,7 @@ Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command:
 
 ```shell
 # on PYNQ boards, first cd /home/xilinx/jupyter_notebooks
-pynq get-notebooks -p .
+pynq get-notebooks --from-package finn-examples -p .
 ```
 
 You can now navigate the provided Jupyter notebook examples, or just use the
