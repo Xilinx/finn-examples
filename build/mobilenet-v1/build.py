@@ -38,6 +38,7 @@ from custom_steps import (
 
 model_name = "mobilenetv1-w4a4"
 board = "U250"
+vitis_platform = "xilinx_u250_xdma_201830_2"
 synth_clk_period_ns = 3.0
 
 mobilenet_build_steps = [
@@ -65,6 +66,7 @@ cfg = build_cfg.DataflowBuildConfig(
     shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
     # folding config comes with FIFO depths already
     auto_fifo_depths=False,
+    vitis_platform=vitis_platform,
     # enable extra performance optimizations (physopt)
     vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
     generate_outputs=[
