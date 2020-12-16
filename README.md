@@ -31,6 +31,7 @@ python3 -m pip install --upgrade pip setuptools
 Install the `finn-examples` package using `pip`:
 
 ```shell
+# remove previous versions with: pip3 uninstall finn-examples
 pip3 install git+https://github.com/Xilinx/finn-examples.git
 ```
 
