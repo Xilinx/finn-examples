@@ -1,5 +1,3 @@
-*This repo is currently under construction. Expected official release will be in late December 2020.*
-
 ## <img src=https://raw.githubusercontent.com/Xilinx/finn/master/docs/img/finn-logo.png width=128/> Dataflow Accelerator Examples
 *for PYNQ on Zynq and Alveo*
 
@@ -32,7 +30,9 @@ Install the `finn-examples` package using `pip`:
 
 ```shell
 # remove previous versions with: pip3 uninstall finn-examples
-pip3 install git+https://github.com/Xilinx/finn-examples.git
+pip3 install finn-examples
+# to install particular git branch:
+# pip3 install git+https://github.com/Xilinx/finn-examples.git@dev
 ```
 
 Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command:
