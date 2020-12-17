@@ -108,8 +108,8 @@ setup(
     setup_requires=["pynq>=2.5.1"],
     install_requires=[
         "pynq>=2.5.1",
-        "finn-base @ git+https://github.com/Xilinx/finn-base#egg=finn-base",
-        "dataset_loading @ git+https://github.com/fbcotter/dataset_loading#egg=dataset_loading",  # noqa
+        "finn-base==0.0.1b0",
+        "finn-dataset_loading==0.0.4",  # noqa
     ],
     extras_require={
         ':python_version<"3.6"': ["matplotlib<3.1", "ipython==7.9"],
