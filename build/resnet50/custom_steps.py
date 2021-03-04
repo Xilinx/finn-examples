@@ -41,7 +41,8 @@ from finn.transformation.general import (
     SortGraph,
     RemoveUnusedTensors,
     GiveUniqueParameterTensors,
-    RemoveStaticGraphInputs
+    RemoveStaticGraphInputs,
+    ApplyConfig,
 )
 
 from finn.transformation.streamline.absorb import (
@@ -127,6 +128,13 @@ from finn.transformation.fpgadataflow.replace_verilog_relpaths import (
 
 from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
     
+from finn.util.config import extract_model_config_to_json
+from finn.transformation.fpgadataflow.set_fifo_depths import (
+    InsertAndSetFIFODepths,
+    RemoveShallowFIFOs,
+)
+from finn.transformation.fpgadataflow.insert_dwc import InsertDWC
+from finn.transformation.fpgadataflow.insert_fifo import InsertFIFO
 
 def step_resnet50_tidy(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(GiveUniqueParameterTensors())
@@ -206,7 +214,7 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferDataLayouts())
     
     try:
-        from finn.transformation.experimental.infer_doublepacked_dsp import InferDoublePackedConv
+        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
         model = model.transform(InferDoublePackedConv([1]))
     except:
         print(" FINN Experimental not available. Using non-packed convolution ")
@@ -245,3 +253,55 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     return model
 
 
+
+def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig):
+    """
+    Depending on the auto_fifo_depths setting, do one of the following:
+    * if auto_fifo_depths=True:  Run the `InsertAndSetFIFODepths` transformation
+    to attempt to determine the FIFO sizes that provide full throughput. Involves
+    running stitched-IP rtlsim and may take a long time.
+    * if auto_fifo_depths=False:  Assume the folding config file contains FIFO
+    sizes as well. Runs the `InsertFIFO` transformation, then
+    `ApplyConfig(cfg.folding_config_file)`, and finally `RemoveShallowFIFOs`.
+    Coherency with config file node naming is ensured by calling
+    `GiveUniqueNodeNames`.
+    """
+
+    if cfg.auto_fifo_depths:
+        model = model.transform(
+            InsertAndSetFIFODepths(
+                cfg._resolve_fpga_part(),
+                cfg._resolve_hls_clk_period(),
+                vivado_ram_style=cfg.large_fifo_mem_style.value,
+            )
+        )
+    else:
+        # assume folding cfg json contains FIFO sizes too
+        # insert DWCs, FIFOs and run ApplyConfig once more
+        model = model.transform(InsertDWC())
+        # need to make sure all FIFOs are created so that their depth can be
+        # set by ApplyConfig, so create_shallow_fifos=True
+        model = model.transform(InsertFIFO(create_shallow_fifos=True))
+        model = model.transform(GiveUniqueNodeNames())
+        model = model.transform(GiveReadableTensorNames())
+        if cfg.folding_config_file is not None:
+            model = model.transform(ApplyConfig(cfg.folding_config_file))
+        # remove any shallow FIFOs
+        model = model.transform(RemoveShallowFIFOs())
+
+    # extract the final configuration and save it as json
+    hw_attrs = [
+        "PE",
+        "SIMD",
+        "ram_style",
+        "depth",
+        "impl_style",
+        "resType",
+        "mem_mode",
+        "runtime_writeable_weights",
+    ]
+    extract_model_config_to_json(
+        model, cfg.output_dir + "/final_hw_config.json", hw_attrs
+    )
+
+    return model

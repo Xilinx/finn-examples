@@ -28,38 +28,46 @@
 
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
-
+from warnings import warn
 # custom steps for resnet50v1.5
 from custom_steps import (
     step_resnet50_tidy,
     step_resnet50_streamline,
-    step_resnet50_convert_to_hls
+    step_resnet50_convert_to_hls,
+    step_resnet50_set_fifo_depths
 )
 
-model_name = "resnet50-w1a2"
+model_name = "resnet50_w1a2"
 board = "U250"
 vitis_platform = "xilinx_u250_xdma_201830_2"
 synth_clk_period_ns = 4.0
 target_fps = 300
 
-mobilenet_build_steps = [
+resnet50_build_steps = [
     step_resnet50_tidy,
     step_resnet50_streamline,
     step_resnet50_convert_to_hls,
     "step_create_dataflow_partition",
     "step_apply_folding_config",
     "step_generate_estimate_reports",
-    "step_hls_ipgen",
-    "step_set_fifo_depths",
-    "step_create_stitched_ip",
-    "step_make_pynq_driver",
+    # "step_hls_ipgen",
+    step_resnet50_set_fifo_depths, # "step_set_fifo_depths",
+    # "step_create_stitched_ip",
     "step_synthesize_bitfile",
+    "step_make_pynq_driver",
     "step_deployment_package",
 ]
 
+try:
+    from finn.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
+    folding_config_file="folding_config/U250_folding_config.json"
+    print("DoublePackedConv detected")
+except:
+    warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ")
+    folding_config_file="folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
 
 cfg = build_cfg.DataflowBuildConfig(
-    steps=mobilenet_build_steps,
+    steps=resnet50_build_steps,
     output_dir="output_%s_%s" % (model_name, board),
     synth_clk_period_ns=synth_clk_period_ns,
     board=board,
@@ -68,6 +76,8 @@ cfg = build_cfg.DataflowBuildConfig(
     # throughput parameters (auto-folding)
     mvau_wwidth_max = 24,
     target_fps = target_fps,
+    folding_config_file =  folding_config_file,
+    auto_fifo_depths=False,
     # enable extra performance optimizations (physopt)
     vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
     generate_outputs=[
@@ -77,5 +87,6 @@ cfg = build_cfg.DataflowBuildConfig(
         build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
     ],
 )
-model_file = "models/%s_export.onnx" % model_name
+
+model_file = "models/%s_exported.onnx" % model_name
 build.build_dataflow_cfg(model_file, cfg)
