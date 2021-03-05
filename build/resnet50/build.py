@@ -77,7 +77,6 @@ cfg = build_cfg.DataflowBuildConfig(
     mvau_wwidth_max = 24,
     target_fps = target_fps,
     folding_config_file =  folding_config_file,
-    auto_fifo_depths=False,
     # enable extra performance optimizations (physopt)
     vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
     generate_outputs=[
