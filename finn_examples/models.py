@@ -121,7 +121,7 @@ def find_runtime_weights(model_name, target_platform):
             if weight_files:
                 return candidate
     raise Exception(
-        "Runtime weight files for model = %s target platform = %s not found. Looked in: %s"
+        "Runtime weights for model = %s target platform = %s not found. Looked in: %s"
         % (model_name, target_platform, str(weight_dir_candidates))
     )
 
@@ -196,5 +196,9 @@ def mobilenetv1_w4a4_imagenet(target_platform=None):
         runtime_weight_dir = find_runtime_weights(model_name, target_platform)
     else:
         runtime_weight_dir = None
-    return FINNExampleOverlay(filename, driver_mode, _imagenet_top5inds_io_shape_dict,
-    runtime_weight_dir=runtime_weight_dir)
+    return FINNExampleOverlay(
+        filename,
+        driver_mode,
+        _imagenet_top5inds_io_shape_dict,
+        runtime_weight_dir=runtime_weight_dir,
+    )

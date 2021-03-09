@@ -46,6 +46,7 @@ zynq_platforms = ["ZCU102", "ZCU104"]
 alveo_platforms = ["U250"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
+
 # determine which shell flow to use for a given platform
 def platform_to_shell(platform):
     if platform in zynq_platforms:
@@ -55,12 +56,14 @@ def platform_to_shell(platform):
     else:
         raise Exception("Unknown platform, can't determine ShellFlowType")
 
+
 # select target clock frequency
 def platform_to_clk_period(platform):
     if platform in zynq_platforms:
         return 10.0
     elif platform in alveo_platforms:
         return 3.0
+
 
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
