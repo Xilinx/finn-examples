@@ -36,6 +36,7 @@ import shutil
 from custom_steps import (
     step_mobilenet_streamline,
     step_mobilenet_convert_to_hls_layers,
+    step_mobilenet_convert_to_hls_layers_separate_th,
     step_mobilenet_lower_convs,
 )
 
@@ -58,31 +59,52 @@ def platform_to_shell(platform):
 
 
 # select target clock frequency
-def platform_to_clk_period(platform):
+def select_clk_period(platform):
     if platform in zynq_platforms:
         return 10.0
     elif platform in alveo_platforms:
         return 3.0
 
 
+# select build steps (ZCU104/102 folding config is based on separate thresholding nodes)
+def select_build_steps(platform):
+    if platform in zynq_platforms:
+        return [
+            step_mobilenet_streamline,
+            step_mobilenet_lower_convs,
+            step_mobilenet_convert_to_hls_layers_separate_th,
+            "step_create_dataflow_partition",
+            "step_apply_folding_config",
+            "step_generate_estimate_reports",
+            "step_hls_codegen",
+            "step_hls_ipgen",
+            "step_set_fifo_depths",
+            "step_create_stitched_ip",
+            "step_make_pynq_driver",
+            "step_synthesize_bitfile",
+            "step_deployment_package",
+        ]
+    elif platform in alveo_platforms:
+        return [
+            step_mobilenet_streamline,
+            step_mobilenet_lower_convs,
+            step_mobilenet_convert_to_hls_layers,
+            "step_create_dataflow_partition",
+            "step_apply_folding_config",
+            "step_generate_estimate_reports",
+            "step_hls_codegen",
+            "step_hls_ipgen",
+            "step_set_fifo_depths",
+            "step_create_stitched_ip",
+            "step_make_pynq_driver",
+            "step_synthesize_bitfile",
+            "step_deployment_package",
+        ]
+
+
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 
-mobilenet_build_steps = [
-    step_mobilenet_streamline,
-    step_mobilenet_lower_convs,
-    step_mobilenet_convert_to_hls_layers,
-    "step_create_dataflow_partition",
-    "step_apply_folding_config",
-    "step_generate_estimate_reports",
-    "step_hls_codegen",
-    "step_hls_ipgen",
-    "step_set_fifo_depths",
-    "step_create_stitched_ip",
-    "step_make_pynq_driver",
-    "step_synthesize_bitfile",
-    "step_deployment_package",
-]
 
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
@@ -100,10 +122,10 @@ for platform_name in platforms_to_build:
     os.makedirs(platform_dir, exist_ok=True)
 
     cfg = build_cfg.DataflowBuildConfig(
-        steps=mobilenet_build_steps,
+        steps=select_build_steps(platform_name),
         output_dir="output_%s_%s" % (model_name, release_platform_name),
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
-        synth_clk_period_ns=platform_to_clk_period(platform_name),
+        synth_clk_period_ns=select_clk_period(platform_name),
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
