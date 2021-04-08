@@ -1,0 +1,599 @@
+{
+    "Defaults": {
+        "outFIFODepth": [
+            32,
+            "all"
+        ],
+        "inFIFODepth": [
+            32,
+            "all"
+        ],
+        "mem_mode": [
+            "decoupled",
+            [
+                "StreamingFCLayer_Batch"
+            ]
+        ]
+    },
+    "FMPadding_Batch_0": {
+        "SIMD": 3
+    },
+    "ConvolutionInputGenerator_0": {
+        "SIMD": 3
+    },
+    "StreamingFCLayer_Batch_0": {
+        "SIMD": 3,
+        "PE": 64
+    },
+    "FMPadding_Batch_1": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_1": {
+        "SIMD": 4
+    },
+    "Pool_Batch_0": {
+        "PE": 4
+    },
+    "DuplicateStreams_Batch_0": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_2": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "StreamingFCLayer_Batch_1": {
+        "PE": 1,
+        "SIMD": 16
+    },
+    "FMPadding_Batch_2": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_2": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_3": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_4": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_0": {
+        "PE": 2
+    },
+    "Thresholding_Batch_0": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_1": {
+        "PE": 2
+    },
+    "Thresholding_Batch_1": {
+        "PE": 2
+    },
+    "Thresholding_Batch_2": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_5": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_3": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_3": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_6": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_7": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_1": {
+        "PE": 2
+    },
+    "Thresholding_Batch_3": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_2": {
+        "PE": 2
+    },
+    "Thresholding_Batch_4": {
+        "PE": 2
+    },
+    "Thresholding_Batch_5": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_8": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_4": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_4": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_9": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_10": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "AddStreams_Batch_2": {
+        "PE": 2
+    },
+    "Thresholding_Batch_6": {
+        "PE": 2
+    },
+    "Thresholding_Batch_7": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_3": {
+        "PE": 2
+    },
+    "DownSampler_0": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_11": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_12": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "FMPadding_Batch_5": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_5": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_13": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_14": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_3": {
+        "PE": 2
+    },
+    "Thresholding_Batch_8": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_4": {
+        "PE": 2
+    },
+    "Thresholding_Batch_9": {
+        "PE": 2
+    },
+    "Thresholding_Batch_10": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_15": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_6": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_6": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_16": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_17": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_4": {
+        "PE": 2
+    },
+    "Thresholding_Batch_11": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_5": {
+        "PE": 2
+    },
+    "Thresholding_Batch_12": {
+        "PE": 2
+    },
+    "Thresholding_Batch_13": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_18": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_7": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_7": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_19": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_20": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_5": {
+        "PE": 2
+    },
+    "Thresholding_Batch_14": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_6": {
+        "PE": 2
+    },
+    "Thresholding_Batch_15": {
+        "PE": 2
+    },
+    "Thresholding_Batch_16": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_21": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_8": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_8": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_22": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_23": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_6": {
+        "PE": 2
+    },
+    "Thresholding_Batch_17": {
+        "PE": 2
+    },
+    "Thresholding_Batch_18": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_7": {
+        "PE": 2
+    },
+    "DownSampler_1": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_24": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_25": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "FMPadding_Batch_9": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_9": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_26": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_27": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_7": {
+        "PE": 2
+    },
+    "Thresholding_Batch_19": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_8": {
+        "PE": 2
+    },
+    "Thresholding_Batch_20": {
+        "PE": 2
+    },
+    "Thresholding_Batch_21": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_28": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_10": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_10": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_29": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_30": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_8": {
+        "PE": 2
+    },
+    "Thresholding_Batch_22": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_9": {
+        "PE": 2
+    },
+    "Thresholding_Batch_23": {
+        "PE": 2
+    },
+    "Thresholding_Batch_24": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_31": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_11": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_11": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_32": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_33": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_9": {
+        "PE": 2
+    },
+    "Thresholding_Batch_25": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_10": {
+        "PE": 2
+    },
+    "Thresholding_Batch_26": {
+        "PE": 2
+    },
+    "Thresholding_Batch_27": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_34": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_12": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_12": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_35": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_36": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_10": {
+        "PE": 2
+    },
+    "Thresholding_Batch_28": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_11": {
+        "PE": 2
+    },
+    "Thresholding_Batch_29": {
+        "PE": 2
+    },
+    "Thresholding_Batch_30": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_37": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_13": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_13": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_38": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_39": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_11": {
+        "PE": 2
+    },
+    "Thresholding_Batch_31": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_12": {
+        "PE": 2
+    },
+    "Thresholding_Batch_32": {
+        "PE": 2
+    },
+    "Thresholding_Batch_33": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_40": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_14": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_14": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_41": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_42": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_12": {
+        "PE": 2
+    },
+    "Thresholding_Batch_34": {
+        "PE": 2
+    },
+    "Thresholding_Batch_35": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_13": {
+        "PE": 2
+    },
+    "DownSampler_2": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_43": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_44": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "FMPadding_Batch_15": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_15": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_45": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_46": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_13": {
+        "PE": 2
+    },
+    "Thresholding_Batch_36": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_14": {
+        "PE": 2
+    },
+    "Thresholding_Batch_37": {
+        "PE": 2
+    },
+    "Thresholding_Batch_38": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_47": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_16": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_16": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_48": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_49": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_14": {
+        "PE": 2
+    },
+    "Thresholding_Batch_39": {
+        "PE": 2
+    },
+    "DuplicateStreams_Batch_15": {
+        "PE": 2
+    },
+    "Thresholding_Batch_40": {
+        "PE": 2
+    },
+    "Thresholding_Batch_41": {
+        "PE": 2
+    },
+    "StreamingFCLayer_Batch_50": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "FMPadding_Batch_17": {
+        "SIMD": 4
+    },
+    "ConvolutionInputGenerator_17": {
+        "SIMD": 4
+    },
+    "StreamingFCLayer_Batch_51": {
+        "PE": 2,
+        "SIMD": 64
+    },
+    "StreamingFCLayer_Batch_52": {
+        "PE": 2,
+        "SIMD": 32
+    },
+    "AddStreams_Batch_15": {
+        "PE": 2
+    },
+    "Thresholding_Batch_42": {
+        "PE": 2
+    },
+    "ConvolutionInputGenerator_18": {
+        "SIMD": 4
+    },
+    "Pool_Batch_1": {
+        "PE": 4
+    },
+    "StreamingFCLayer_Batch_53": {
+        "PE": 1,
+        "SIMD": 4,
+        "mem_mode": "external"
+    },
+    "LabelSelect_Batch_0": {
+        "outputDataType": "UINT16",
+        "PE": 1
+    },
+    "ChannelwiseOp_Batch_0": {
+        "PE": 2
+    },
+    "ChannelwiseOp_Batch_1": {
+        "PE": 2
+    },
+    "ChannelwiseOp_Batch_2": {
+        "PE": 1
+    }
+}
