@@ -49,6 +49,7 @@ mobilenet_build_steps = [
     "step_create_dataflow_partition",
     "step_apply_folding_config",
     "step_generate_estimate_reports",
+    "step_hls_codegen",
     "step_hls_ipgen",
     "step_set_fifo_depths",
     step_mobilenet_slr_floorplan,
