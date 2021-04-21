@@ -39,6 +39,7 @@ from finn.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 from finn.transformation.general import (
     GiveReadableTensorNames,
     GiveUniqueNodeNames,
+    ApplyConfig,
 )
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
 from finn.transformation.infer_shapes import InferShapes
@@ -94,3 +95,26 @@ def step_mobilenet_convert_to_hls_layers(model: ModelWrapper, cfg: DataflowBuild
     model = model.transform(GiveUniqueNodeNames())
     model = model.transform(GiveReadableTensorNames())
     return model
+
+
+def step_mobilenet_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
+    if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
+        try:
+            from finn.analysis.partitioning import partition
+            import json
+            # apply partitioning of the model, restricting the first and last layers to SLR0
+            floorplan = partition(model, cfg.synth_clk_period_ns, cfg.board, abs_anchors=[(0,[0]),(-1,[0])])[0]
+            # re-define default SLR to 0
+            floorplan['Defaults']['slr'][0] = 0
+            # save floorplan and register it in the config, so it is applied later
+            json_floorplan = os.environ["FINN_BUILD_DIR"]+'/slr_floorplan.json'
+            with open(json_floorplan, 'w') as f:
+                json.dump(floorplan, f, indent=4)
+            cfg.vitis_floorplan_file = json_floorplan
+            print("SLR floorplanning applied")
+        except:
+            print("No SLR floorplanning applied")
+    return model
+
+
+    

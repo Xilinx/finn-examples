@@ -34,6 +34,7 @@ from custom_steps import (
     step_mobilenet_streamline,
     step_mobilenet_convert_to_hls_layers,
     step_mobilenet_lower_convs,
+    step_mobilenet_slr_floorplan,
 )
 
 model_name = "mobilenetv1-w4a4"
@@ -50,6 +51,7 @@ mobilenet_build_steps = [
     "step_generate_estimate_reports",
     "step_hls_ipgen",
     "step_set_fifo_depths",
+    step_mobilenet_slr_floorplan,
     "step_create_stitched_ip",
     "step_make_pynq_driver",
     "step_synthesize_bitfile",
