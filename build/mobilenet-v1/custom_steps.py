@@ -26,7 +26,10 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from finn.core.modelwrapper import ModelWrapper
-from finn.builder.build_dataflow_config import DataflowBuildConfig
+from finn.builder.build_dataflow_config import (
+    DataflowBuildConfig,
+    ShellFlowType,
+)
 from finn.transformation.streamline import Streamline
 from finn.transformation.double_to_single_float import DoubleToSingleFloat
 import finn.transformation.streamline.absorb as absorb
@@ -101,16 +104,12 @@ def step_mobilenet_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
         try:
             from finn.analysis.partitioning import partition
-            import json
             # apply partitioning of the model, restricting the first and last layers to SLR0
-            floorplan = partition(model, cfg.synth_clk_period_ns, cfg.board, abs_anchors=[(0,[0]),(-1,[0])])[0]
-            # re-define default SLR to 0
-            floorplan['Defaults']['slr'][0] = 0
-            # save floorplan and register it in the config, so it is applied later
-            json_floorplan = os.environ["FINN_BUILD_DIR"]+'/slr_floorplan.json'
-            with open(json_floorplan, 'w') as f:
-                json.dump(floorplan, f, indent=4)
-            cfg.vitis_floorplan_file = json_floorplan
+            default_slr = 0
+            abs_anchors = [(0,[default_slr]),(-1,[default_slr])]
+            floorplan = partition(model, cfg.synth_clk_period_ns, cfg.board, abs_anchors=abs_anchors, multivariant=False)[0]
+            # apply floorplan to model
+            model = model.transform(ApplyConfig(floorplan))
             print("SLR floorplanning applied")
         except:
             print("No SLR floorplanning applied")

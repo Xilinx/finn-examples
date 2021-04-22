@@ -53,9 +53,8 @@ mobilenet_build_steps = [
     "step_hls_ipgen",
     "step_set_fifo_depths",
     step_mobilenet_slr_floorplan,
-    "step_create_stitched_ip",
-    "step_make_pynq_driver",
     "step_synthesize_bitfile",
+    "step_make_pynq_driver",
     "step_deployment_package",
 ]
 
