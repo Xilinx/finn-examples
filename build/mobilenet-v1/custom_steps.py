@@ -94,3 +94,20 @@ def step_mobilenet_convert_to_hls_layers(model: ModelWrapper, cfg: DataflowBuild
     model = model.transform(GiveUniqueNodeNames())
     model = model.transform(GiveReadableTensorNames())
     return model
+
+
+def step_mobilenet_convert_to_hls_layers_separate_th(
+    model: ModelWrapper, cfg: DataflowBuildConfig
+):
+    mem_mode = cfg.default_mem_mode.value
+    model = model.transform(to_hls.InferPool_Batch())
+    model = model.transform(to_hls.InferConvInpGen())
+    model = model.transform(to_hls.InferThresholdingLayer())
+    model = model.transform(to_hls.InferVVAU())
+    model = model.transform(to_hls.InferQuantizedStreamingFCLayer(mem_mode))
+    model = model.transform(to_hls.InferChannelwiseLinearLayer())
+    model = model.transform(to_hls.InferLabelSelectLayer())
+    model = model.transform(InferShapes())
+    model = model.transform(GiveUniqueNodeNames())
+    model = model.transform(GiveReadableTensorNames())
+    return model

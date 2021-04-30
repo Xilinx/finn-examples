@@ -104,6 +104,28 @@ def find_bitfile(model_name, target_platform):
     )
 
 
+def find_runtime_weights(model_name, target_platform):
+    weight_dir = "%s_runtime_weights" % (model_name)
+    weight_dir_candidates = [
+        pk.resource_filename(
+            "finn_examples", "bitfiles/%s/%s" % (target_platform, weight_dir)
+        ),
+        pk.resource_filename(
+            "finn_examples",
+            "bitfiles/bitfiles.zip.d/%s/%s" % (target_platform, weight_dir),
+        ),
+    ]
+    for candidate in weight_dir_candidates:
+        if os.path.isdir(candidate):
+            weight_files = os.listdir(candidate)
+            if weight_files:
+                return candidate
+    raise Exception(
+        "Runtime weights for model = %s target platform = %s not found. Looked in: %s"
+        % (model_name, target_platform, str(weight_dir_candidates))
+    )
+
+
 def get_driver_mode():
     driver_modes = {"edge": "zynq-iodma", "pcie": "alveo"}
     return driver_modes[get_edge_or_pcie()]
@@ -170,4 +192,13 @@ def mobilenetv1_w4a4_imagenet(target_platform=None):
     driver_mode = get_driver_mode()
     model_name = "mobilenetv1-w4a4"
     filename = find_bitfile(model_name, target_platform)
-    return FINNExampleOverlay(filename, driver_mode, _imagenet_top5inds_io_shape_dict)
+    if target_platform in ["ZCU104"]:
+        runtime_weight_dir = find_runtime_weights(model_name, target_platform)
+    else:
+        runtime_weight_dir = None
+    return FINNExampleOverlay(
+        filename,
+        driver_mode,
+        _imagenet_top5inds_io_shape_dict,
+        runtime_weight_dir=runtime_weight_dir,
+    )
