@@ -28,7 +28,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # URL for git repo to be cloned
-REPO_URL=https://github.com/Xilinx/finn.git
+REPO_URL=https://github.com/Xilinx/finn
 # commit hash for repo
 REPO_COMMIT=e5da788bdc74fc9c234bb0176521ad51e830c22e
 # directory (under the same folder as this script) to clone to
