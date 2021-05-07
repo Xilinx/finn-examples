@@ -196,9 +196,12 @@ def mobilenetv1_w4a4_imagenet(target_platform=None):
         runtime_weight_dir = find_runtime_weights(model_name, target_platform)
     else:
         runtime_weight_dir = None
+    # target 185 MHz for Zynq (this is ignored for Alveo)
+    fclk_mhz = 185.0
     return FINNExampleOverlay(
         filename,
         driver_mode,
         _imagenet_top5inds_io_shape_dict,
         runtime_weight_dir=runtime_weight_dir,
+        fclk_mhz=fclk_mhz,
     )

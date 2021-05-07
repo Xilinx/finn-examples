@@ -62,7 +62,7 @@ def platform_to_shell(platform):
 # select target clock frequency
 def select_clk_period(platform):
     if platform in zynq_platforms:
-        return 10.0
+        return 5.4
     elif platform in alveo_platforms:
         return 3.0
 
