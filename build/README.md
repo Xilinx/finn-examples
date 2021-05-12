@@ -27,8 +27,7 @@ Please see the READMEs under the respective subfolders here for instructions on 
 
 All examples in this repo use the same Python PYNQ driver, located under
 `finn_examples/driver.py` in the repo. This driver can support any FINN-generated
-accelerator that doesn't use external weights, the only thing that needs to be
-specified is the configuration for the input and output tensors in the `io_shape_dict`. Have a look at `finn_examples/models.py` to see how this is done for the example models in this repo:
+accelerator, the only thing that needs to be specified is the configuration for the input and output tensors in the `io_shape_dict`. Have a look at `finn_examples/models.py` to see how this is done for the example models in this repo:
 
 ```python
 _cifar10_cnv_io_shape_dict = {
