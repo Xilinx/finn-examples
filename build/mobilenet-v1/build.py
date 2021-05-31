@@ -38,12 +38,14 @@ from custom_steps import (
     step_mobilenet_convert_to_hls_layers,
     step_mobilenet_convert_to_hls_layers_separate_th,
     step_mobilenet_lower_convs,
+    step_mobilenet_slr_floorplan,
 )
 
 model_name = "mobilenetv1-w4a4"
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU102", "ZCU104"]
+#alveo_platforms = ["U50", "U200", "U250", "U280"]
 alveo_platforms = ["U250"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
@@ -80,8 +82,8 @@ def select_build_steps(platform):
             "step_hls_ipgen",
             "step_set_fifo_depths",
             "step_create_stitched_ip",
-            "step_make_pynq_driver",
             "step_synthesize_bitfile",
+            "step_make_pynq_driver",
             "step_deployment_package",
         ]
     elif platform in alveo_platforms:
@@ -95,9 +97,9 @@ def select_build_steps(platform):
             "step_hls_codegen",
             "step_hls_ipgen",
             "step_set_fifo_depths",
-            "step_create_stitched_ip",
-            "step_make_pynq_driver",
+            step_mobilenet_slr_floorplan,
             "step_synthesize_bitfile",
+            "step_make_pynq_driver",
             "step_deployment_package",
         ]
 
