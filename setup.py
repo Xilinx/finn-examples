@@ -109,7 +109,7 @@ setup(
     install_requires=[
         "pynq>=2.5.1",
         "finn-base==0.0.1b0",
-        "finn-dataset_loading==0.0.4",  # noqa
+        "finn-dataset_loading==0.0.5",  # noqa
     ],
     extras_require={
         ':python_version<"3.6"': ["matplotlib<3.1", "ipython==7.9"],
