@@ -14,6 +14,8 @@ pre-built bitfiles, PYNQ Python drivers and Jupyter notebooks to get started,
 and you can rebuild them from source.
 Both PYNQ on Zynq and Alveo are supported.
 
+Need help with a problem in this repo, or got a question? Feel free to ask for help in the [FINN Gitter channel](https://gitter.im/xilinx-finn/community).
+
 ## Quickstart
 
 
