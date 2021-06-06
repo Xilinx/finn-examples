@@ -18,6 +18,7 @@ Both PYNQ on Zynq and Alveo are supported.
 
 
 *For Alveo we recommend setting up everything inside a virtualenv as described [here](https://pynq.readthedocs.io/en/v2.6.1/getting_started/alveo_getting_started.html?highlight=alveo#install-conda).*
+*For PYNQ boards, all commands below must be prefixed with `sudo` or by first going into `sudo su`.*
 
 First, ensure that your `pip` and `setuptools` installations are up-to-date
 on your PYNQ board or Alveo server:
