@@ -12,11 +12,11 @@
         "md5sum": "59598d7f36ffdc74a0a0262f5b67423c"
     },
     "ZCU104": {
-        "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/ZCU104.zip",
-        "md5sum": "cdc1b757a059b0bb2b7270b3081ae52e"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/mnv1-zcu104/ZCU104.zip",
+        "md5sum": "1ed10d74e85eec70fd094b2947b5b8e3"
     },
     "xilinx_u250_xdma_201830_2": {
-        "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/xilinx_u250_xdma_201830_2.zip",
-        "md5sum": "5e8f3625fcf14aaa4fc7416fd9f15450"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/mnv1-u250-partitioned/xilinx_u250_xdma_201830_2.zip",
+        "md5sum": "d8c7d67c688f3471b6e2c53762b8b258"
     }
 }
