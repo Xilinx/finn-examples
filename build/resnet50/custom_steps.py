@@ -119,7 +119,10 @@ from finn.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 
 from finn.core.modelwrapper import ModelWrapper
 from finn.custom_op.registry import getCustomOp
-from finn.builder.build_dataflow_config import DataflowBuildConfig
+from finn.builder.build_dataflow_config import (
+    DataflowBuildConfig,
+    ShellFlowType,
+)
 
 from finn.transformation.fpgadataflow.prepare_ip import PrepareIP
 from finn.transformation.fpgadataflow.hlssynth_ip import HLSSynthIP
@@ -304,4 +307,22 @@ def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig)
         model, cfg.output_dir + "/final_hw_config.json", hw_attrs
     )
 
+    return model
+
+
+def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
+    if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
+        try:
+            from finn.analysis.partitioning import partition
+            # apply partitioning of the model, restricting the first and last layers to SLR0
+            default_slr = 0
+            abs_anchors = [(0,[default_slr]),(-1,[default_slr])]
+            #increase resource limits to make partitioning feasible, except for SLR0 which also has DDR subsystem
+            limits = np.array([[0.75,.5,.7,.6,.6],[1,.7,.9,.8,.8],[1,.7,.9,.8,.8],[1,.7,.9,.8,.8]])
+            floorplan = partition(model, cfg.synth_clk_period_ns, cfg.board, abs_anchors=abs_anchors, multivariant=False, linear_cuts=True, limits=limits)[0]
+            # apply floorplan to model
+            model = model.transform(ApplyConfig(floorplan))
+            print("SLR floorplanning applied")
+        except:
+            print("No SLR floorplanning applied")
     return model
