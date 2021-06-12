@@ -1,4 +1,4 @@
-#  Copyright (C) 2020 Xilinx, Inc
+#  Copyright (C) 2020-2021 Xilinx, Inc
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ from distutils.command.build import build as dist_build
 from pynq.utils import build_py as _build_py
 
 __author__ = "Yaman Umuroglu"
-__copyright__ = "Copyright 2020, Xilinx"
+__copyright__ = "Copyright 2020-2021, Xilinx"
 __email__ = "yamanu@xilinx.com"
 
 
@@ -90,7 +90,7 @@ extend_package(os.path.join(module_name, "notebooks"))
 
 setup(
     name=module_name,
-    version="0.0.1b",
+    version="0.0.2b",
     description="FINN Examples on PYNQ for Zynq and Alveo",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -108,8 +108,8 @@ setup(
     setup_requires=["pynq>=2.5.1"],
     install_requires=[
         "pynq>=2.5.1",
-        "finn-base==0.0.1b0",
-        "finn-dataset_loading==0.0.4",  # noqa
+        "finn-base==0.0.2b0",
+        "finn-dataset_loading==0.0.5",  # noqa
     ],
     extras_require={
         ':python_version<"3.6"': ["matplotlib<3.1", "ipython==7.9"],

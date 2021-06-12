@@ -28,18 +28,20 @@
 
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
+from finn.util.basic import alveo_default_platform
 from warnings import warn
 # custom steps for resnet50v1.5
 from custom_steps import (
     step_resnet50_tidy,
     step_resnet50_streamline,
     step_resnet50_convert_to_hls,
-    step_resnet50_set_fifo_depths
+    step_resnet50_set_fifo_depths,
+    step_resnet50_slr_floorplan
 )
 
 model_name = "resnet50_w1a2"
 board = "U250"
-vitis_platform = "xilinx_u250_xdma_201830_2"
+vitis_platform = alveo_default_platform[board]
 synth_clk_period_ns = 4.0
 target_fps = 300
 
@@ -50,9 +52,10 @@ resnet50_build_steps = [
     "step_create_dataflow_partition",
     "step_apply_folding_config",
     "step_generate_estimate_reports",
-    # "step_hls_ipgen",
-    step_resnet50_set_fifo_depths, # "step_set_fifo_depths",
-    # "step_create_stitched_ip",
+    "step_hls_codegen",
+    "step_hls_ipgen",
+    step_resnet50_set_fifo_depths,
+    step_resnet50_slr_floorplan,
     "step_synthesize_bitfile",
     "step_make_pynq_driver",
     "step_deployment_package",

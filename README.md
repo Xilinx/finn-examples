@@ -14,10 +14,13 @@ pre-built bitfiles, PYNQ Python drivers and Jupyter notebooks to get started,
 and you can rebuild them from source.
 Both PYNQ on Zynq and Alveo are supported.
 
+Need help with a problem in this repo, or got a question? Feel free to ask for help in the [FINN Gitter channel](https://gitter.im/xilinx-finn/community).
+
 ## Quickstart
 
 
 *For Alveo we recommend setting up everything inside a virtualenv as described [here](https://pynq.readthedocs.io/en/v2.6.1/getting_started/alveo_getting_started.html?highlight=alveo#install-conda).*
+*For PYNQ boards, all commands below must be prefixed with `sudo` or by first going into `sudo su`.*
 
 First, ensure that your `pip` and `setuptools` installations are up-to-date
 on your PYNQ board or Alveo server:
