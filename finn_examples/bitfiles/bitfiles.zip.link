@@ -16,7 +16,7 @@
         "md5sum": "1ed10d74e85eec70fd094b2947b5b8e3"
     },
     "xilinx_u250_xdma_201830_2": {
-        "url": "https://github.com/Xilinx/finn-examples/releases/download/mnv1-u250-partitioned/xilinx_u250_xdma_201830_2.zip",
-        "md5sum": "d8c7d67c688f3471b6e2c53762b8b258"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/rn50-u250/xilinx_u250_xdma_201830_2.zip",
+        "md5sum": "042cc5602c8a39d7541f1d79946c0b68"
     }
 }
