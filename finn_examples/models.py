@@ -71,18 +71,30 @@ _imagenet_top5inds_io_shape_dict = {
 # resnet50 uses a different io_shape_dict due to
 # external weights for last layer
 _imagenet_resnet50_top5inds_io_shape_dict = {
-    "idt" : DataType.UINT8,
-    "odt" : DataType.UINT16,
-    "ishape_normal" : (1, 224, 224, 3),
-    "oshape_normal" : (1, 5),
-    "ishape_folded" : (1, 224, 224, 3),
-    "oshape_folded" : (1, 5, 1),
-    "ishape_packed" : (1, 224, 224, 3),
-    "oshape_packed" : (1, 5, 2),
-    "input_dma_name" : 'idma1',
-    "number_of_external_weights": 1
+    "idt": DataType.UINT8,
+    "odt": DataType.UINT16,
+    "ishape_normal": (1, 224, 224, 3),
+    "oshape_normal": (1, 5),
+    "ishape_folded": (1, 224, 224, 3),
+    "oshape_folded": (1, 5, 1),
+    "ishape_packed": (1, 224, 224, 3),
+    "oshape_packed": (1, 5, 2),
+    "input_dma_name": "idma1",
+    "number_of_external_weights": 1,
 }
 
+_radioml_io_shape_dict = {
+    "idt": DataType.INT8,
+    "odt": DataType.UINT8,
+    "ishape_normal": (1, 1024, 1, 2),
+    "oshape_normal": (1, 1),
+    "ishape_folded": (1, 1024, 1, 2, 1),
+    "oshape_folded": (1, 1, 1),
+    "ishape_packed": (1, 1024, 1, 2, 1),
+    "oshape_packed": (1, 1, 1),
+    "input_dma_name": "idma0",
+    "number_of_external_weights": 0,
+}
 
 # from https://github.com/Xilinx/PYNQ-HelloWorld/blob/master/setup.py
 # get current platform: either edge or pcie
@@ -222,6 +234,7 @@ def mobilenetv1_w4a4_imagenet(target_platform=None):
         fclk_mhz=fclk_mhz,
     )
 
+
 def resnet50_w1a2_imagenet(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
@@ -235,3 +248,16 @@ def resnet50_w1a2_imagenet(target_platform=None):
         runtime_weight_dir=runtime_weight_dir,
     )
 
+
+def vgg10_w2a2_radioml(target_platform=None):
+    target_platform = resolve_target_platform(target_platform)
+    driver_mode = get_driver_mode()
+    model_name = "vgg10-w2a2"
+    filename = find_bitfile(model_name, target_platform)
+    fclk_mhz = 185.0
+    return FINNExampleOverlay(
+        filename,
+        driver_mode,
+        _radioml_io_shape_dict,
+        fclk_mhz=fclk_mhz,
+    )
