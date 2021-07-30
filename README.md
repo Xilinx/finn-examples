@@ -67,7 +67,7 @@ dummy_out = accel.execute(dummy_in)
 | <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250<br>ZCU104       |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       |
-
+| <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights, 3-bit activations<br>4-bit first layer activations | ZCU104<br>(to be extended)
 ## Supported Boards
 
 *Note that the larger NNs are only available on Alveo or selected Zynq boards.*
