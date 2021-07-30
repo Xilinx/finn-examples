@@ -27,13 +27,10 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from finn.core.modelwrapper import ModelWrapper
 from finn.builder.build_dataflow_config import DataflowBuildConfig
-
 from finn.transformation.change_3d_tensors_to_4d import Change3DTo4DTensors
-from finn.transformation.general import GiveUniqueNodeNames, GiveReadableTensorNames
+from finn.transformation.general import GiveUniqueNodeNames
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
 import finn.transformation.streamline.absorb as absorb
-
-from finn.transformation.fpgadataflow.make_finegrained import MakeFinegrained
 
 
 def step_pre_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -46,16 +43,4 @@ def step_convert_final_layers(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(to_hls.InferChannelwiseLinearLayer())
     model = model.transform(to_hls.InferLabelSelectLayer())
     model = model.transform(GiveUniqueNodeNames())
-    return model
-
-
-def step_experimentalconv(model: ModelWrapper, cfg: DataflowBuildConfig):
-    model = model.transform(to_hls.InferExperimentalConvAsFC())
-    return model
-
-
-def step_experimentalfg(model: ModelWrapper, cfg: DataflowBuildConfig):
-    model = model.transform(MakeFinegrained())
-    model = model.transform(GiveUniqueNodeNames())
-    model = model.transform(GiveReadableTensorNames())
     return model

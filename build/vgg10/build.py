@@ -35,9 +35,7 @@ import shutil
 # custom steps
 from custom_steps import step_pre_streamline, step_convert_final_layers
 
-model_name = "18_VGG10_w4a4w2a2_v2_ready"
-# model_name = "yolov4-tiny-2b3b-dw_final_cutoff"
-# model_name = "ConvAsFC_test_in_2_512_32" #test model
+model_name = "radioml_w4a3_tidy"
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104"]
@@ -60,8 +58,7 @@ def select_clk_period(platform):
     return 5.0
 
 
-# select build steps (ZCU104/102 folding config is based on separate thresholding nodes)
-# """ normal
+# assemble build flow from custom and pre-existing steps
 def select_build_steps(platform):
     return [
         "step_tidy_up",
@@ -85,58 +82,8 @@ def select_build_steps(platform):
     ]
 
 
-# """
-""" experimental fg mmv
-def select_build_steps(platform):
-    return [
-        "step_tidy_up",
-        step_pre_streamline,
-        "step_streamline",
-        "step_convert_to_hls",
-        step_convert_final_layers,
-        "step_create_dataflow_partition",
-        step_experimentalfg,
-        "step_target_fps_parallelization",
-        "step_apply_folding_config",
-        "step_generate_estimate_reports",
-        "step_hls_codegen",
-        "step_hls_ipgen",
-        #"step_set_fifo_depths",
-        "step_create_stitched_ip",
-        #"step_measure_rtlsim_performance",
-        "step_out_of_context_synthesis",
-        "step_synthesize_bitfile",
-        "step_make_pynq_driver",
-        "step_deployment_package",
-    ]
-"""
-""" experimental conv as fc (full unrolling)
-def select_build_steps(platform):
-    return [
-        #"step_tidy_up",
-        #step_pre_streamline,
-        #"step_streamline",
-        #"step_convert_to_hls",
-        #step_convert_final_layers,
-        step_experimentalconv,
-        "step_create_dataflow_partition",
-        "step_target_fps_parallelization",
-        "step_apply_folding_config",
-        "step_generate_estimate_reports",
-        "step_hls_codegen",
-        "step_hls_ipgen",
-        "step_set_fifo_depths",
-        "step_create_stitched_ip",
-        "step_measure_rtlsim_performance",
-        "step_out_of_context_synthesis",
-        "step_synthesize_bitfile",
-        "step_make_pynq_driver",
-        "step_deployment_package",
-    ]
-"""
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
-
 
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
@@ -161,17 +108,15 @@ for platform_name in platforms_to_build:
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
-        # target_fps=100000,
-        # mvau_wwidth_max = 36,
         auto_fifo_depths=True,
-        standalone_thresholds=False,  # needed (only) for experimental fg flow
+        standalone_thresholds=False,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.STITCHED_IP,
             # build_cfg.DataflowOutputType.OOC_SYNTH,
-            build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
+            # build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
