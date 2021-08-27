@@ -1,4 +1,4 @@
-## <img src=https://raw.githubusercontent.com/Xilinx/finn/master/docs/img/finn-logo.png width=128/> Dataflow Accelerator Examples
+## <img src=https://raw.githubusercontent.com/Xilinx/finn/github-pages/docs/img/finn-logo.png width=128/> Dataflow Accelerator Examples
 *for PYNQ on Zynq and Alveo*
 
 <img align="left" src="docs/img/finn-example.png" alt="drawing" style="margin-right: 20px" width="250"/>
@@ -67,6 +67,9 @@ dummy_out = accel.execute(dummy_in)
 | <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250<br>ZCU104       |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       |
+| <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights and activations | Pynq-Z1       |
+
+We welcome community contributions to add more examples to this repo! 
 
 ## Supported Boards
 
