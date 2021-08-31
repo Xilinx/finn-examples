@@ -6,7 +6,7 @@ It has a repeated structure of depthwise-separable (dws) convolution building bl
 Each dws convolution consists
 of a depthwise and a pointwise convolution each followed by a batchnorm and ReLU block.
 MobileNet-v1 has 13 of these blocks.
-Here, we use a reduced-precision implementation of MobileNet-v1 from [Brevitas](https://github.com/Xilinx/brevitas/tree/master/brevitas_examples/imagenet_classification),
+Here, we use a reduced-precision implementation of MobileNet-v1 from [Brevitas](https://github.com/Xilinx/brevitas/tree/master/src/brevitas_examples/imagenet_classification),
 where the weights and activations are quantized to 4-bit, except for the first
 layer which uses 8-bit weights and inputs.
 It requires about 2 MB of weight storage and 1.1 GMACs per inference, yielding
@@ -41,7 +41,7 @@ cd $FINN_EXAMPLES/build/finn
 ## Where did the ONNX model files come from?
 
 The 4-bit quantized MobileNet-v1 is part of the
-[Brevitas examples](https://github.com/Xilinx/brevitas/tree/master/brevitas_examples/imagenet_classification).
+[Brevitas examples](https://github.com/Xilinx/brevitas/tree/master/src/brevitas_examples/imagenet_classification).
 Subsequently, the trained networks is [exported to ONNX](https://github.com/Xilinx/finn/blob/master/notebooks/basics/1_brevitas_network_import.ipynb). In addition, the particular version used here has two additions for pre- and postprocessing:
 
 * A divide-by-255 node is added at the input, and the input is marked as 8-bit (to directly accept 8-bit images as input)
