@@ -17,6 +17,7 @@ The file `build.py` assembles the needed files and configures how the model is c
 - `synth_clk_period_ns`: set the desired clock period in nS.
 - `fpga_part` configures the IP for your target device that the stitched IP will be implemented in.  It should be the full string recognized in Vivado: \device\-\package\-\temperature_grade\-\speed_grade\
 - `generate_outputs`: for integration purposes, the only output needed is `...STITCHED_IP`.  You might find the ESTIMATE_REPORTS interesting and it doesn't add any significant runtime.  Other options are documented [here](https://finn.readthedocs.io/en/latest/command_line.html#generated-outputs) and some of them (namely OOC_SYNTH, BITFILE) add substantial runtime.
+- `model_file`: Set the source of your quantized model.
 
 
 ### Running FINN Compiler
@@ -25,10 +26,10 @@ Prior to running, insure the following prerequisites have been met:
 - Install FINN.  A helpful script may be of use: `finn-examples/build/get_finn.sh` 
 - Insure you have `VIVADO_PATH` env variable is set appropriately for your install.  For example:
 > export VIVADO_PATH=/opt/Xilinx/Vivado/2020.1
-- For convenience, set env variable for your `finn-examples` directory:
+- For convenience, set env variable `FE_PATH` to your `finn-examples` directory:
 > export FE_PATH=/home/foo/finn-examples
 
-Then, change to `finn` install directory and invoke:
+Then, change to `.../finn/` install directory and invoke:
 > ./run-docker.sh build_custom ${FE_PATH}/build/fpga_flow/
 
 The build should finish in about 10 minutes, and the FINN docker will close on success.
@@ -60,7 +61,7 @@ Explore the IPI board design and note the interfaces.
 
 
 
-### Simulating the Stitch IP with Verilog Test Bench
+## Simulating the Stitched IP with Verilog Test Bench
 
 The included `testbench.sv` is a very simple test to illustrate how to feed data to the compiled model. 
 
@@ -75,10 +76,11 @@ Thus, the input data for the first cycle is organized as such:
 
 The test bench reads data from a simple text file (data.hex).  The included script `gen_tb_data.py` creates the test data as well as the ground truth expectations (Note: using ground truth is undesirable if the intent is to validate that the HW implementation matches the trained model).  The script takes the liberty of flipping the byte order such that veriliog's $readmemh brings B0_0 nicely into the LSB position.   To generate the test data:
 
-> cd ${FE_PATH}/build/fpga_flow/output_tfc_w0a1_fpga/stitched_ip
-> mkdir -p finn_vivado_stitch_proj.sim/sim_1/behav/xsim
-> ../../gen_tb_data.py > finn_vivado_stitch_proj.sim/sim_1/behav/xsim/data.hex
-
+```
+cd ${FE_PATH}/build/fpga_flow/output_tfc_w0a1_fpga/stitched_ip
+mkdir -p finn_vivado_stitch_proj.sim/sim_1/behav/xsim
+../../gen_tb_data.py > finn_vivado_stitch_proj.sim/sim_1/behav/xsim/data.hex
+```
 In Vivado, add the testbench as a simulation file. Paste this in to the Tcl Console:
 > add_files -fileset sim_1 -norecurse ../../testbench.sv
 
@@ -86,13 +88,13 @@ In Vivado, add the testbench as a simulation file. Paste this in to the Tcl Cons
 Then, run the simulation (Flow Navigator -> Simulation -> Run Simulation).   Give the simulator a `run -all`  (click the "play" button in the simulator) to run the sim to it's $finish conclusion.  With 20 data points run, it should have 1 mismatch due using the ground-truth as the check source:
 
 ```
- ************************************************************ 
-  SIM COMPLETE
-   Validated 20 data points 
-   Total error count: ====>  1  <====
+************************************************************ 
+SIM COMPLETE
+ Validated 20 data points 
+ Total error count: ====>  1  <====
 ```
 
-#### Instantiation in Mission Design
+### Instantiation in Mission Design
 
 There are any number of ways to bring the stitched IP into another design.  
 
