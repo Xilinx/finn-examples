@@ -52,6 +52,7 @@ from finn.transformation.streamline.absorb import (
     FactorOutMulSignMagnitude,
     Absorb1BitMulIntoMatMul,
     Absorb1BitMulIntoConv,
+    AbsorbConsecutiveTransposes,
 )
 
 from finn.transformation.streamline.collapse_repeated import (
@@ -233,6 +234,7 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
         to_hls.InferChannelwiseLinearLayer,
         to_hls.InferPool_Batch,
         AbsorbTransposeIntoMultiThreshold,
+        AbsorbConsecutiveTransposes,
         RoundAndClipThresholds,
         to_hls.InferQuantizedStreamingFCLayer,
         to_hls.InferThresholdingLayer,

@@ -78,6 +78,7 @@ def step_mobilenet_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
 def step_mobilenet_lower_convs(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(LowerConvsToMatMul())
     model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
+    model = model.transform(absorb.AbsorbConsecutiveTransposes())
     model = model.transform(GiveUniqueNodeNames())
     model = model.transform(GiveReadableTensorNames())
     model = model.transform(InferDataTypes())
