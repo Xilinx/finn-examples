@@ -1,30 +1,21 @@
-# MobileNet-v1
+# VGG10
 
-MobileNet-v1 was [introduced](https://arxiv.org/abs/1704.04861) by Google in 2017 as a lightweight
-DNN targeting the ImageNet dataset.
-It has a repeated structure of depthwise-separable (dws) convolution building blocks.
-Each dws convolution consists
-of a depthwise and a pointwise convolution each followed by a batchnorm and ReLU block.
-MobileNet-v1 has 13 of these blocks.
-Here, we use a reduced-precision implementation of MobileNet-v1 from [Brevitas](https://github.com/Xilinx/brevitas/tree/master/brevitas_examples/imagenet_classification),
-where the weights and activations are quantized to 4-bit, except for the first
-layer which uses 8-bit weights and inputs.
-It requires about 2 MB of weight storage and 1.1 GMACs per inference, yielding
-70.4\% top-1 accuracy on ImageNet.
+This 1-dimensional CNN was [introduced](https://arxiv.org/pdf/1712.04578.pdf) by DeepSig alongside their RadioML 2018 dataset for RF modulation classification.
+It consists of 7 1D convolution + maxpooling layers, followed by 2 hidden dense layers and the final dense classification layer. ReLU activations and Batchnorm are applied throughout the network. The input is a frame of 1024 I/Q samples (i.e. shape [1024,2]), the classifier distinguishes 24 classes (i.e. modulation types).
 
-## Build bitfiles for MobileNet-v1
+Here, we use a reduced-precision implementation trained on [RadioML 2018.01A](https://www.deepsig.ai/datasets) with Brevitas. The weights are quantized to 4-bit and the activations to 3-bit, except for the first layer which uses 4-bit activations. The pre-trained model reaches 58.4% overall accuracy and 90.9% at the highest SNR (30 dB).
 
-Due to the depthwise separable convolutions in MobileNet-v1,
-we use a specialized build script that replaces a few of the standard steps
-in FINN with custom ones.
-**MobileNet-v1 is currently only supported on Alveo U250 and ZCU104.**
-We also provide a folding configuration for the **ZCU102**, but there is no pre-built Pynq image available for this board.
+## Build bitfiles for VGG10
+
+Due to the 1-dimensional topology in VGG10,
+we use a specialized build script that adds a few custom build steps to the standard steps in FINN.
+**We currently provide bitstreams and the corresponding build configuration only for the ZCU104, but plan to extend to other boards shortly.**
 
 0. Ensure you have performed the *Setup* steps in the top-level README for setting up the FINN requirements and environment variables.
 
-1. Download the pretrained MobileNet-v1 ONNX model from the releases page, and extract
-the zipfile under `mobilenet-v1/models`. You should have e.g. `mobilenetv1/models∕mobilenetv1-w4a4_pre_post_tidy.onnx` as a result.
-You can use the provided `mobilenet-v1/models/download_mobilenet.sh` script for this.
+1. Download the pretrained VGG10 ONNX model from the releases page, and extract
+the zipfile under `vgg10/models`. You should have e.g. `vgg10/models∕radioml-w4a3_tidy.onnx` as a result.
+You can use the provided `vgg10/models/download_vgg10.sh` script for this.
 
 2. Launch the build as follows:
 ```SHELL
@@ -32,22 +23,14 @@ You can use the provided `mobilenet-v1/models/download_mobilenet.sh` script for 
 FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule
 cd $FINN_EXAMPLES/build/finn
-# launch the build on the mobilenet-v1 folder
-./run-docker.sh build_custom /path/to/finn-examples/build/mobilenet-v1
+# launch the build on the vgg10 folder
+./run-docker.sh build_custom /path/to/finn-examples/build/vgg10
 ```
 
-5. The generated outputs will be under `mobilenet-v1/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
+5. The generated outputs will be under `vgg10/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
 
 ## Where did the ONNX model files come from?
 
-The 4-bit quantized MobileNet-v1 is part of the
-[Brevitas examples](https://github.com/Xilinx/brevitas/tree/master/brevitas_examples/imagenet_classification).
-Subsequently, the trained networks is [exported to ONNX](https://github.com/Xilinx/finn/blob/master/notebooks/basics/1_brevitas_network_import.ipynb). In addition, the particular version used here has two additions for pre- and postprocessing:
+The quantized VGG10 is based on the baseline topology for our problem statement in the ITU AI/ML in 5G Challenge. You can find it in our [sandbox repository](https://github.com/Xilinx/brevitas-radioml-challenge-21).
 
-* A divide-by-255 node is added at the input, and the input is marked as 8-bit (to directly accept 8-bit images as input)
-* Normalization is added at the input with `mean = [0.485, 0.456, 0.406]` and `std = 0.226`. Note that the `std` is global and not per-channel to facilitate its removal via the [streamlining transform](https://arxiv.org/pdf/1709.04060).
-* A top-K node with k=5 is added at the output (to return the top-5 class indices instead of logits)
-
-These modifications are done as part of the end2end MobileNet-v1 test in FINN.
-You can [see more here](https://github.com/Xilinx/finn/blob/bf9a67eee6ff5a797ea3a0bd866706d7518c3c6f/tests/end2end/test_end2end_mobilenet_v1.py#L102)
-for further reference.
+In addition, the ONNX model has been tidied up by removing the input quantization, which we do in software for this example, and by adding a top-k (k=1) node at the output. Thus, the accelerator returns the top-1 class index instead of logits.
