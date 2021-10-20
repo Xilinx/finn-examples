@@ -179,6 +179,7 @@ def step_resnet50_streamline_linear(model: ModelWrapper, cfg: DataflowBuildConfi
         AbsorbMulIntoMultiThreshold(),
         Absorb1BitMulIntoMatMul(),
         Absorb1BitMulIntoConv(),
+        RoundAndClipThresholds(),
     ]
     for trn in streamline_transformations:
         model = model.transform(trn)
@@ -214,7 +215,7 @@ def step_resnet50_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
 
 
 def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
-    model.set_tensor_datatype(model.graph.input[0].name, DataType.UINT8)
+    model.set_tensor_datatype(model.graph.input[0].name, DataType["UINT8"])
     model = model.transform(InferDataLayouts())
     
     try:
@@ -229,16 +230,15 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(SortGraph())
 
     to_hls_transformations = [
-        to_hls.InferAddStreamsLayer,
         LowerConvsToMatMul,
-        to_hls.InferChannelwiseLinearLayer,
-        to_hls.InferPool_Batch,
+        AbsorbConsecutiveTransposes,
         AbsorbTransposeIntoMultiThreshold,
         AbsorbConsecutiveTransposes,
-        RoundAndClipThresholds,
+        to_hls.InferAddStreamsLayer,
+        to_hls.InferChannelwiseLinearLayer,
+        to_hls.InferPool_Batch,
         to_hls.InferQuantizedStreamingFCLayer,
         to_hls.InferThresholdingLayer,
-        AbsorbConsecutiveTransposes,
         to_hls.InferConvInpGen,
         to_hls.InferDuplicateStreamsLayer,
         to_hls.InferLabelSelectLayer,
