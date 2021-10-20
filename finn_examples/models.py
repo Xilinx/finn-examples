@@ -36,8 +36,8 @@ from finn.core.datatype import DataType
 from finn_examples.driver import FINNExampleOverlay
 
 _mnist_fc_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT8,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT8"],
     "ishape_normal": (1, 784),
     "oshape_normal": (1, 1),
     "ishape_folded": (1, 1, 784),
@@ -47,8 +47,8 @@ _mnist_fc_io_shape_dict = {
 }
 
 _cifar10_cnv_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT8,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT8"],
     "ishape_normal": (1, 32, 32, 3),
     "oshape_normal": (1, 1),
     "ishape_folded": (1, 1, 32, 32, 1, 3),
@@ -58,8 +58,8 @@ _cifar10_cnv_io_shape_dict = {
 }
 
 _bincop_cnv_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT8,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT8"],
     "ishape_normal": (1, 72, 72, 3),
     "oshape_normal": (1, 1),
     "ishape_folded": (1, 1, 72, 72, 1, 3),
@@ -69,8 +69,8 @@ _bincop_cnv_io_shape_dict = {
 }
 
 _imagenet_top5inds_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT16,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT16"],
     "ishape_normal": (1, 224, 224, 3),
     "oshape_normal": (1, 1, 1, 5),
     "ishape_folded": (1, 224, 224, 1, 3),
@@ -82,8 +82,8 @@ _imagenet_top5inds_io_shape_dict = {
 # resnet50 uses a different io_shape_dict due to
 # external weights for last layer
 _imagenet_resnet50_top5inds_io_shape_dict = {
-    "idt" : DataType.UINT8,
-    "odt" : DataType.UINT16,
+    "idt" : DataType["UINT8"],
+    "odt" : DataType["UINT16"],
     "ishape_normal" : (1, 224, 224, 3),
     "oshape_normal" : (1, 5),
     "ishape_folded" : (1, 224, 224, 3),
