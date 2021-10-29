@@ -36,8 +36,8 @@ from finn.core.datatype import DataType
 from finn_examples.driver import FINNExampleOverlay
 
 _mnist_fc_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT8,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT8"],
     "ishape_normal": (1, 784),
     "oshape_normal": (1, 1),
     "ishape_folded": (1, 1, 784),
@@ -47,8 +47,8 @@ _mnist_fc_io_shape_dict = {
 }
 
 _cifar10_cnv_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT8,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT8"],
     "ishape_normal": (1, 32, 32, 3),
     "oshape_normal": (1, 1),
     "ishape_folded": (1, 1, 32, 32, 1, 3),
@@ -57,9 +57,20 @@ _cifar10_cnv_io_shape_dict = {
     "oshape_packed": (1, 1, 1),
 }
 
+_bincop_cnv_io_shape_dict = {
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT8"],
+    "ishape_normal": (1, 72, 72, 3),
+    "oshape_normal": (1, 1),
+    "ishape_folded": (1, 1, 72, 72, 1, 3),
+    "oshape_folded": (1, 1, 1),
+    "ishape_packed": (1, 1, 72, 72, 1, 3),
+    "oshape_packed": (1, 1, 1),
+}
+
 _imagenet_top5inds_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT16,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT16"],
     "ishape_normal": (1, 224, 224, 3),
     "oshape_normal": (1, 1, 1, 5),
     "ishape_folded": (1, 224, 224, 1, 3),
@@ -71,8 +82,8 @@ _imagenet_top5inds_io_shape_dict = {
 # resnet50 uses a different io_shape_dict due to
 # external weights for last layer
 _imagenet_resnet50_top5inds_io_shape_dict = {
-    "idt": DataType.UINT8,
-    "odt": DataType.UINT16,
+    "idt": DataType["UINT8"],
+    "odt": DataType["UINT16"],
     "ishape_normal": (1, 224, 224, 3),
     "oshape_normal": (1, 5),
     "ishape_folded": (1, 224, 224, 3),
@@ -84,16 +95,14 @@ _imagenet_resnet50_top5inds_io_shape_dict = {
 }
 
 _radioml_io_shape_dict = {
-    "idt": DataType.INT8,
-    "odt": DataType.UINT8,
+    "idt": DataType["INT8"],
+    "odt": DataType["UINT8"],
     "ishape_normal": (1, 1024, 1, 2),
     "oshape_normal": (1, 1),
-    "ishape_folded": (1, 1024, 1, 2, 1),
+    "ishape_folded": (1, 1024, 1, 1, 2),
     "oshape_folded": (1, 1, 1),
-    "ishape_packed": (1, 1024, 1, 2, 1),
+    "ishape_packed": (1, 1024, 1, 1, 2),
     "oshape_packed": (1, 1, 1),
-    "input_dma_name": "idma0",
-    "number_of_external_weights": 0,
 }
 
 # from https://github.com/Xilinx/PYNQ-HelloWorld/blob/master/setup.py
@@ -215,6 +224,14 @@ def cnv_w2a2_cifar10(target_platform=None):
     return FINNExampleOverlay(filename, driver_mode, _cifar10_cnv_io_shape_dict)
 
 
+def bincop_cnv(target_platform=None):
+    target_platform = resolve_target_platform(target_platform)
+    driver_mode = get_driver_mode()
+    model_name = "bincop-cnv"
+    filename = find_bitfile(model_name, target_platform)
+    return FINNExampleOverlay(filename, driver_mode, _bincop_cnv_io_shape_dict)
+
+
 def mobilenetv1_w4a4_imagenet(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
@@ -249,12 +266,12 @@ def resnet50_w1a2_imagenet(target_platform=None):
     )
 
 
-def vgg10_w4a3_radioml(target_platform=None):
+def vgg10_w4a4_radioml(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
-    model_name = "vgg10-w4a3"
+    model_name = "vgg10-w4a4"
     filename = find_bitfile(model_name, target_platform)
-    fclk_mhz = 185.0
+    fclk_mhz = 250.0
     return FINNExampleOverlay(
         filename,
         driver_mode,

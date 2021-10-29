@@ -90,7 +90,7 @@ extend_package(os.path.join(module_name, "notebooks"))
 
 setup(
     name=module_name,
-    version="0.0.2b",
+    version="0.0.3b",
     description="FINN Examples on PYNQ for Zynq and Alveo",
     long_description=long_description,
     long_description_content_type="text/markdown",
