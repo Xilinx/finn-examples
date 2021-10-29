@@ -1,14 +1,14 @@
 {
   "Defaults": {},
   "FMPadding_Batch_0": {
-    "SIMD": 1
+    "SIMD": 2
   },
   "ConvolutionInputGenerator1D_0": {
     "SIMD": 2,
     "ram_style": "auto"
   },
   "StreamingFCLayer_Batch_0": {
-    "PE": 16,
+    "PE": 32,
     "SIMD": 6,
     "ram_style": "auto",
     "mem_mode": "const",
@@ -20,12 +20,12 @@
     "SIMD": 16
   },
   "ConvolutionInputGenerator1D_1": {
-    "SIMD": 64,
+    "SIMD": 32,
     "ram_style": "auto"
   },
   "StreamingFCLayer_Batch_1": {
-    "PE": 32,
-    "SIMD": 64,
+    "PE": 16,
+    "SIMD": 96,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
@@ -36,12 +36,12 @@
     "SIMD": 8
   },
   "ConvolutionInputGenerator1D_2": {
-    "SIMD": 64,
+    "SIMD": 32,
     "ram_style": "auto"
   },
   "StreamingFCLayer_Batch_2": {
-    "PE": 16,
-    "SIMD": 64,
+    "PE": 8,
+    "SIMD": 96,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
@@ -49,15 +49,15 @@
   "StreamingMaxPool_Batch_2": {
   },
   "FMPadding_Batch_3": {
-    "SIMD": 4
+    "SIMD": 8
   },
   "ConvolutionInputGenerator1D_3": {
-    "SIMD": 64,
+    "SIMD": 32,
     "ram_style": "auto"
   },
   "StreamingFCLayer_Batch_3": {
-    "PE": 8,
-    "SIMD": 64,
+    "PE": 4,
+    "SIMD": 96,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
@@ -65,15 +65,15 @@
   "StreamingMaxPool_Batch_3": {
   },
   "FMPadding_Batch_4": {
-    "SIMD": 2
+    "SIMD": 4
   },
   "ConvolutionInputGenerator1D_4": {
-    "SIMD": 64,
+    "SIMD": 32,
     "ram_style": "auto"
   },
   "StreamingFCLayer_Batch_4": {
-    "PE": 4,
-    "SIMD": 64,
+    "PE": 2,
+    "SIMD": 96,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
@@ -81,15 +81,15 @@
   "StreamingMaxPool_Batch_4": {
   },
   "FMPadding_Batch_5": {
-    "SIMD": 1
+    "SIMD": 2
   },
   "ConvolutionInputGenerator1D_5": {
-    "SIMD": 64,
+    "SIMD": 32,
     "ram_style": "auto"
   },
   "StreamingFCLayer_Batch_5": {
-    "PE": 2,
-    "SIMD": 64,
+    "PE": 1,
+    "SIMD": 96,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
@@ -100,12 +100,12 @@
     "SIMD": 1
   },
   "ConvolutionInputGenerator1D_6": {
-    "SIMD": 64,
+    "SIMD": 32,
     "ram_style": "auto"
   },
   "StreamingFCLayer_Batch_6": {
     "PE": 1,
-    "SIMD": 64,
+    "SIMD": 96,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
@@ -113,22 +113,22 @@
   "StreamingMaxPool_Batch_6": {
   },
   "StreamingFCLayer_Batch_7": {
-    "PE": 1,
-    "SIMD": 16,
+    "PE": 2,
+    "SIMD": 32,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
   },
   "StreamingFCLayer_Batch_8": {
     "PE": 1,
-    "SIMD": 4,
+    "SIMD": 32,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0
   },
   "StreamingFCLayer_Batch_9": {
     "PE": 1,
-    "SIMD": 1,
+    "SIMD": 8,
     "ram_style": "auto",
     "mem_mode": "const",
     "runtime_writeable_weights": 0

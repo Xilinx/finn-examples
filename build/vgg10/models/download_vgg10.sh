@@ -1,4 +1,4 @@
 #!/bin/sh
 
-wget https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/onnx-models-mobilenetv1.zip
-unzip onnx-models-mobilenetv1.zip
+wget https://github.com/Xilinx/finn-examples/releases/download/*ToDo*/onnx-models-vgg10.zip
+unzip onnx-models-vgg10.zip

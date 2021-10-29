@@ -35,7 +35,7 @@ import shutil
 # custom steps
 from custom_steps import step_pre_streamline, step_convert_final_layers
 
-model_name = "radioml_w4a3_tidy"
+model_name = "radioml_w4a4_small_tidy"
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104"]
@@ -55,7 +55,7 @@ def platform_to_shell(platform):
 
 # select target clock frequency
 def select_clk_period(platform):
-    return 5.0
+    return 4.0
 
 
 # assemble build flow from custom and pre-existing steps
