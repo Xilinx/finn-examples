@@ -94,6 +94,18 @@ _imagenet_resnet50_top5inds_io_shape_dict = {
     "number_of_external_weights": 1
 }
 
+_gscv2_mlp_io_shape_dict = {
+    "idt" : DataType['INT8'],
+    "odt" : DataType['UINT8'],
+    "ishape_normal" : (1, 490),
+    "oshape_normal" : (1, 1),
+    "ishape_folded" : (1, 49, 10),
+    "oshape_folded" : (1, 1, 1),
+    "ishape_packed" : (1, 49, 10),
+    "oshape_packed" : (1, 1, 1),
+    "input_dma_name" : 'idma0',
+}
+
 # from https://github.com/Xilinx/PYNQ-HelloWorld/blob/master/setup.py
 # get current platform: either edge or pcie
 
@@ -164,6 +176,12 @@ def resolve_target_platform(target_platform):
         assert target_platform in [x.name for x in pynq.Device.devices]
         return target_platform
 
+def kws_mlp(target_platform=None):
+    target_platform = resolve_target_platform(target_platform)
+    driver_mode = get_driver_mode()
+    model_name = "kwsmlp-w3a3"
+    filename = find_bitfile(model_name, target_platform)
+    return FINNExampleOverlay(filename, driver_mode, _mnist_fc_io_shape_dict)
 
 def tfc_w1a1_mnist(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
