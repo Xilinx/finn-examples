@@ -36,7 +36,7 @@ import finn.transformation.streamline.absorb as absorb
 import finn.transformation.streamline.reorder as reorder
 from finn.transformation.infer_data_layouts import InferDataLayouts
 from finn.transformation.streamline.collapse_repeated import CollapseRepeatedMul
-from finn.transformation.streamline.remove import RemoveIdentityOps
+from finn.transformation.remove import RemoveIdentityOps
 from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
 from finn.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 from finn.transformation.general import (

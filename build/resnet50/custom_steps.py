@@ -81,7 +81,7 @@ from finn.transformation.streamline.reorder import (
     )
 
 from finn.transformation.double_to_single_float import DoubleToSingleFloat   
-from finn.transformation.streamline.remove import RemoveIdentityOps
+from finn.transformation.remove import RemoveIdentityOps
 from finn.core.datatype import DataType
 
 from finn.transformation.infer_shapes import InferShapes
