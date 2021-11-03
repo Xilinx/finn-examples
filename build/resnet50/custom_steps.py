@@ -230,19 +230,18 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(SortGraph())
 
     to_hls_transformations = [
-        LowerConvsToMatMul,
-        AbsorbConsecutiveTransposes,
-        AbsorbTransposeIntoMultiThreshold,
-        AbsorbConsecutiveTransposes,
         to_hls.InferAddStreamsLayer,
+        LowerConvsToMatMul,
         to_hls.InferChannelwiseLinearLayer,
         to_hls.InferPool_Batch,
+        AbsorbTransposeIntoMultiThreshold,
+        RoundAndClipThresholds,
         to_hls.InferQuantizedStreamingFCLayer,
         to_hls.InferThresholdingLayer,
+        AbsorbConsecutiveTransposes,
         to_hls.InferConvInpGen,
         to_hls.InferDuplicateStreamsLayer,
-        to_hls.InferLabelSelectLayer,
-
+        to_hls.InferLabelSelectLayer
     ]
     for trn in to_hls_transformations:
         model = model.transform(trn())
