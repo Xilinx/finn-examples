@@ -181,7 +181,7 @@ def kws_mlp(target_platform=None):
     driver_mode = get_driver_mode()
     model_name = "kwsmlp-w3a3"
     filename = find_bitfile(model_name, target_platform)
-    return FINNExampleOverlay(filename, driver_mode, _mnist_fc_io_shape_dict)
+    return FINNExampleOverlay(filename, driver_mode, _gscv2_mlp_io_shape_dict)
 
 def tfc_w1a1_mnist(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
