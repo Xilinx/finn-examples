@@ -13,3 +13,4 @@ build/finn
 *.link_summary
 *.onnx
 *.pyc
+*.egg-info

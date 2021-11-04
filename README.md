@@ -1,4 +1,4 @@
-## <img src=https://raw.githubusercontent.com/Xilinx/finn/master/docs/img/finn-logo.png width=128/> Dataflow Accelerator Examples
+## <img src="docs/img/finn-logo.png" width=128/> Dataflow Accelerator Examples
 *for PYNQ on Zynq and Alveo*
 
 <img align="left" src="docs/img/finn-example.png" alt="drawing" style="margin-right: 20px" width="250"/>
