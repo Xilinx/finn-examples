@@ -12,8 +12,8 @@
         "md5sum": "59598d7f36ffdc74a0a0262f5b67423c"
     },
     "ZCU104": {
-        "url": "https://github.com/Xilinx/finn-examples/releases/download/mnv1-zcu104/ZCU104.zip",
-        "md5sum": "1ed10d74e85eec70fd094b2947b5b8e3"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/radioml/ZCU104.zip",
+        "md5sum": "9b7edad0511da9cb3c834a289d6797a2"
     },
     "xilinx_u250_xdma_201830_2": {
         "url": "https://github.com/Xilinx/finn-examples/releases/download/rn50-u250/xilinx_u250_xdma_201830_2.zip",
