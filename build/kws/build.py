@@ -63,12 +63,10 @@ verification_steps = [
     build_cfg.VerificationStepType.TIDY_UP_PYTHON,
     build_cfg.VerificationStepType.STREAMLINED_PYTHON,
     build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,
-    # build_cfg.VerificationStepType.STITCHED_IP_RTLSIM,     # Fails with timeout
 ]
 
 model_name = (
-    "MLP_W3A3_scale_init-0.1_no_per_channel_"
-    "scaling_at_output_usigned_non-narrow_relu_act_QONNX"
+    "MLP_W3A3_python_speech_features_pre-processing_QONNX"
 )
 model_file = model_name + ".onnx"
 
