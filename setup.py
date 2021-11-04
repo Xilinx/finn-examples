@@ -86,6 +86,7 @@ with open("README.md", encoding="utf-8") as fh:
     readme_lines = fh.readlines()[4:]
 long_description = "".join(readme_lines)
 extend_package(os.path.join(module_name, "bitfiles"))
+extend_package(os.path.join(module_name, "data"))
 extend_package(os.path.join(module_name, "notebooks"))
 
 setup(

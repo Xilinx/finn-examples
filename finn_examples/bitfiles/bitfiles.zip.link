@@ -1,7 +1,7 @@
 {
     "Pynq-Z1": {
-        "url": "https://github.com/Xilinx/finn-examples/releases/download/binary-cop/Pynq-Z1.zip",
-        "md5sum": "8d36644dfa90711767e979c1a437b46d"
+        "url": "https://github.com/Xilinx/finn-examples/releases/download/kws/Pynq-Z1.zip",
+        "md5sum": "9d558be328ccc1194b0381d1009a5718"
     },
     "Pynq-Z2": {
         "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.1a/Pynq-Z2.zip",
