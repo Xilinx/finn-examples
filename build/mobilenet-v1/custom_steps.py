@@ -36,7 +36,7 @@ import finn.transformation.streamline.absorb as absorb
 import finn.transformation.streamline.reorder as reorder
 from finn.transformation.infer_data_layouts import InferDataLayouts
 from finn.transformation.streamline.collapse_repeated import CollapseRepeatedMul
-from finn.transformation.streamline.remove import RemoveIdentityOps
+from finn.transformation.remove import RemoveIdentityOps
 from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
 from finn.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 from finn.transformation.general import (
@@ -78,6 +78,7 @@ def step_mobilenet_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
 def step_mobilenet_lower_convs(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(LowerConvsToMatMul())
     model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
+    model = model.transform(absorb.AbsorbConsecutiveTransposes())
     model = model.transform(GiveUniqueNodeNames())
     model = model.transform(GiveReadableTensorNames())
     model = model.transform(InferDataTypes())

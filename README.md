@@ -1,4 +1,4 @@
-## <img src="docs/img/finn-logo.png" width=128/> Dataflow Accelerator Examples
+## <img src=https://raw.githubusercontent.com/Xilinx/finn/github-pages/docs/img/finn-logo.png width=128/> Dataflow Accelerator Examples
 *for PYNQ on Zynq and Alveo*
 
 <img align="left" src="docs/img/finn-example.png" alt="drawing" style="margin-right: 20px" width="250"/>
@@ -42,7 +42,7 @@ Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command:
 
 ```shell
 # on PYNQ boards, first cd /home/xilinx/jupyter_notebooks
-pynq get-notebooks --from-package finn-examples -p .
+pynq get-notebooks --from-package finn-examples -p . --force
 ```
 
 You can now navigate the provided Jupyter notebook examples, or just use the
@@ -67,6 +67,11 @@ dummy_out = accel.execute(dummy_in)
 | <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250<br>ZCU104       |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       |
+| <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights and activations | ZCU104  |
+| <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights and activations | Pynq-Z1       |
+| <img src="docs/img/keyword-spotting.png" width="150"/><br/><br>Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights and activations | Pynq-Z1       |
+
+We welcome community contributions to add more examples to this repo!
 
 ## Supported Boards
 

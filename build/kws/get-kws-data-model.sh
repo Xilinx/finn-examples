@@ -27,32 +27,6 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# URL for git repo to be cloned
-REPO_URL=https://github.com/Xilinx/finn
-# commit hash for repo
-REPO_COMMIT=d1cc9cf94f1c33354cc169c5a6517314d0e94e3b
-# directory (under the same folder as this script) to clone to
-REPO_DIR=finn
-
-
-# absolute path to this script, e.g. /home/user/bin/foo.sh
-SCRIPT=$(readlink -f "$0")
-# absolute path this script is in, thus /home/user/bin
-SCRIPTPATH=$(dirname "$SCRIPT")
-# absolute path for the repo local copy
-CLONE_TO=$SCRIPTPATH/$REPO_DIR
-
-# clone repo if dir not found
-if [ ! -d "$CLONE_TO" ]; then
-  git clone $REPO_URL $CLONE_TO
-fi
-git -C $CLONE_TO pull
-# checkout the expected commit
-git -C $CLONE_TO checkout $REPO_COMMIT
-# verify
-CURRENT_COMMIT=$(git -C $CLONE_TO rev-parse HEAD)
-if [ $CURRENT_COMMIT == $REPO_COMMIT ]; then
-  echo "Successfully checked out $REPO_DIR at commit $CURRENT_COMMIT"
-else
-  echo "Could not check out $REPO_DIR. Check your internet connection and try again."
-fi
+# Download validation data and model
+wget https://github.com/Xilinx/finn-examples/releases/download/kws/python_speech_preprocessing_all_validation_KWS_data.npz
+wget https://github.com/Xilinx/finn-examples/releases/download/kws/MLP_W3A3_python_speech_features_pre-processing_QONNX.onnx
