@@ -308,6 +308,13 @@ def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig)
         model, cfg.output_dir + "/final_hw_config.json", hw_attrs
     )
 
+    # after FIFOs are ready to go, call PrepareIP and HLSSynthIP again
+    # this will only run for the new nodes (e.g. FIFOs and DWCs)
+    model = model.transform(
+        PrepareIP(cfg._resolve_fpga_part(), cfg._resolve_hls_clk_period())
+    )
+    model = model.transform(HLSSynthIP())
+    model = model.transform(ReplaceVerilogRelPaths())
     return model
 
 
