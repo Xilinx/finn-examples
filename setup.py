@@ -91,7 +91,7 @@ extend_package(os.path.join(module_name, "notebooks"))
 
 setup(
     name=module_name,
-    version="0.0.3b",
+    version="0.0.4",
     description="FINN Examples on PYNQ for Zynq and Alveo",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -109,7 +109,7 @@ setup(
     setup_requires=["pynq>=2.5.1"],
     install_requires=[
         "pynq>=2.5.1",
-        "finn-base==0.0.2b0",
+        "finn-base==0.0.3",
         "finn-dataset_loading==0.0.5",  # noqa
     ],
     extras_require={
