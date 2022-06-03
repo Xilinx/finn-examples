@@ -11,7 +11,7 @@
         "mem_mode": [
             "decoupled",
             [
-                "StreamingFCLayer_Batch"
+                "MatrixVectorActivation"
             ]
         ]
     },
@@ -21,7 +21,7 @@
     "ConvolutionInputGenerator_0": {
         "SIMD": 3
     },
-    "StreamingFCLayer_Batch_0": {
+    "MatrixVectorActivation_0": {
         "SIMD": 3,
         "PE": 64
     },
@@ -37,11 +37,11 @@
     "DuplicateStreams_Batch_0": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_2": {
+    "MatrixVectorActivation_2": {
         "PE": 2,
         "SIMD": 32
     },
-    "StreamingFCLayer_Batch_1": {
+    "MatrixVectorActivation_1": {
         "PE": 1,
         "SIMD": 16
     },
@@ -51,11 +51,11 @@
     "ConvolutionInputGenerator_2": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_3": {
+    "MatrixVectorActivation_3": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_4": {
+    "MatrixVectorActivation_4": {
         "PE": 2,
         "SIMD": 32
     },
@@ -74,7 +74,7 @@
     "Thresholding_Batch_2": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_5": {
+    "MatrixVectorActivation_5": {
         "PE": 2,
         "SIMD": 32
     },
@@ -84,11 +84,11 @@
     "ConvolutionInputGenerator_3": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_6": {
+    "MatrixVectorActivation_6": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_7": {
+    "MatrixVectorActivation_7": {
         "PE": 2,
         "SIMD": 32
     },
@@ -107,7 +107,7 @@
     "Thresholding_Batch_5": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_8": {
+    "MatrixVectorActivation_8": {
         "PE": 2,
         "SIMD": 32
     },
@@ -117,11 +117,11 @@
     "ConvolutionInputGenerator_4": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_9": {
+    "MatrixVectorActivation_9": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_10": {
+    "MatrixVectorActivation_10": {
         "PE": 2,
         "SIMD": 64
     },
@@ -140,11 +140,11 @@
     "DownSampler_0": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_11": {
+    "MatrixVectorActivation_11": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_12": {
+    "MatrixVectorActivation_12": {
         "PE": 2,
         "SIMD": 64
     },
@@ -154,11 +154,11 @@
     "ConvolutionInputGenerator_5": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_13": {
+    "MatrixVectorActivation_13": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_14": {
+    "MatrixVectorActivation_14": {
         "PE": 2,
         "SIMD": 32
     },
@@ -177,7 +177,7 @@
     "Thresholding_Batch_10": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_15": {
+    "MatrixVectorActivation_15": {
         "PE": 2,
         "SIMD": 32
     },
@@ -187,11 +187,11 @@
     "ConvolutionInputGenerator_6": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_16": {
+    "MatrixVectorActivation_16": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_17": {
+    "MatrixVectorActivation_17": {
         "PE": 2,
         "SIMD": 32
     },
@@ -210,7 +210,7 @@
     "Thresholding_Batch_13": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_18": {
+    "MatrixVectorActivation_18": {
         "PE": 2,
         "SIMD": 32
     },
@@ -220,11 +220,11 @@
     "ConvolutionInputGenerator_7": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_19": {
+    "MatrixVectorActivation_19": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_20": {
+    "MatrixVectorActivation_20": {
         "PE": 2,
         "SIMD": 32
     },
@@ -243,7 +243,7 @@
     "Thresholding_Batch_16": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_21": {
+    "MatrixVectorActivation_21": {
         "PE": 2,
         "SIMD": 32
     },
@@ -253,11 +253,11 @@
     "ConvolutionInputGenerator_8": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_22": {
+    "MatrixVectorActivation_22": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_23": {
+    "MatrixVectorActivation_23": {
         "PE": 2,
         "SIMD": 32
     },
@@ -276,11 +276,11 @@
     "DownSampler_1": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_24": {
+    "MatrixVectorActivation_24": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_25": {
+    "MatrixVectorActivation_25": {
         "PE": 2,
         "SIMD": 64
     },
@@ -290,11 +290,11 @@
     "ConvolutionInputGenerator_9": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_26": {
+    "MatrixVectorActivation_26": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_27": {
+    "MatrixVectorActivation_27": {
         "PE": 2,
         "SIMD": 32
     },
@@ -313,7 +313,7 @@
     "Thresholding_Batch_21": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_28": {
+    "MatrixVectorActivation_28": {
         "PE": 2,
         "SIMD": 32
     },
@@ -323,11 +323,11 @@
     "ConvolutionInputGenerator_10": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_29": {
+    "MatrixVectorActivation_29": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_30": {
+    "MatrixVectorActivation_30": {
         "PE": 2,
         "SIMD": 32
     },
@@ -346,7 +346,7 @@
     "Thresholding_Batch_24": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_31": {
+    "MatrixVectorActivation_31": {
         "PE": 2,
         "SIMD": 32
     },
@@ -356,11 +356,11 @@
     "ConvolutionInputGenerator_11": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_32": {
+    "MatrixVectorActivation_32": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_33": {
+    "MatrixVectorActivation_33": {
         "PE": 2,
         "SIMD": 32
     },
@@ -379,7 +379,7 @@
     "Thresholding_Batch_27": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_34": {
+    "MatrixVectorActivation_34": {
         "PE": 2,
         "SIMD": 32
     },
@@ -389,11 +389,11 @@
     "ConvolutionInputGenerator_12": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_35": {
+    "MatrixVectorActivation_35": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_36": {
+    "MatrixVectorActivation_36": {
         "PE": 2,
         "SIMD": 32
     },
@@ -412,7 +412,7 @@
     "Thresholding_Batch_30": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_37": {
+    "MatrixVectorActivation_37": {
         "PE": 2,
         "SIMD": 32
     },
@@ -422,11 +422,11 @@
     "ConvolutionInputGenerator_13": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_38": {
+    "MatrixVectorActivation_38": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_39": {
+    "MatrixVectorActivation_39": {
         "PE": 2,
         "SIMD": 32
     },
@@ -445,7 +445,7 @@
     "Thresholding_Batch_33": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_40": {
+    "MatrixVectorActivation_40": {
         "PE": 2,
         "SIMD": 32
     },
@@ -455,11 +455,11 @@
     "ConvolutionInputGenerator_14": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_41": {
+    "MatrixVectorActivation_41": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_42": {
+    "MatrixVectorActivation_42": {
         "PE": 2,
         "SIMD": 32
     },
@@ -478,11 +478,11 @@
     "DownSampler_2": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_43": {
+    "MatrixVectorActivation_43": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_44": {
+    "MatrixVectorActivation_44": {
         "PE": 2,
         "SIMD": 64
     },
@@ -492,11 +492,11 @@
     "ConvolutionInputGenerator_15": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_45": {
+    "MatrixVectorActivation_45": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_46": {
+    "MatrixVectorActivation_46": {
         "PE": 2,
         "SIMD": 32
     },
@@ -515,7 +515,7 @@
     "Thresholding_Batch_38": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_47": {
+    "MatrixVectorActivation_47": {
         "PE": 2,
         "SIMD": 32
     },
@@ -525,11 +525,11 @@
     "ConvolutionInputGenerator_16": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_48": {
+    "MatrixVectorActivation_48": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_49": {
+    "MatrixVectorActivation_49": {
         "PE": 2,
         "SIMD": 32
     },
@@ -548,7 +548,7 @@
     "Thresholding_Batch_41": {
         "PE": 2
     },
-    "StreamingFCLayer_Batch_50": {
+    "MatrixVectorActivation_50": {
         "PE": 2,
         "SIMD": 32
     },
@@ -558,11 +558,11 @@
     "ConvolutionInputGenerator_17": {
         "SIMD": 4
     },
-    "StreamingFCLayer_Batch_51": {
+    "MatrixVectorActivation_51": {
         "PE": 2,
         "SIMD": 64
     },
-    "StreamingFCLayer_Batch_52": {
+    "MatrixVectorActivation_52": {
         "PE": 2,
         "SIMD": 32
     },
@@ -578,7 +578,7 @@
     "Pool_Batch_1": {
         "PE": 4
     },
-    "StreamingFCLayer_Batch_53": {
+    "MatrixVectorActivation_53": {
         "PE": 1,
         "SIMD": 4,
         "mem_mode": "external"

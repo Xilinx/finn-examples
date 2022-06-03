@@ -236,7 +236,7 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
         to_hls.InferPool_Batch,
         AbsorbTransposeIntoMultiThreshold,
         RoundAndClipThresholds,
-        to_hls.InferQuantizedStreamingFCLayer,
+        to_hls.InferQuantizedMatrixVectorActivation,
         to_hls.InferThresholdingLayer,
         AbsorbConsecutiveTransposes,
         to_hls.InferConvInpGen,
