@@ -28,7 +28,7 @@
     "SIMD": 32,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_0": {
+  "VectorVectorActivation_0": {
     "PE": 32,
     "resType": "lut"
   },
@@ -57,7 +57,7 @@
     "SIMD": 32,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_1": {
+  "VectorVectorActivation_1": {
     "PE": 32,
     "resType": "lut"
   },
@@ -91,7 +91,7 @@
     "SIMD": 64,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_2": {
+  "VectorVectorActivation_2": {
     "PE": 64,
     "resType": "lut"
   },
@@ -130,7 +130,7 @@
     "SIMD": 16,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_3": {
+  "VectorVectorActivation_3": {
     "PE": 16,
     "resType": "lut"
   },
@@ -161,7 +161,7 @@
     "SIMD": 32,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_4": {
+  "VectorVectorActivation_4": {
     "PE": 32,
     "resType": "lut"
   },
@@ -200,7 +200,7 @@
     "SIMD": 8,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_5": {
+  "VectorVectorActivation_5": {
     "PE": 8,
     "resType": "lut"
   },
@@ -231,7 +231,7 @@
     "SIMD": 16,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_6": {
+  "VectorVectorActivation_6": {
     "PE": 16,
     "resType": "lut"
   },
@@ -267,7 +267,7 @@
     "SIMD": 16,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_7": {
+  "VectorVectorActivation_7": {
     "PE": 16,
     "resType": "lut"
   },
@@ -303,7 +303,7 @@
     "SIMD": 16,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_8": {
+  "VectorVectorActivation_8": {
     "PE": 16,
     "resType": "lut"
   },
@@ -339,7 +339,7 @@
     "SIMD": 16,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_9": {
+  "VectorVectorActivation_9": {
     "PE": 16,
     "resType": "lut"
   },
@@ -375,7 +375,7 @@
     "SIMD": 16,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_10": {
+  "VectorVectorActivation_10": {
     "PE": 16,
     "resType": "lut"
   },
@@ -411,7 +411,7 @@
     "SIMD": 4,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_11": {
+  "VectorVectorActivation_11": {
     "PE": 4,
     "resType": "lut"
   },
@@ -450,7 +450,7 @@
     "SIMD": 8,
     "ram_style": "distributed"
   },
-  "Vector_Vector_Activate_Batch_12": {
+  "VectorVectorActivation_12": {
     "PE": 8,
     "resType": "lut"
   },
