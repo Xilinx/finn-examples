@@ -105,14 +105,22 @@ def step_mobilenet_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
         try:
             from finn.analysis.partitioning import partition
-            # apply partitioning of the model, restricting the first and last layers to SLR0
+
+            # apply partitioning of the model, restricting the first and last layers
+            # to SLR0
             default_slr = 0
-            abs_anchors = [(0,[default_slr]),(-1,[default_slr])]
-            floorplan = partition(model, cfg.synth_clk_period_ns, cfg.board, abs_anchors=abs_anchors, multivariant=False)[0]
+            abs_anchors = [(0, [default_slr]), (-1, [default_slr])]
+            floorplan = partition(
+                model,
+                cfg.synth_clk_period_ns,
+                cfg.board,
+                abs_anchors=abs_anchors,
+                multivariant=False,
+            )[0]
             # apply floorplan to model
             model = model.transform(ApplyConfig(floorplan))
             print("SLR floorplanning applied")
-        except:
+        except Exception:
             print("No SLR floorplanning applied")
     return model
 
