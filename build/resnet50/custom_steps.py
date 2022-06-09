@@ -28,11 +28,9 @@
 
 # from finn.core.modelwrapper import ModelWrapper
 import numpy as np
-import copy
 
 from finn.transformation.fold_constants import FoldConstants
 
-from finn.transformation.infer_datatypes import InferDataTypes
 from finn.transformation.general import (
     ConvertSubToAdd,
     ConvertDivToMul,
@@ -53,6 +51,7 @@ from finn.transformation.streamline.absorb import (
     Absorb1BitMulIntoMatMul,
     Absorb1BitMulIntoConv,
     AbsorbConsecutiveTransposes,
+    AbsorbTransposeIntoMultiThreshold,
 )
 
 from finn.transformation.streamline.collapse_repeated import (
@@ -67,59 +66,31 @@ from finn.transformation.streamline.reorder import (
     MoveAddPastConv,
     MoveScalarMulPastConv,
     MoveScalarLinearPastInvariants,
-    MoveMaxPoolPastMultiThreshold
+    MoveMaxPoolPastMultiThreshold,
 )
 
 from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
 from finn.transformation.streamline.sign_to_thres import ConvertSignToThres
 from finn.transformation.batchnorm_to_affine import BatchNormToAffine
 
-## just for not linear
+# just for not linear
 from finn.transformation.streamline.reorder import (
     MoveLinearPastEltwiseAdd,
     MoveLinearPastFork,
-    )
+)
 
-from finn.transformation.double_to_single_float import DoubleToSingleFloat   
+from finn.transformation.double_to_single_float import DoubleToSingleFloat
 from finn.transformation.remove import RemoveIdentityOps
 from finn.core.datatype import DataType
 
 from finn.transformation.infer_shapes import InferShapes
 from finn.transformation.infer_datatypes import InferDataTypes
 from finn.transformation.infer_data_layouts import InferDataLayouts
-from finn.transformation.general import (
-    GiveReadableTensorNames,
-    GiveUniqueNodeNames,
-    SortGraph,
-    RemoveUnusedTensors
-)
-
-
-from finn.transformation.streamline.absorb import (
-    AbsorbConsecutiveTransposes,
-    AbsorbTransposeIntoMultiThreshold,
-)
-
-from finn.transformation.streamline.collapse_repeated import (
-    CollapseRepeatedAdd,
-    CollapseRepeatedMul,
-)
-
-from finn.transformation.streamline.reorder import (
-    MoveScalarLinearPastInvariants,
-    MoveAddPastMul,
-    MoveScalarMulPastMatMul,
-    MoveScalarAddPastMatMul,
-)
-
 from finn.transformation.insert_topk import InsertTopK
-from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
-from finn.transformation.double_to_single_float import DoubleToSingleFloat
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
 from finn.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 
 from finn.core.modelwrapper import ModelWrapper
-from finn.custom_op.registry import getCustomOp
 from finn.builder.build_dataflow_config import (
     DataflowBuildConfig,
     ShellFlowType,
@@ -128,10 +99,11 @@ from finn.builder.build_dataflow_config import (
 from finn.transformation.fpgadataflow.prepare_ip import PrepareIP
 from finn.transformation.fpgadataflow.hlssynth_ip import HLSSynthIP
 from finn.transformation.fpgadataflow.replace_verilog_relpaths import (
-    ReplaceVerilogRelPaths)
+    ReplaceVerilogRelPaths,
+)
 
 from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
-    
+
 from finn.util.config import extract_model_config_to_json
 from finn.transformation.fpgadataflow.set_fifo_depths import (
     InsertAndSetFIFODepths,
@@ -139,6 +111,7 @@ from finn.transformation.fpgadataflow.set_fifo_depths import (
 )
 from finn.transformation.fpgadataflow.insert_dwc import InsertDWC
 from finn.transformation.fpgadataflow.insert_fifo import InsertFIFO
+
 
 def step_resnet50_tidy(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(GiveUniqueParameterTensors())
@@ -155,9 +128,10 @@ def step_resnet50_tidy(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferDataTypes())
     return model
 
+
 def step_resnet50_streamline_linear(model: ModelWrapper, cfg: DataflowBuildConfig):
     streamline_transformations = [
-        AbsorbScalarMulAddIntoTopK(), # before MoveAddPastMul to avoid int->float 
+        AbsorbScalarMulAddIntoTopK(),  # before MoveAddPastMul to avoid int->float
         ConvertSubToAdd(),
         ConvertDivToMul(),
         RemoveIdentityOps(),
@@ -185,6 +159,7 @@ def step_resnet50_streamline_linear(model: ModelWrapper, cfg: DataflowBuildConfi
         model = model.transform(trn)
         model = model.transform(GiveUniqueNodeNames())
     return model
+
 
 def step_resnet50_streamline_nonlinear(model: ModelWrapper, cfg: DataflowBuildConfig):
     streamline_transformations = [
@@ -217,13 +192,15 @@ def step_resnet50_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
 def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model.set_tensor_datatype(model.graph.input[0].name, DataType["UINT8"])
     model = model.transform(InferDataLayouts())
-    
-    try:
-        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
-        model = model.transform(InferDoublePackedConv([1]))
-    except:
-        print(" FINN Experimental not available. Using non-packed convolution ")
 
+    try:
+        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import (
+            InferDoublePackedConv,
+        )
+
+        model = model.transform(InferDoublePackedConv([1]))
+    except Exception:
+        print(" FINN Experimental not available. Using non-packed convolution ")
 
     model = model.transform(DoubleToSingleFloat())
     model = model.transform(InferDataTypes())
@@ -236,12 +213,12 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
         to_hls.InferPool_Batch,
         AbsorbTransposeIntoMultiThreshold,
         RoundAndClipThresholds,
-        to_hls.InferQuantizedStreamingFCLayer,
+        to_hls.InferQuantizedMatrixVectorActivation,
         to_hls.InferThresholdingLayer,
         AbsorbConsecutiveTransposes,
         to_hls.InferConvInpGen,
         to_hls.InferDuplicateStreamsLayer,
-        to_hls.InferLabelSelectLayer
+        to_hls.InferLabelSelectLayer,
     ]
     for trn in to_hls_transformations:
         model = model.transform(trn())
@@ -255,7 +232,6 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(SortGraph())
 
     return model
-
 
 
 def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -322,15 +298,33 @@ def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
         try:
             from finn.analysis.partitioning import partition
-            # apply partitioning of the model, restricting the first and last layers to SLR0
+
+            # apply partitioning of the model, restricting the first and last layers
+            # to SLR0
             default_slr = 0
-            abs_anchors = [(0,[default_slr]),(-1,[default_slr])]
-            #increase resource limits to make partitioning feasible, except for SLR0 which also has DDR subsystem
-            limits = np.array([[0.75,.5,.7,.6,.6],[1,.7,.9,.8,.8],[1,.7,.9,.8,.8],[1,.7,.9,.8,.8]])
-            floorplan = partition(model, cfg.synth_clk_period_ns, cfg.board, abs_anchors=abs_anchors, multivariant=False, linear_cuts=True, limits=limits)[0]
+            abs_anchors = [(0, [default_slr]), (-1, [default_slr])]
+            # increase resource limits to make partitioning feasible, except for SLR0
+            # which also has DDR subsystem
+            limits = np.array(
+                [
+                    [0.75, 0.5, 0.7, 0.6, 0.6],
+                    [1, 0.7, 0.9, 0.8, 0.8],
+                    [1, 0.7, 0.9, 0.8, 0.8],
+                    [1, 0.7, 0.9, 0.8, 0.8],
+                ]
+            )
+            floorplan = partition(
+                model,
+                cfg.synth_clk_period_ns,
+                cfg.board,
+                abs_anchors=abs_anchors,
+                multivariant=False,
+                linear_cuts=True,
+                limits=limits,
+            )[0]
             # apply floorplan to model
             model = model.transform(ApplyConfig(floorplan))
             print("SLR floorplanning applied")
-        except:
+        except Exception:
             print("No SLR floorplanning applied")
     return model
