@@ -32,8 +32,11 @@ import time
 from pynq import Overlay, allocate
 from pynq.ps import Clocks
 
-from finn.core.datatype import DataType
-from finn.util.basic import gen_finn_dt_tensor
+from qonnx.core.datatype import DataType
+from qonnx.util.basic import (
+    gen_finn_dt_tensor,
+    roundup_to_integer_multiple
+)
 from finn.util.data_packing import (
     finnpy_to_packed_bytearray,
     packed_bytearray_to_finnpy,
@@ -401,14 +404,18 @@ class FINNExampleOverlay(Overlay):
         res["runtime[ms]"] = runtime * 1000
         res["throughput[images/s]"] = self.batch_size / runtime
         res["DRAM_in_bandwidth[Mb/s]"] = (
-            np.prod(self.ishape_packed) * 0.000001 / runtime
+            np.prod(self.ishape_packed) * 0.000001 / runtime *
+            roundup_to_integer_multiple(self.idt().bitwidth(), 8)
         )
         res["DRAM_out_bandwidth[Mb/s]"] = (
-            np.prod(self.oshape_packed) * 0.000001 / runtime
+            np.prod(self.oshape_packed) * 0.000001 / runtime *
+            roundup_to_integer_multiple(self.odt().bitwidth(), 8)
         )
         for iwdma, iwbuf, iwdma_name in self.external_weights:
+            # Bit-width of the elements of the array are always 8-bit;
+            # see function load_external_weights
             res["DRAM_extw_%s_bandwidth[Mb/s]" % iwdma_name] = (
-                self.batch_size * np.prod(iwbuf.shape) * 0.000001 / runtime
+                self.batch_size * np.prod(iwbuf.shape) * 0.000001 / runtime * 8
             )
         if self.platform == "zynq-iodma":
             res["fclk[mhz]"] = Clocks.fclk0_mhz

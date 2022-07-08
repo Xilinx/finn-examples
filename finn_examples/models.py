@@ -32,7 +32,7 @@ import os
 import platform
 import pynq
 
-from finn.core.datatype import DataType
+from qonnx.core.datatype import DataType
 from finn_examples.driver import FINNExampleOverlay
 
 _mnist_fc_io_shape_dict = {
@@ -106,8 +106,8 @@ _radioml_io_shape_dict = {
 }
 
 _gscv2_mlp_io_shape_dict = {
-    "idt" : DataType['INT8'],
-    "odt" : DataType['UINT8'],
+    "idt" : DataType["INT8"],
+    "odt" : DataType["UINT8"],
     "ishape_normal" : (1, 490),
     "oshape_normal" : (1, 1),
     "ishape_folded" : (1, 49, 10),

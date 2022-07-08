@@ -14,7 +14,8 @@ pre-built bitfiles, PYNQ Python drivers and Jupyter notebooks to get started,
 and you can rebuild them from source.
 Both PYNQ on Zynq and Alveo are supported.
 
-Need help with a problem in this repo, or got a question? Feel free to ask for help in the [FINN Gitter channel](https://gitter.im/xilinx-finn/community).
+Need help with a problem in this repo, or got a question? Feel free to ask for help in the [GitHub discussions](https://github.com/Xilinx/finn/discussions).
+In the past, we also had a [Gitter channel](https://gitter.im/xilinx-finn/community). Please be aware that this is no longer maintained by us but can still be used to search for questions previous users had.
 
 ## Quickstart
 
@@ -61,15 +62,17 @@ dummy_out = accel.execute(dummy_in)
 ```
 
 ##  Example Neural Network Accelerators
-| Dataset                                                        | Topology                | Quantization                                               | Supported boards |
-|----------------------------------------------------------------|-------------------------|------------------------------------------------------------|------------------|
-| <img src="docs/img/cifar-10.png" width="150"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | all              |
-| <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              |
-| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250<br>ZCU104       |
-| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       |
-| <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights and activations | ZCU104  |
-| <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights and activations | Pynq-Z1       |
-| <img src="docs/img/keyword-spotting.png" width="150"/><br/><br>Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights and activations | Pynq-Z1       |
+| Dataset                                                        | Topology                | Quantization                                               | Supported boards | Supported build flows
+|----------------------------------------------------------------|-------------------------|------------------------------------------------------------|------------------|------------------|
+| <img src="docs/img/cifar-10.png" width="150"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | all              | Pynq-Z1<br>ZCU104<br>Ultra96 |
+| <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              | Pynq-Z1<br>ZCU104<br>Ultra96 |
+| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250<br>ZCU104       | ZCU104 |
+| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       | - |
+| <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights and activations | ZCU104  | ZCU104 |
+| <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights and activations | Pynq-Z1       | Pynq-Z1 |
+| <img src="docs/img/keyword-spotting.png" width="150"/><br/><br>Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights and activations | Pynq-Z1       | Pynq-Z1 |
+
+*Please note that for the non-supported Alveo build flows, you can use the pre-built FPGA bitfiles generated with older versions of the Vitis/Vivado tools. These bitfiles target the following Alveo U250 platform: [xilinx_u250_xdma_201830_2](https://www.xilinx.com/products/boards-and-kits/alveo/package-files-archive/u250-2018-3-1.html).
 
 We welcome community contributions to add more examples to this repo!
 
