@@ -106,9 +106,9 @@ setup(
     python_requires=">=3.5.2",
     # keeping 'setup_requires' only for readability - relying on
     # pyproject.toml and PEP 517/518
-    setup_requires=["pynq==2.6.0"],
+    setup_requires=["pynq>=2.5.1"],
     install_requires=[
-        "pynq==2.6.0",
+        "pynq>=2.5.1",
         "qonnx==0.1",
         "finn-dataset_loading==0.0.5",  # noqa
     ],
