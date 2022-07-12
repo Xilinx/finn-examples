@@ -403,13 +403,13 @@ class FINNExampleOverlay(Overlay):
         runtime = end - start
         res["runtime[ms]"] = runtime * 1000
         res["throughput[images/s]"] = self.batch_size / runtime
-        res["DRAM_in_bandwidth[Mb/s]"] = (
-            np.prod(self.ishape_packed) * 0.000001 / runtime *
-            roundup_to_integer_multiple(self.idt().bitwidth(), 8)
+        # the _packed arrays always consist of bytes so no need to
+        # take i/o bitwidths into account (which is baked into the shape)
+        res["DRAM_in_bandwidth[MB/s]"] = (
+            np.prod(self.ishape_packed) * 0.000001 / runtime
         )
-        res["DRAM_out_bandwidth[Mb/s]"] = (
-            np.prod(self.oshape_packed) * 0.000001 / runtime *
-            roundup_to_integer_multiple(self.odt().bitwidth(), 8)
+        res["DRAM_out_bandwidth[MB/s]"] = (
+            np.prod(self.oshape_packed) * 0.000001 / runtime
         )
         for iwdma, iwbuf, iwdma_name in self.external_weights:
             # Bit-width of the elements of the array are always 8-bit;
