@@ -29,9 +29,9 @@
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
 
-from finn.core.modelwrapper import ModelWrapper
+from qonnx.core.modelwrapper import ModelWrapper
 from finn.builder.build_dataflow_config import DataflowBuildConfig
-from finn.transformation.insert_topk import InsertTopK
+from qonnx.transformation.insert_topk import InsertTopK
 from finn.builder.build_dataflow_steps import build_dataflow_step_lookup
 import time
 import finn.core.onnx_exec as oxe
@@ -71,7 +71,7 @@ model_name = (
 model_file = model_name + ".onnx"
 
 # Change the ONNX opset from version 9 to 11, which adds support for the TopK node
-from finn.core.modelwrapper import ModelWrapper
+from qonnx.core.modelwrapper import ModelWrapper
 model = ModelWrapper(model_file)
 model.model.opset_import[0].version = 11
 model_file = model_file.replace(".onnx", "_opset-11.onnx")
