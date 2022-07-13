@@ -414,7 +414,7 @@ class FINNExampleOverlay(Overlay):
         for iwdma, iwbuf, iwdma_name in self.external_weights:
             # Bit-width of the elements of the array are always 8-bit;
             # see function load_external_weights
-            res["DRAM_extw_%s_bandwidth[Mb/s]" % iwdma_name] = (
+            res["DRAM_extw_%s_bandwidth[MB/s]" % iwdma_name] = (
                 self.batch_size * np.prod(iwbuf.shape) * 0.000001 / runtime * 8
             )
         if self.platform == "zynq-iodma":
