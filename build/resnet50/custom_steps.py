@@ -26,9 +26,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# from finn.core.modelwrapper import ModelWrapper
-import numpy as np
-
+from qonnx.core.modelwrapper import ModelWrapper
 import numpy as np
 
 from qonnx.transformation.fold_constants import FoldConstants

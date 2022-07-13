@@ -25,29 +25,29 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-from finn.core.modelwrapper import ModelWrapper
+from qonnx.core.modelwrapper import ModelWrapper
 from finn.builder.build_dataflow_config import (
     DataflowBuildConfig,
     ShellFlowType,
 )
 from finn.transformation.streamline import Streamline
-from finn.transformation.double_to_single_float import DoubleToSingleFloat
+from qonnx.transformation.double_to_single_float import DoubleToSingleFloat
 import finn.transformation.streamline.absorb as absorb
 import finn.transformation.streamline.reorder as reorder
-from finn.transformation.infer_data_layouts import InferDataLayouts
+from qonnx.transformation.infer_data_layouts import InferDataLayouts
 from finn.transformation.streamline.collapse_repeated import CollapseRepeatedMul
-from finn.transformation.remove import RemoveIdentityOps
+from qonnx.transformation.remove import RemoveIdentityOps
 from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
-from finn.transformation.lower_convs_to_matmul import LowerConvsToMatMul
-from finn.transformation.general import (
+from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
+from qonnx.transformation.general import (
     GiveReadableTensorNames,
     GiveUniqueNodeNames,
     ApplyConfig,
 )
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
-from finn.transformation.infer_shapes import InferShapes
-from finn.transformation.change_datalayout import ChangeDataLayoutQuantAvgPool2d
-from finn.transformation.infer_datatypes import InferDataTypes
+from qonnx.transformation.infer_shapes import InferShapes
+from qonnx.transformation.change_datalayout import ChangeDataLayoutQuantAvgPool2d
+from qonnx.transformation.infer_datatypes import InferDataTypes
 
 
 def step_mobilenet_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):

@@ -25,10 +25,10 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-from finn.core.modelwrapper import ModelWrapper
+from qonnx.core.modelwrapper import ModelWrapper
 from finn.builder.build_dataflow_config import DataflowBuildConfig
-from finn.transformation.change_3d_tensors_to_4d import Change3DTo4DTensors
-from finn.transformation.general import GiveUniqueNodeNames
+from qonnx.transformation.change_3d_tensors_to_4d import Change3DTo4DTensors
+from qonnx.transformation.general import GiveUniqueNodeNames
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
 import finn.transformation.streamline.absorb as absorb
 
