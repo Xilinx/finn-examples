@@ -26,12 +26,12 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# from finn.core.modelwrapper import ModelWrapper
+from qonnx.core.modelwrapper import ModelWrapper
 import numpy as np
 
-from finn.transformation.fold_constants import FoldConstants
+from qonnx.transformation.fold_constants import FoldConstants
 
-from finn.transformation.general import (
+from qonnx.transformation.general import (
     ConvertSubToAdd,
     ConvertDivToMul,
     GiveReadableTensorNames,
@@ -71,7 +71,7 @@ from finn.transformation.streamline.reorder import (
 
 from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
 from finn.transformation.streamline.sign_to_thres import ConvertSignToThres
-from finn.transformation.batchnorm_to_affine import BatchNormToAffine
+from qonnx.transformation.batchnorm_to_affine import BatchNormToAffine
 
 # just for not linear
 from finn.transformation.streamline.reorder import (
@@ -79,18 +79,17 @@ from finn.transformation.streamline.reorder import (
     MoveLinearPastFork,
 )
 
-from finn.transformation.double_to_single_float import DoubleToSingleFloat
-from finn.transformation.remove import RemoveIdentityOps
-from finn.core.datatype import DataType
+from qonnx.transformation.double_to_single_float import DoubleToSingleFloat
+from qonnx.transformation.remove import RemoveIdentityOps
+from qonnx.core.datatype import DataType
 
-from finn.transformation.infer_shapes import InferShapes
-from finn.transformation.infer_datatypes import InferDataTypes
-from finn.transformation.infer_data_layouts import InferDataLayouts
-from finn.transformation.insert_topk import InsertTopK
+from qonnx.transformation.infer_shapes import InferShapes
+from qonnx.transformation.infer_datatypes import InferDataTypes
+from qonnx.transformation.infer_data_layouts import InferDataLayouts
+from qonnx.transformation.insert_topk import InsertTopK
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
-from finn.transformation.lower_convs_to_matmul import LowerConvsToMatMul
+from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 
-from finn.core.modelwrapper import ModelWrapper
 from finn.builder.build_dataflow_config import (
     DataflowBuildConfig,
     ShellFlowType,
@@ -104,7 +103,7 @@ from finn.transformation.fpgadataflow.replace_verilog_relpaths import (
 
 from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
 
-from finn.util.config import extract_model_config_to_json
+from qonnx.util.config import extract_model_config_to_json
 from finn.transformation.fpgadataflow.set_fifo_depths import (
     InsertAndSetFIFODepths,
     RemoveShallowFIFOs,

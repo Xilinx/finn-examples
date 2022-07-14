@@ -29,15 +29,16 @@
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
 
-from finn.core.modelwrapper import ModelWrapper
+from qonnx.core.modelwrapper import ModelWrapper
 from finn.builder.build_dataflow_config import DataflowBuildConfig
-from finn.transformation.insert_topk import InsertTopK
+from qonnx.transformation.insert_topk import InsertTopK
 from finn.builder.build_dataflow_steps import build_dataflow_step_lookup
 import time
 import finn.core.onnx_exec as oxe
 import numpy as np
 import datetime
 from glob import glob
+import os
 
 
 # Inject the preprocessing step into FINN to enable json serialization later on
@@ -71,42 +72,58 @@ model_name = (
 model_file = model_name + ".onnx"
 
 # Change the ONNX opset from version 9 to 11, which adds support for the TopK node
-from finn.core.modelwrapper import ModelWrapper
+from qonnx.core.modelwrapper import ModelWrapper
 model = ModelWrapper(model_file)
 model.model.opset_import[0].version = 11
 model_file = model_file.replace(".onnx", "_opset-11.onnx")
 model.save(model_file)
 
-platform_name = "Pynq-Z1"
-output_dir = f"{time.time():.2f}_output_{model_name.replace('/','_')}_{platform_name}"
 
-# Configure build
-cfg = build_cfg.DataflowBuildConfig(
-    # steps=estimate_steps, generate_outputs=estimate_outputs,
-    verify_steps=verification_steps,
-    steps=build_steps,
-    generate_outputs=build_outputs,
-    output_dir=output_dir,
-    target_fps=200000,
-    synth_clk_period_ns=10.0,
-    board=platform_name,
-    shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
-    save_intermediate_models=True,
-    stitched_ip_gen_dcp=True,
-    verify_save_full_context=True,
-)
-# Build the model
-build.build_dataflow_cfg(model_file, cfg)
+# create a release dir, used for finn-examples release packaging
+os.makedirs("release", exist_ok=True)
+platforms_to_build = ["Pynq-Z1"]
+last_output_dir=""
+for platform_name in platforms_to_build:
+    release_platform_name = platform_name
+    platform_dir = "release/%s" % release_platform_name
+    os.makedirs(platform_dir, exist_ok=True)
+    last_output_dir="output_%s_%s" % (model_name, release_platform_name)
+    # Configure build
+    cfg = build_cfg.DataflowBuildConfig(
+        # steps=estimate_steps, generate_outputs=estimate_outputs,
+        verify_steps=verification_steps,
+        steps=build_steps,
+        generate_outputs=build_outputs,
+        output_dir=last_output_dir,
+        target_fps=200000,
+        synth_clk_period_ns=10.0,
+        board=platform_name,
+        shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
+        save_intermediate_models=True,
+        stitched_ip_gen_dcp=True,
+        verify_save_full_context=True,
+    )
+    # Build the model
+    build.build_dataflow_cfg(model_file, cfg)
 
-# Save Build config
-config_json_path = f"{output_dir}/DataflowBuildConfig.json"
-with open(config_json_path, "w") as f:
-    f.write(cfg.to_json())
-print(f"Saved DataflowBuildConfig to: {config_json_path}")
+    # copy bitfiles and runtime weights into release dir if found
+    bitfile_gen_dir = cfg.output_dir + "/bitfile"
+    files_to_check_and_copy = [
+        "finn-accel.bit",
+        "finn-accel.hwh",
+        "finn-accel.xclbin",
+    ]
+    for f in files_to_check_and_copy:
+        src_file = bitfile_gen_dir + "/" + f
+        dst_file = platform_dir + "/" + f.replace("finn-accel", "kwsmlp-w3a3")
+        if os.path.isfile(src_file):
+            shutil.copy(src_file, dst_file)
+
+
 
 # Export quantized inputs
 print("Quantizing validation dataset.")
-parent_model = ModelWrapper(output_dir + "/intermediate_models/dataflow_parent.onnx")
+parent_model = ModelWrapper(last_output_dir + "/intermediate_models/dataflow_parent.onnx")
 input_shape = (1, 1, 10, 49)
 last_node = parent_model.graph.node[-2]
 
