@@ -69,7 +69,7 @@ verification_steps = [
 model_name = (
     "MLP_W3A3_python_speech_features_pre-processing_QONNX"
 )
-model_file = model_name + ".onnx"
+model_file = "models/" + model_name + ".onnx"
 
 # Change the ONNX opset from version 9 to 11, which adds support for the TopK node
 from qonnx.core.modelwrapper import ModelWrapper
@@ -127,7 +127,7 @@ parent_model = ModelWrapper(last_output_dir + "/intermediate_models/dataflow_par
 input_shape = (1, 1, 10, 49)
 last_node = parent_model.graph.node[-2]
 
-for f_name in glob("*.npz"):
+for f_name in glob("models/*.npz"):
     print(f"Processing file: {f_name}")
 
     with open(f_name, "rb") as f:
@@ -168,7 +168,7 @@ for f_name in glob("*.npz"):
     pre_processed_inputs = pre_processed_inputs.astype(np.int8)
 
     # Save data
-    export_path = output_dir + "/" + f_name.replace(".npz", "_{}_len_{}.npy")
+    export_path = "models/" + f_name.replace(".npz", "_{}_len_{}.npy")
     print(f"Saving data to: {export_path}")
     np.save(
         export_path.format("inputs", len(pre_processed_inputs)), pre_processed_inputs
