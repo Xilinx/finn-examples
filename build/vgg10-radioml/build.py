@@ -144,11 +144,3 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
-
-    # create zipfile for all examples for this platform
-    shutil.make_archive(
-        "release/" + release_platform_name,
-        "zip",
-        root_dir="release",
-        base_dir=release_platform_name,
-    )
