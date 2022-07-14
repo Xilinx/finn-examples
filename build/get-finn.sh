@@ -30,7 +30,7 @@
 # URL for git repo to be cloned
 REPO_URL=https://github.com/Xilinx/finn
 # commit hash for repo
-REPO_COMMIT=fe4a150cb68ae146f99b3f2d685509e0c2022da7
+REPO_COMMIT=96c0f5e3678abd7b1eaab2a2b4f8e937ac1f48b8
 # directory (under the same folder as this script) to clone to
 REPO_DIR=finn
 
