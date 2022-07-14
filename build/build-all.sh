@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2020, Xilinx
+# Copyright (c) 2022, Xilinx
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,32 +27,46 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# URL for git repo to be cloned
-REPO_URL=https://github.com/Xilinx/finn
-# commit hash for repo
-REPO_COMMIT=96c0f5e3678abd7b1eaab2a2b4f8e937ac1f48b8
-# directory (under the same folder as this script) to clone to
-REPO_DIR=finn
-
 
 # absolute path to this script, e.g. /home/user/bin/foo.sh
 SCRIPT=$(readlink -f "$0")
 # absolute path this script is in, thus /home/user/bin
 SCRIPTPATH=$(dirname "$SCRIPT")
-# absolute path for the repo local copy
-CLONE_TO=$SCRIPTPATH/$REPO_DIR
+# subdirs for all finn-examples build folders
+BUILD_FOLDERS="bnn-pynq kws mobilenet-v1 resnet50 vgg10-radioml"
+# all HW platforms we build for
+PLATFORMS="Pynq-Z1 Ultra96 ZCU104 U250"
 
-# clone repo if dir not found
-if [ ! -d "$CLONE_TO" ]; then
-  git clone $REPO_URL $CLONE_TO
-fi
-git -C $CLONE_TO pull
-# checkout the expected commit
-git -C $CLONE_TO checkout $REPO_COMMIT
-# verify
-CURRENT_COMMIT=$(git -C $CLONE_TO rev-parse HEAD)
-if [ $CURRENT_COMMIT == $REPO_COMMIT ]; then
-  echo "Successfully checked out $REPO_DIR at commit $CURRENT_COMMIT"
-else
-  echo "Could not check out $REPO_DIR. Check your internet connection and try again."
-fi
+# fetch correct compiler version
+cd $SCRIPTPATH
+bash get-finn.sh
+
+
+# fetch all models, continue on error
+for BUILD_FOLDER in $BUILD_FOLDERS; do
+    cd $SCRIPTPATH/$BUILD_FOLDER/models
+    rm -rf *.zip *.onnx *.npz
+    ./download-model.sh || true
+done
+
+# run all build scripts, continue on error
+cd $SCRIPTPATH/finn
+for BUILD_FOLDER in $BUILD_FOLDERS; do
+    ./run-docker.sh build_custom $SCRIPTPATH/$BUILD_FOLDER || true
+done
+
+# gather all release folders, continue on error
+RELEASE_TARGET=$SCRIPTPATH/release
+mkdir -p $RELEASE_TARGET
+for BUILD_FOLDER in $BUILD_FOLDERS; do
+    cp -r $SCRIPTPATH/$BUILD_FOLDER/release/* $RELEASE_TARGET || true
+done
+
+# create zipfiles for finn-examples upload
+cd $SCRIPTPATH/$BUILD_FOLDER/release
+rm -rf *.zip
+for PLATFORM in $PLATFORMS; do
+    zip -r $PLATFORM.zip $PLATFORM/ || true
+    MD5SUM=$(md5sum $PLATFORM.zip)
+    echo "$PLATFORM.zip : $MD5SUM" >> md5sum.log
+done

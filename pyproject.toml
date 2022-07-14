@@ -1,2 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel", "pynq>=2.5.1"]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2", "wheel", "pynq>=2.5.1"]
+
+[tool.setuptools_scm]
+write_to = "finn_examples/_version.py"

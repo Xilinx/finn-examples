@@ -76,10 +76,3 @@ for platform_name in platforms_to_build:
             dst_file = platform_dir + "/" + f.replace("finn-accel", model_name)
             if os.path.isfile(src_file):
                 shutil.copy(src_file, dst_file)
-    # create zipfile for all examples for this platform
-    shutil.make_archive(
-        "release/" + release_platform_name,
-        "zip",
-        root_dir="release",
-        base_dir=release_platform_name,
-    )
