@@ -62,7 +62,11 @@ resnet50_build_steps = [
     "step_deployment_package",
 ]
 
-platforms_to_build = ["U250"]
+# which platforms to build the networks for
+zynq_platforms = []
+alveo_platforms = ["U250"]
+platforms_to_build = zynq_platforms + alveo_platforms
+
 model_file = "models/%s_exported.onnx" % model_name
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
