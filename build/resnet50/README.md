@@ -16,7 +16,7 @@ finn-experimental](https://github.com/Xilinx/finn-experimental). This allows 16x
 
 1. Download the pretrained Resnet 50 ONNX model from the releases page, and extract
 the zipfile under `resnet50/models`. You should have e.g. `resnet50/models∕resnet50_w1a2_exported.onnx` as a result.
-You can use the provided `resnet50/models/download_resnet50.sh` script for this.
+You can use the provided `resnet50/models/download-model.sh` script for this.
 
 2. Launch the build as follows:
 ```SHELL
