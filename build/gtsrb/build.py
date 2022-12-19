@@ -13,7 +13,7 @@ models = [
 ]
 
 # which platforms to build the networks for
-zynq_platforms = ["Pynq-Z1"]
+zynq_platforms = ["ZUBoard-1CG"]
 platforms_to_build = zynq_platforms
 
 def custom_step_add_preproc(model, cfg):
