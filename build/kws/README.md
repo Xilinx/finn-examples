@@ -1,4 +1,4 @@
-# The KWS examplee
+# The KWS example
 
 The KWS example includes an MLP for the Google SpeechCommandsV2 dataset.
 
