@@ -12,7 +12,7 @@ platforms_to_build = zynq_platforms
 shell_flow_type = build_cfg.ShellFlowType.VIVADO_ZYNQ
 
 # Define model name
-model_name = "cybsec-mlp"
+model_name = "unsw_nb15-mlp-w2a2"
 
 # Create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
