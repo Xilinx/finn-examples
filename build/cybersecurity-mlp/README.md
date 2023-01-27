@@ -1,8 +1,8 @@
 # The multilayer perceptron for cybersecurity use-cases
-The MLP for the cybersecurity use-case is based on the three-part tutorial for training a quantized MLP and deploying it with FINN which is provided in the FINN [end-to-end example repository](https://github.com/Xilinx/finn/tree/main/notebooks/end2end_example). For more information on training the network, or more details behind what's happening under the hood, these notebooks provide an excellent starting point.
+The multi layer perceptron (MLP) for the cybersecurity use-case is based on the three-part tutorial for training a quantized MLP and deploying it with FINN, which is provided in the FINN [end-to-end example repository](https://github.com/Xilinx/finn/tree/main/notebooks/end2end_example). The MLP consists of four fully-connected layers in total: three hidden layers with 64 neurons, and a final output layer with a single output, all using 2-bit weights. For more information on training the network, or more details behind what's happening under the hood, the notebooks provided in the FINN end-to-end example repository serve as an excellent starting point.
 
 # Build bitfiles for MLP example
-0. Ensure you have performed the *Setup* steps in the [top-level README](https://github.com/Xilinx/finn-examples/tree/main/build) for setting up the FINN requirements and environment variables.
+0. Ensure you have performed the *Setup* steps in the top-level README for setting up the FINN requirements and environment variables.
 
 1. Edit the `mlp-cybersecurity/build.py` to restrict the platform variables to the ones that you are interested in, e.g. `platforms_to_build = ["Pynq-Z1"]`. You can also change the other build configuration options, see the [FINN docs](https://finn-dev.readthedocs.io/en/latest/source_code/finn.util.html#finn.util.build_dataflow.DataflowBuildConfig) for a full explanation.
 
