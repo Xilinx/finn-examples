@@ -7,7 +7,7 @@ from custom_steps import custom_step_mlp_export
 
 # Which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
-alveo_platforms = ["U250"]
+alveo_platforms = []
 
 # Note: only zynq platforms currently tested
 platforms_to_build = zynq_platforms + alveo_platforms
