@@ -17,7 +17,7 @@ from setuptools import find_packages, setup
 import os
 import zipfile
 from distutils.command.build import build as dist_build
-from pynq.utils import build_py as _build_py
+from pynqutils.setup_utils import build_py as _build_py
 
 __author__ = "Yaman Umuroglu"
 __copyright__ = "Copyright 2020-2021, Xilinx"

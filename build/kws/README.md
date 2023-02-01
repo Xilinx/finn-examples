@@ -1,4 +1,4 @@
-# The KWS examplee
+# The KWS example
 
 The KWS example includes an MLP for the Google SpeechCommandsV2 dataset.
 
@@ -15,7 +15,7 @@ FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule
 cd $FINN_EXAMPLES/build/finn
 # launch the build on the bnn-pynq folder
-bash run-docker.sh build_custom /path/to/finn-examples/build/kws
+bash run-docker.sh build_custom $FINN_EXAMPLES/build/kws
 ```
 
 3. The generated outputs will be under `kws/<timestamp>_output_<onnx_file_name>_<platform>`. 

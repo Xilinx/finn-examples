@@ -33,7 +33,7 @@ FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule
 cd $FINN_EXAMPLES/build/finn
 # launch the build on the mobilenet-v1 folder
-./run-docker.sh build_custom /path/to/finn-examples/build/mobilenet-v1
+./run-docker.sh build_custom $FINN_EXAMPLES/build/mobilenet-v1
 ```
 
 5. The generated outputs will be under `mobilenet-v1/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
@@ -49,5 +49,5 @@ Subsequently, the trained networks is [exported to ONNX](https://github.com/Xili
 * A top-K node with k=5 is added at the output (to return the top-5 class indices instead of logits)
 
 These modifications are done as part of the end2end MobileNet-v1 test in FINN.
-You can [see more here](https://github.com/Xilinx/finn/blob/bf9a67eee6ff5a797ea3a0bd866706d7518c3c6f/tests/end2end/test_end2end_mobilenet_v1.py#L102)
+You can [see more here](https://github.com/Xilinx/finn/blob/41740ed1a953c09dd2f87b03ebfde5f9d8a7d4f0/tests/end2end/test_end2end_mobilenet_v1.py#L91)
 for further reference.
