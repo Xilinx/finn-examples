@@ -1,5 +1,19 @@
-## <img src=https://raw.githubusercontent.com/Xilinx/finn/github-pages/docs/img/finn-logo.png width=128/> Dataflow Accelerator Examples
-*for PYNQ on Zynq and Alveo*
+# <img src=https://raw.githubusercontent.com/Xilinx/finn/github-pages/docs/img/finn-logo.png width=200 style="margin-bottom: -15px; margin-right: 10px"/> Dataflow Accelerator Examples <p style="text-align: center; font-size:15px;margin-top:5px;margin-bottom:-5px;font-weight:normal"> <em> for PYNQ on Zynq and Alveo </em> </p> 
+
+<p align="left">
+    <a>
+        <img src="https://img.shields.io/github/v/release/Xilinx/finn-examples?color=%09%23228B22&display_name=tag&label=Release" />
+    </a>
+    <a href="https://github.com/Xilinx/finn-examples">
+        <img src="https://img.shields.io/badge/FINN-v0.9.0-blue" />
+    </a>
+    <a href="https://github.com/Xilinx/PYNQ/tree/v3.0.1">
+        <img src="https://img.shields.io/badge/PYNQ-v3.0.1-blue" />
+    </a>
+    <a href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2022-1.html">
+        <img src="https://img.shields.io/badge/Vivado%2FVitis-v2022.1-blue" />
+    </a>
+</p>
 
 <img align="left" src="docs/img/finn-example.png" alt="drawing" style="margin-right: 20px" width="250"/>
 
@@ -21,29 +35,43 @@ In the past, we also had a [Gitter channel](https://gitter.im/xilinx-finn/commun
 
 
 *For Alveo we recommend setting up everything inside a virtualenv as described [here](https://pynq.readthedocs.io/en/v2.6.1/getting_started/alveo_getting_started.html?highlight=alveo#install-conda).*
-*For PYNQ boards, all commands below must be prefixed with `sudo` or by first going into `sudo su`. We recommend PYNQ version 2.6.1 as some installation issues have been reported for PYNQ version 2.7.*
+*For PYNQ boards, all commands below must be prefixed with `sudo` or by first going into `sudo su`. We recommend PYNQ version 3.0.1, but older installations of PYNQ should also work. For PYNQ v2.0.6, please refer for set-up instructions to FINN-examples v0.0.5.*
 
-First, ensure that your `pip` and `setuptools` installations are up-to-date
+First, source the PYNQ and SRT virtual environment:
+
+```shell
+source /etc/profile.d/pynq_venv.sh
+source /etc/profile.d/xrt_setup.sh
+```
+
+Next, ensure that your `pip` and `setuptools` installations are up-to-date
 on your PYNQ board or Alveo server:
 
 ```shell
 python3 -m pip install --upgrade pip setuptools
 ```
 
+Since we are going to install finn-examples without build-isolation, we need to ensure all dependencies are installed. For that, install `setuptools_csm` as well:
+
+```shell
+python3 -m pip install setuptools_scm
+```
+
 Install the `finn-examples` package using `pip`:
 
 ```shell
 # remove previous versions with: pip3 uninstall finn-examples
-pip3 install finn-examples
+pip3 install finn-examples --no-build-isolation
 # to install particular git branch:
-# pip3 install git+https://github.com/Xilinx/finn-examples.git@dev
+# pip3 install git+https://github.com/Xilinx/finn-examples.git@dev --no-build-isolation
 ```
 
-Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command:
+Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command. An example on how to run the Jupyter notebook server, assuming we are forwarding port 8888 from the target to some port on our local machine, is also shown below:
 
 ```shell
 # on PYNQ boards, first cd /home/xilinx/jupyter_notebooks
 pynq get-notebooks --from-package finn-examples -p . --force
+jupyter-notebook --no-browser --allow-root --port=8888
 ```
 
 You can now navigate the provided Jupyter notebook examples, or just use the
@@ -71,6 +99,7 @@ dummy_out = accel.execute(dummy_in)
 | <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights and activations | ZCU104  | ZCU104 |
 | <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights and activations | Pynq-Z1       | Pynq-Z1 |
 | <img src="docs/img/keyword-spotting.png" width="150"/><br/><br>Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights and activations | Pynq-Z1       | Pynq-Z1 |
+| <img src="docs/img/unsw-nb15.jpg" width="150"/><br/><br>UNSW-NB15 | 4-layer fully-connected  | 2-bit weights and activations | Pynq-Z1 <br> ZCU104 <br> Ultra96       | Pynq-Z1 <br> ZCU104 <br> Ultra96 |
 
 *Please note that for the non-supported Alveo build flows, you can use the pre-built FPGA bitfiles generated with older versions of the Vitis/Vivado tools. These bitfiles target the following Alveo U250 platform: [xilinx_u250_xdma_201830_2](https://www.xilinx.com/products/boards-and-kits/alveo/package-files-archive/u250-2018-3-1.html).
 
