@@ -25,7 +25,7 @@ FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule
 cd $FINN_EXAMPLES/build/finn
 # launch the build on the resnet50 folder
-./run-docker.sh build_custom /path/to/finn-examples/build/resnet50
+./run-docker.sh build_custom $FINN_EXAMPLES/build/resnet50
 ```
 
 5. The generated outputs will be under `resnet50/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
