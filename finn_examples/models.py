@@ -117,6 +117,20 @@ _gscv2_mlp_io_shape_dict = {
     "input_dma_name" : 'idma0',
 }
 
+_unsw_nb15_mlp_io_shape_dict = {
+    "idt" : DataType['BIPOLAR'],
+    "odt" : DataType['BIPOLAR'],
+    "ishape_normal" : (1, 600),
+    "oshape_normal" : (1, 1),
+    "ishape_folded" : (1, 15, 40),
+    "oshape_folded" : (1, 1, 1),
+    "ishape_packed" : (1, 15, 5),
+    "oshape_packed" : (1, 1, 1),
+    "input_dma_name" : 'idma0',
+    "output_dma_name" : 'odma0',
+    "number_of_external_weights": 0,
+}
+
 # from https://github.com/Xilinx/PYNQ-HelloWorld/blob/master/setup.py
 # get current platform: either edge or pcie
 
@@ -295,4 +309,19 @@ def vgg10_w4a4_radioml(target_platform=None):
         driver_mode,
         _radioml_io_shape_dict,
         fclk_mhz=fclk_mhz,
+    )
+
+
+def mlp_w2a2_unsw_nb15(target_platform=None, batch_size=10):
+    target_platform = resolve_target_platform(target_platform)
+    driver_mode = get_driver_mode()
+    model_name = "unsw_nb15-mlp-w2a2"
+    filename = find_bitfile(model_name, target_platform)
+    fclk_mhz = 100.0
+    return FINNExampleOverlay(
+        filename,
+        driver_mode,
+        _unsw_nb15_mlp_io_shape_dict,
+        batch_size,
+        fclk_mhz=fclk_mhz
     )
