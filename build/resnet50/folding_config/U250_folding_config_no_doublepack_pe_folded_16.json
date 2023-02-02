@@ -1,11 +1,11 @@
 {
     "Defaults": {
-        "outFIFODepth": [
-            32,
+        "outFIFODepths": [
+            [32],
             "all"
         ],
-        "inFIFODepth": [
-            32,
+        "inFIFODepths": [
+            [32],
             "all"
         ],
         "mem_mode": [

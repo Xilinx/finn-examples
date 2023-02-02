@@ -1,8 +1,8 @@
 {
     "Defaults": {
-        "outFIFODepth":[32,"all"],
-		"inFIFODepth":[32,"all"],
-		"mem_mode":["decoupled",["MatrixVectorActivation"]]
+        "outFIFODepths":[[32],"all"],
+        "inFIFODepths":[[32],"all"],
+        "mem_mode":["decoupled",["MatrixVectorActivation"]]
     },
     "ConvDoublePacked_Batch_0": {
         "SIMD": 3,
