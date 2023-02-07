@@ -9,11 +9,11 @@ import numpy as np
 from onnx import helper as oh
 
 models = [
-    "cnv_gtsrb",
+    "cnv_1w1a_gtsrb",
 ]
 
 # which platforms to build the networks for
-zynq_platforms = ["ZUBoard-1CG"]
+zynq_platforms = ["Pynq-Z1"]
 platforms_to_build = zynq_platforms
 
 def custom_step_add_preproc(model, cfg):
@@ -63,13 +63,18 @@ for platform_name in platforms_to_build:
         # set up the build configuration for this model
         cfg = build_cfg.DataflowBuildConfig(
             output_dir="output_%s_%s" % (model_name, release_platform_name),
-            folding_config_file="folding_config/%s_folding_config.json" % model_name,
+            target_fps=3000,
             synth_clk_period_ns=10.0,
             board=platform_name,
             steps=custom_build_steps,
             shell_flow_type=shell_flow_type,
             vitis_platform=vitis_platform,
-            generate_outputs=[build_cfg.DataflowOutputType.BITFILE],
+            generate_outputs=[
+                build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
+                build_cfg.DataflowOutputType.STITCHED_IP,
+                build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
+                build_cfg.DataflowOutputType.BITFILE,
+            ],
             #stop_step="step_create_dataflow_partition",
             save_intermediate_models=True,
         )
