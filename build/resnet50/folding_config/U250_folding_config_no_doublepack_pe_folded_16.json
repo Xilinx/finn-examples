@@ -1,11 +1,11 @@
 {
     "Defaults": {
-        "outFIFODepth": [
-            32,
+        "outFIFODepths": [
+            [32],
             "all"
         ],
-        "inFIFODepth": [
-            32,
+        "inFIFODepths": [
+            [32],
             "all"
         ],
         "mem_mode": [
@@ -35,7 +35,8 @@
         "PE": 4
     },
     "DuplicateStreams_Batch_0": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "MatrixVectorActivation_2": {
         "PE": 2,
@@ -60,13 +61,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_0": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_0": {
         "PE": 2
     },
     "DuplicateStreams_Batch_1": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_1": {
         "PE": 2
@@ -93,13 +96,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_1": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_3": {
         "PE": 2
     },
     "DuplicateStreams_Batch_2": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_4": {
         "PE": 2
@@ -126,7 +131,8 @@
         "SIMD": 64
     },
     "AddStreams_Batch_2": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_6": {
         "PE": 2
@@ -135,7 +141,8 @@
         "PE": 2
     },
     "DuplicateStreams_Batch_3": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "DownSampler_0": {
         "SIMD": 4
@@ -163,13 +170,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_3": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_8": {
         "PE": 2
     },
     "DuplicateStreams_Batch_4": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_9": {
         "PE": 2
@@ -196,13 +205,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_4": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_11": {
         "PE": 2
     },
     "DuplicateStreams_Batch_5": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_12": {
         "PE": 2
@@ -229,13 +240,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_5": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_14": {
         "PE": 2
     },
     "DuplicateStreams_Batch_6": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_15": {
         "PE": 2
@@ -262,7 +275,8 @@
         "SIMD": 32
     },
     "AddStreams_Batch_6": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_17": {
         "PE": 2
@@ -271,7 +285,8 @@
         "PE": 2
     },
     "DuplicateStreams_Batch_7": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "DownSampler_1": {
         "SIMD": 4
@@ -299,13 +314,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_7": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_19": {
         "PE": 2
     },
     "DuplicateStreams_Batch_8": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_20": {
         "PE": 2
@@ -332,13 +349,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_8": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_22": {
         "PE": 2
     },
     "DuplicateStreams_Batch_9": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_23": {
         "PE": 2
@@ -365,13 +384,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_9": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_25": {
         "PE": 2
     },
     "DuplicateStreams_Batch_10": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_26": {
         "PE": 2
@@ -398,13 +419,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_10": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_28": {
         "PE": 2
     },
     "DuplicateStreams_Batch_11": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_29": {
         "PE": 2
@@ -431,13 +454,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_11": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_31": {
         "PE": 2
     },
     "DuplicateStreams_Batch_12": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_32": {
         "PE": 2
@@ -464,7 +489,8 @@
         "SIMD": 32
     },
     "AddStreams_Batch_12": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_34": {
         "PE": 2
@@ -473,7 +499,8 @@
         "PE": 2
     },
     "DuplicateStreams_Batch_13": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "DownSampler_2": {
         "SIMD": 4
@@ -501,13 +528,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_13": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_36": {
         "PE": 2
     },
     "DuplicateStreams_Batch_14": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_37": {
         "PE": 2
@@ -534,13 +563,15 @@
         "SIMD": 32
     },
     "AddStreams_Batch_14": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_39": {
         "PE": 2
     },
     "DuplicateStreams_Batch_15": {
-        "PE": 2
+        "PE": 2,
+        "outFIFODepths": [32, 32]
     },
     "Thresholding_Batch_40": {
         "PE": 2
@@ -567,7 +598,8 @@
         "SIMD": 32
     },
     "AddStreams_Batch_15": {
-        "PE": 2
+        "PE": 2,
+        "inFIFODepths": [32, 32]
     },
     "Thresholding_Batch_42": {
         "PE": 2
