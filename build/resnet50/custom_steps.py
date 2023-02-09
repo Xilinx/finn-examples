@@ -107,6 +107,7 @@ from qonnx.util.config import extract_model_config_to_json
 from finn.transformation.fpgadataflow.set_fifo_depths import (
     InsertAndSetFIFODepths,
     RemoveShallowFIFOs,
+    SplitLargeFIFOs,
 )
 from finn.transformation.fpgadataflow.insert_dwc import InsertDWC
 from finn.transformation.fpgadataflow.insert_fifo import InsertFIFO
@@ -265,8 +266,10 @@ def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig)
         model = model.transform(GiveReadableTensorNames())
         if cfg.folding_config_file is not None:
             model = model.transform(ApplyConfig(cfg.folding_config_file))
-        # remove any shallow FIFOs
-        model = model.transform(RemoveShallowFIFOs())
+    # split large FIFOs into multiple FIFOs
+    model = model.transform(SplitLargeFIFOs())
+    # remove any shallow FIFOs
+    model = model.transform(RemoveShallowFIFOs())
 
     # extract the final configuration and save it as json
     hw_attrs = [
