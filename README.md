@@ -1,10 +1,10 @@
-# <img src=https://raw.githubusercontent.com/Xilinx/finn/github-pages/docs/img/finn-logo.png width=200 style="margin-bottom: -15px; margin-right: 10px"/> Dataflow Accelerator Examples <p style="text-align: center; font-size:15px;margin-top:5px;margin-bottom:-5px;font-weight:normal"> <em> for PYNQ on Zynq and Alveo </em> </p> 
-
+# <img src=https://raw.githubusercontent.com/Xilinx/finn/github-pages/docs/img/finn-logo.png width=200 style="margin-bottom: -15px; margin-right: 10px"/> Dataflow Accelerator Examples
+*for PYNQ on Zynq and Alveo*
 <p align="left">
     <a>
         <img src="https://img.shields.io/github/v/release/Xilinx/finn-examples?color=%09%23228B22&display_name=tag&label=Release" />
     </a>
-    <a href="https://github.com/Xilinx/finn-examples">
+    <a href="https://github.com/Xilinx/finn/tree/main">
         <img src="https://img.shields.io/badge/FINN-v0.9.0-blue" />
     </a>
     <a href="https://github.com/Xilinx/PYNQ/tree/v3.0.1">
@@ -33,11 +33,10 @@ In the past, we also had a [Gitter channel](https://gitter.im/xilinx-finn/commun
 
 ## Quickstart
 
+### Zynq
+*For ZYNQ boards, all commands below must be prefixed with `sudo` or by first going into `sudo su`. We recommend PYNQ version 3.0.1, but older installations of PYNQ should also work. For PYNQ v2.6.1, please refer for set-up instructions to [FINN-examples v0.0.5](https://github.com/Xilinx/finn-examples/tree/v0.0.5).*
 
-*For Alveo we recommend setting up everything inside a virtualenv as described [here](https://pynq.readthedocs.io/en/v2.6.1/getting_started/alveo_getting_started.html?highlight=alveo#install-conda).*
-*For PYNQ boards, all commands below must be prefixed with `sudo` or by first going into `sudo su`. We recommend PYNQ version 3.0.1, but older installations of PYNQ should also work. For PYNQ v2.0.6, please refer for set-up instructions to FINN-examples v0.0.5.*
-
-First, source the PYNQ and SRT virtual environment:
+First, source the PYNQ and XRT virtual environment:
 
 ```shell
 source /etc/profile.d/pynq_venv.sh
@@ -65,6 +64,31 @@ pip3 install finn-examples --no-build-isolation
 # to install particular git branch:
 # pip3 install git+https://github.com/Xilinx/finn-examples.git@dev --no-build-isolation
 ```
+
+### Alveo
+*For Alveo we recommend setting up everything inside a virtualenv as described [here](https://pynq.readthedocs.io/en/v2.6.1/getting_started/alveo_getting_started.html?highlight=alveo#install-conda).*
+
+First, create & source a virtual environment:
+```shell
+conda create -n <virtual-env> python=3.10
+conda activate <virtual-env>
+```
+
+Next, ensure that your `pip` and `setuptools` installations are up-to-date:
+```shell
+python3 -m pip install --upgrade pip setuptools
+```
+
+Finally, we can now install Pynq, FINN-examples and Jupyter (please note to source the XRT environment before):
+```shell
+pip3 install pynq==3.0.1
+python3 -m pip install setuptools_scm, ipython
+pip3 install finn-examples --no-build-isolation
+# to install particular git branch:
+# pip3 install git+https://github.com/Xilinx/finn-examples.git@dev --no-build-isolation
+python3 -m pip install jupyter
+```
+***
 
 Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command. An example on how to run the Jupyter notebook server, assuming we are forwarding port 8888 from the target to some port on our local machine, is also shown below:
 
@@ -100,8 +124,6 @@ dummy_out = accel.execute(dummy_in)
 | <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights and activations | Pynq-Z1       | Pynq-Z1 |
 | <img src="docs/img/keyword-spotting.png" width="150"/><br/><br>Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights and activations | Pynq-Z1       | Pynq-Z1 |
 | <img src="docs/img/unsw-nb15.jpg" width="150"/><br/><br>UNSW-NB15 | 4-layer fully-connected  | 2-bit weights and activations | Pynq-Z1 <br> ZCU104 <br> Ultra96       | Pynq-Z1 <br> ZCU104 <br> Ultra96 |
-
-*Please note that for the non-supported Alveo build flows, you can use the pre-built FPGA bitfiles generated with older versions of the Vitis/Vivado tools. These bitfiles target the following Alveo U250 platform: [xilinx_u250_xdma_201830_2](https://www.xilinx.com/products/boards-and-kits/alveo/package-files-archive/u250-2018-3-1.html).
 
 We welcome community contributions to add more examples to this repo!
 
