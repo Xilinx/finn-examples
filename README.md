@@ -1,5 +1,5 @@
 # <img src=https://raw.githubusercontent.com/Xilinx/finn/github-pages/docs/img/finn-logo.png width=200 style="margin-bottom: -15px; margin-right: 10px"/> Dataflow Accelerator Examples
-*for PYNQ on Zynq and Alveo*
+<p align="center"> <em>for PYNQ on Zynq and Alveo</em> <p>
 <p align="left">
     <a>
         <img src="https://img.shields.io/github/v/release/Xilinx/finn-examples?color=%09%23228B22&display_name=tag&label=Release" />
@@ -108,7 +108,7 @@ import numpy as np
 # instantiate the accelerator
 accel = models.cnv_w2a2_cifar10()
 # generate an empty numpy array to use as input
-dummy_in = np.empty(accel.ishape_normal, dtype=np.uint8)
+dummy_in = np.empty(accel.ishape_normal(), dtype=np.uint8)
 # perform inference and get output
 dummy_out = accel.execute(dummy_in)
 ```
@@ -116,8 +116,8 @@ dummy_out = accel.execute(dummy_in)
 ##  Example Neural Network Accelerators
 | Dataset                                                        | Topology                | Quantization                                               | Supported boards | Supported build flows
 |----------------------------------------------------------------|-------------------------|------------------------------------------------------------|------------------|------------------|
-| <img src="docs/img/cifar-10.png" width="150"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | all              | Pynq-Z1<br>ZCU104<br>Ultra96 |
-| <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | all              | Pynq-Z1<br>ZCU104<br>Ultra96 |
+| <img src="docs/img/cifar-10.png" width="150"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
+| <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights and activations<br>8-bit first layer weights | Alveo U250<br>ZCU104       | ZCU104 |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       | - |
 | <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights and activations | ZCU104  | ZCU104 |
