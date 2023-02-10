@@ -33,7 +33,7 @@ SCRIPT=$(readlink -f "$0")
 # absolute path this script is in, thus /home/user/bin
 SCRIPTPATH=$(dirname "$SCRIPT")
 # subdirs for all finn-examples build folders
-BUILD_FOLDERS="bnn-pynq kws mobilenet-v1 resnet50 vgg10-radioml"
+BUILD_FOLDERS="bnn-pynq kws mobilenet-v1 resnet50 vgg10-radioml cybersecurity-mlp"
 # all HW platforms we build for
 PLATFORMS="Pynq-Z1 Ultra96 ZCU104 U250"
 

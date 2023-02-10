@@ -34,6 +34,33 @@ import warnings
 
 from qonnx.core.datatype import DataType
 
+# TODO solve by moving onnx-dependent fxns to onnx.py
+# finn-examples uses parts of qonnx without having
+# onnx installed and doesn't use this functionality
+# workaround to avoid import errors when onnx isn't
+# installed:
+try:
+    from onnx.helper import make_model, make_opsetid
+except ModuleNotFoundError:
+    make_model = None
+    make_opsetid = None
+
+
+def get_preferred_onnx_opset():
+    "Return preferred ONNX opset version for QONNX"
+    return 11
+
+
+def qonnx_make_model(graph_proto, **kwargs):
+    "Wrapper around ONNX make_model with preferred qonnx opset version"
+    opset_imports = kwargs.pop("opset_imports", None)
+    if opset_imports is None:
+        opset_imports = [make_opsetid("", get_preferred_onnx_opset())]
+        kwargs["opset_imports"] = opset_imports
+    else:
+        kwargs["opset_imports"] = opset_imports
+    return make_model(graph_proto, **kwargs)
+
 
 def is_finn_op(op_type):
     "Return whether given op_type string is a QONNX or FINN custom op"
@@ -181,35 +208,22 @@ def pad_tensor_to_multiple_of(ndarray, pad_to_dims, val=0, distr_pad=False):
     return ret
 
 
-def calculate_matvec_accumulator_range(matrix, vec_dt):
+def calculate_matvec_accumulator_range(matrix: np.ndarray, vec_dt: DataType):
     """Calculate the minimum and maximum possible result (accumulator) values
     for a dot product x * A, given matrix A of dims (MW, MH), and vector (1, MW)
     with datatype vec_dt. Returns (acc_min, acc_max).
     """
-    min_weight = matrix.min()
-    max_weight = matrix.max()
-    perceptive_field_elems = matrix.shape[0]
-    min_input = vec_dt.min()
-    max_input = vec_dt.max()
-    # calculate minimum and maximum values of accumulator
-    # assume inputs span the whole range of the input datatype
-    acc_min = perceptive_field_elems * min(
-        min_weight * max_input,
-        min_weight * min_input,
-        max_weight * max_input,
-        max_weight * min_input,
-    )
-    acc_max = perceptive_field_elems * max(
-        min_weight * max_input,
-        min_weight * min_input,
-        max_weight * max_input,
-        max_weight * min_input,
-    )
-    return (acc_min, acc_max)
+    max_weight = abs(matrix).sum(axis=0).max()
+    max_input = max(abs(vec_dt.min()), abs(vec_dt.max()))
+    max_value = max_input * max_weight
+    # If either the weight and input datatypes are signed, then the minimum
+    # value that their accumulated product can be is -max_value. Else, it's 0.
+    min_value = -max_value if (matrix.min() < 0) or vec_dt.signed() else 0
+    return (min_value, max_value)
 
 
 def gen_finn_dt_tensor(finn_dt, tensor_shape):
-    """Generates random tensor in given shape and with given FINN DataType."""
+    """Generates random tensor in given shape and with given QONNX DataType."""
     if type(tensor_shape) == list:
         tensor_shape = tuple(tensor_shape)
     if finn_dt == DataType["BIPOLAR"]:
@@ -255,10 +269,8 @@ def sanitize_quant_values(model, node_tensors, execution_context, check_values=F
     that are supposed to be integers (as indicated by their quantization
     annotation). Will raise an assertion if the amount of rounding is too large.
     Returns the sanitized execution context.
-
     If check_values is specified, an extra DataType.allowed() check will be
     performed on any rounded tensors.
-
     Background:
     QONNX uses floating point tensors as a carrier data type to represent
     integers. Floating point arithmetic can introduce rounding errors, e.g.
@@ -305,9 +317,9 @@ def sanitize_quant_values(model, node_tensors, execution_context, check_values=F
             execution_context[tensor_name] = updated_values
         else:
             raise Exception(
-                """Rounding error is too high to match set FINN
+                """Rounding error is too high to match set QONNX
             datatype ({}) for input {}""".format(
                     dtype, tensor_name
                 )
             )
-    return execution_context
+    return 
