@@ -17,7 +17,7 @@ It requires about 2 MB of weight storage and 1.1 GMACs per inference, yielding
 Due to the depthwise separable convolutions in MobileNet-v1,
 we use a specialized build script that replaces a few of the standard steps
 in FINN with custom ones.
-**MobileNet-v1 is currently only supported on Alveo U250 and ZCU104.**
+**MobileNet-v1 is currently only supported on Alveo U250.**
 We also provide a folding configuration for the **ZCU102**, but there is no pre-built Pynq image available for this board.
 
 0. Ensure you have performed the *Setup* steps in the top-level README for setting up the FINN requirements and environment variables.
