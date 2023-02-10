@@ -4,7 +4,7 @@
     <a>
         <img src="https://img.shields.io/github/v/release/Xilinx/finn-examples?color=%09%23228B22&display_name=tag&label=Release" />
     </a>
-    <a href="https://github.com/Xilinx/finn/tree/main">
+    <a href="https://github.com/Xilinx/finn/tree/v0.9">
         <img src="https://img.shields.io/badge/FINN-v0.9.0-blue" />
     </a>
     <a href="https://github.com/Xilinx/PYNQ/tree/v3.0.1">
@@ -127,7 +127,7 @@ dummy_out = accel.execute(dummy_in)
 |----------------------------------------------------------------|-------------------------|------------------------------------------------------------|------------------|------------------|
 | <img src="docs/img/cifar-10.png" width="150"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
 | <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
-| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights & activations<br>8-bit first layer weights | Alveo U250<br>ZCU104       | Alveo U250 |
+| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights & activations<br>8-bit first layer weights | Alveo U250       | Alveo U250 |
 | <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       | - |
 | <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights & activations | ZCU104  | ZCU104 |
 | <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights & activations | Pynq-Z1       | Pynq-Z1 |
