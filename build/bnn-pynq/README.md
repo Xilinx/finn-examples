@@ -32,7 +32,7 @@ FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule
 cd $FINN_EXAMPLES/build/finn
 # launch the build on the bnn-pynq folder
-./run-docker.sh build_custom /path/to/finn-examples/build/bnn-pynq
+./run-docker.sh build_custom $FINN_EXAMPLES/build/bnn-pynq
 ```
 
 5. The generated outputs will be under `bnn-pynq/output_<topology>_<platform>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
@@ -40,7 +40,7 @@ cd $FINN_EXAMPLES/build/finn
 ## Where did those ONNX model files come from?
 
 The BNN-PYNQ networks are part of the
-[Brevitas examples](https://github.com/Xilinx/brevitas/tree/master/brevitas_examples/bnn_pynq). You can find the details on quantization, accuracy, layers used in the Brevitas repo, as well as the training scripts if you'd like to retrain them yourself.
+[Brevitas examples](https://github.com/Xilinx/brevitas/tree/master/src/brevitas_examples/bnn_pynq). You can find the details on quantization, accuracy, layers used in the Brevitas repo, as well as the training scripts if you'd like to retrain them yourself.
 
 Subsequently, those trained networks are [exported to ONNX](https://github.com/Xilinx/finn/blob/master/notebooks/basics/1_brevitas_network_import.ipynb). In addition, the particular versions
 used here have two additions, as described in the "Adding Pre- and Postprocessing" section of [this notebook](https://github.com/Xilinx/finn/blob/master/notebooks/end2end_example/bnn-pynq/tfc_end2end_example.ipynb):

@@ -78,7 +78,6 @@ class BaseDataType(ABC):
     @abstractmethod
     def allowed(self, value):
         """Check whether given value is allowed for this DataType.
-
         * value (float32): value to be checked"""
         pass
 
@@ -105,12 +104,12 @@ class BaseDataType(ABC):
 
     @abstractmethod
     def to_numpy_dt(self):
-        "Return an appropriate numpy datatype that can represent this FINN DataType."
+        "Return an appropriate numpy datatype that can represent this QONNX DataType."
         pass
 
     @abstractmethod
     def get_canonical_name(self):
-        "Return a canonical string representation of this FINN DataType."
+        "Return a canonical string representation of this QONNX DataType."
 
 
 class FloatType(BaseDataType):
@@ -339,8 +338,8 @@ class DataTypeMeta(EnumMeta):
 
 
 class DataType(Enum, metaclass=DataTypeMeta):
-    """Enum class that contains FINN data types to set the quantization annotation.
-    ONNX does not support data types smaller than 8-bit integers, whereas in FINN we are
+    """Enum class that contains QONNX data types to set the quantization annotation.
+    ONNX does not support data types smaller than 8-bit integers, whereas in QONNX we are
     interested in smaller integers down to ternary and bipolar."""
 
     @staticmethod

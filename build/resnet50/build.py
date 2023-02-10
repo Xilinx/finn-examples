@@ -113,7 +113,7 @@ for platform_name in platforms_to_build:
         # throughput parameters (auto-folding)
         mvau_wwidth_max = 24,
         target_fps = target_fps,
-        folding_config_file =  folding_config_file,
+        folding_config_file = folding_config_file,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[

@@ -39,6 +39,7 @@ import numpy as np
 import datetime
 from glob import glob
 import os
+import shutil
 
 
 # Inject the preprocessing step into FINN to enable json serialization later on
@@ -168,7 +169,7 @@ for f_name in glob("models/*.npz"):
     pre_processed_inputs = pre_processed_inputs.astype(np.int8)
 
     # Save data
-    export_path = "models/" + f_name.replace(".npz", "_{}_len_{}.npy")
+    export_path = f_name.replace(".npz", "_{}_len_{}.npy")
     print(f"Saving data to: {export_path}")
     np.save(
         export_path.format("inputs", len(pre_processed_inputs)), pre_processed_inputs
