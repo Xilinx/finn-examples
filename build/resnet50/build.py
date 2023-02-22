@@ -95,13 +95,13 @@ for platform_name in platforms_to_build:
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
 
-    try:
-        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
-        folding_config_file="folding_config/U250_folding_config.json"
-        print("DoublePackedConv detected")
-    except:
-        warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ")
-        folding_config_file="folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
+#    try:
+#        from finnexperimental.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
+#        folding_config_file="folding_config/U250_folding_config.json"
+#        print("DoublePackedConv detected")
+#    except:
+#        warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ")
+    folding_config_file="folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
