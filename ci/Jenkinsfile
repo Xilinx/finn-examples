@@ -1,0 +1,13 @@
+pipeline {
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
+  }
+  agent { node { label 'finn-build' } }
+  stages {
+    stage('Hello world') {
+      steps {
+        sh 'echo "Hello finn-examples"'
+      }
+    }
+  }
+}
