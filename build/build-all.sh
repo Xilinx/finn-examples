@@ -37,11 +37,6 @@ BUILD_FOLDERS="bnn-pynq kws mobilenet-v1 resnet50 vgg10-radioml cybersecurity-ml
 # all HW platforms we build for
 PLATFORMS="Pynq-Z1 Ultra96 ZCU104 U250"
 
-# fetch correct compiler version
-cd $SCRIPTPATH
-bash get-finn.sh
-
-
 # fetch all models, continue on error
 for BUILD_FOLDER in $BUILD_FOLDERS; do
     cd $SCRIPTPATH/$BUILD_FOLDER/models
