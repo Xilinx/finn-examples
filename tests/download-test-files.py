@@ -68,23 +68,23 @@ if __name__ == "__main__":
             zip_file = os.path.basename(url)
             runcmd('unzip {}'.format(zip_file))
 
-# do the same for bitfiles - need a switch statement based on board chosen
-# this script should take in a board to select which bitstreams to download
+        # do the same for bitfiles - need a switch statement based on board chosen
+        # this script should take in a board to select which bitstreams to download
+        if args.board:
+            print(args.board)
+            os.chdir(root_dir + bit_links_dir)
 
-print(args.board)
-os.chdir(root_dir + bit_links_dir)
+            bitfile = "bitfiles.zip.link"
+            bitfile_zip_dir = "bitfiles.zip.d"
+            print(bitfile)
+            print(bitfile_zip_dir)
+            bitfile_url = load_bitfile_links(bitfile, args.board)
 
-bitfile = "bitfiles.zip.link"
-bitfile_zip_dir = "bitfiles.zip.d"
-print(bitfile)
-print(bitfile_zip_dir)
-bitfile_url = load_bitfile_links(bitfile, args.board)
-
-# make bitstream dir and 
-runcmd('mkdir {}'.format(bitfile_zip_dir))
-os.chdir(bitfile_zip_dir)
-runcmd('wget {}'.format(bitfile_url))
-zip_file = os.path.basename(bitfile_url)
-runcmd('unzip {}'.format(zip_file))
+            # make bitstream dir and
+            runcmd('mkdir {}'.format(bitfile_zip_dir))
+            os.chdir(bitfile_zip_dir)
+            runcmd('wget {}'.format(bitfile_url))
+            zip_file = os.path.basename(bitfile_url)
+            runcmd('unzip {}'.format(zip_file))
 
 print("Done")
