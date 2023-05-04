@@ -46,10 +46,7 @@ def load_bitfile_links(file, board):
 if __name__ == "__main__":
 
     args = parser.parse_args()
-    #print(args)
-
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    #print(root_dir)
 
     if args.remove:
         os.chdir(root_dir + data_links_dir)
@@ -81,8 +78,6 @@ bitfile = "bitfiles.zip.link"
 bitfile_zip_dir = "bitfiles.zip.d"
 print(bitfile)
 print(bitfile_zip_dir)
-#runcmd('mkdir {}'.format(bitfile_zip_dir))
-#os.chdir(bitfile_zip_dir)
 bitfile_url = load_bitfile_links(bitfile, args.board)
 
 # make bitstream dir and 
@@ -93,4 +88,3 @@ zip_file = os.path.basename(bitfile_url)
 runcmd('unzip {}'.format(zip_file))
 
 print("Done")
-
