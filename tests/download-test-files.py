@@ -10,8 +10,8 @@ parser.add_argument("-d", "--data", action="store_true", help="download data fil
 parser.add_argument("-b", "--board", help="select which board's bitfiles to download")
 parser.add_argument("-r", "--remove", action="store_true", help="delete data and bitfiles")
 
-data_links_dir = "/finn_examples/data"
-bit_links_dir = "/finn_examples/bitfiles"
+data_links_dir = "/../finn_examples/data"
+bit_links_dir = "/../finn_examples/bitfiles"
 bitfile = "bitfiles.zip.link"
 bitfile_zip_dir = "bitfiles.zip.d"
 
