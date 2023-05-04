@@ -58,7 +58,7 @@ for BUILD_FOLDER in $BUILD_FOLDERS; do
 done
 
 # create zipfiles for finn-examples upload
-cd $SCRIPTPATH/$BUILD_FOLDER/release
+cd $RELEASE_TARGET
 rm -rf *.zip
 for PLATFORM in $PLATFORMS; do
     zip -r $PLATFORM.zip $PLATFORM/ || true
