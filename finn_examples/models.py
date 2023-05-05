@@ -335,7 +335,7 @@ def resnet50_w1a2_imagenet(target_platform=None):
 def vgg10_w4a4_radioml(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
-    model_name = "vgg10-radioml-w4a4"
+    model_name = "radioml_w4a4_small_tidy"
     filename = find_bitfile(model_name, target_platform)
     fclk_mhz = 250.0
     return FINNExampleOverlay(
