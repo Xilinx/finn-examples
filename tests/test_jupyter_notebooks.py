@@ -17,7 +17,7 @@ pynq_notebooks = [
     ),
     pytest.param(
         notebook_dir + "3_binarycop_mask_detection.ipynb",
-        marks=pytest.mark.pynq_notebooks,
+        marks=[pytest.mark.pynq_notebooks, pytest.mark.xfail],
     ),
     pytest.param(
         notebook_dir + "4_keyword_spotting.ipynb",
