@@ -2,12 +2,132 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
   }
-  agent { node { label 'finn-build' } }
+  agent none
   stages {
-    stage('Hello world') {
-      steps {
-        sh 'echo "Hello finn-examples"'
-      }
-    }
+	stage('Run Notebooks') {
+        parallel {
+		stage('Test Pynq-Z1 notebooks') {
+		  agent {
+			label 'finn-pynq'
+		  }
+		  environment {
+			USER_XILINX = credentials('pynq-z1-credentials')
+		  }
+		  steps {
+			clean_finn_examples_clone()
+			download_all_files('Pynq-Z1')
+
+			// Create a script to run as root on the Pynq-Z1 agent
+			create_test_script('pynq_notebooks')
+
+			// Execute the script as the root user - needed for Pynq-Z1
+			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
+		  }
+		  post {
+			always {
+			  // Delete the created Pynq-Z1 test script
+			  sh 'rm run-tests.sh'
+			}
+			failure {
+			  echo 'Failed to run Pynq-Z1 tests'
+			}
+			success {
+			  echo 'Pynq-Z1 tests passed'
+			}
+		  }
+		}
+		stage('Test Ultra96 notebooks') {
+		  agent {
+			label 'finn-ultra96'
+		  }
+		  environment {
+			USER_XILINX = credentials('pynq-z1-credentials')
+		  }
+		  steps {
+			clean_finn_examples_clone()
+			download_all_files('Ultra96')
+
+			// Create a script to run as root on the Ultra96 agent
+			create_test_script('ultra96_notebooks')
+
+			// Execute the script as the root user - needed for Ultra96
+			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
+		  }
+		  post {
+			always {
+			  // Delete the created Alveo test script
+			  sh 'rm run-tests.sh'
+			}
+			failure {
+			  echo 'Failed to run Ultra96 tests'
+			}
+			success {
+			  echo 'Ultra96 tests passed'
+			}
+		  }
+		}
+		stage('Test Alveo U250 notebooks') {
+		  agent {
+			label 'finn-build-55'
+		  }
+		  environment {
+			USER_XILINX = credentials('pynq-z1-credentials')
+			IMAGENET_VAL_PATH = '/scratch/imagenet-validation-dataset'
+		  }
+		  steps {
+			clean_finn_examples_clone()
+			download_all_files('xilinx_u250_gen3x16_xdma_2_1_202010_1')
+
+			// Create a script to run as root on the U250 agent
+			create_test_script('alveo_notebooks')
+
+            sh 'mv finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_2_1_202010_1 finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_shell_2_1'
+
+			// Execute the script as the root user - needed for U250
+			sh './run-tests.sh'
+		  }
+		  post {
+			always {
+			  // Delete the created Alveo test script
+			  sh 'rm run-tests.sh'
+			}
+			failure {
+			  echo 'Failed to run U250 tests'
+			}
+			success {
+			  echo 'U250 tests passed'
+			}
+		  }
+		}
+	  }
+	}
   }
+}
+
+void clean_finn_examples_clone() {
+  sh 'rm -rf finn_examples/bitfiles/bitfiles.zip.d'
+  sh 'python tests/download-test-files.py -r'
+}
+
+void download_all_files(String board) {
+  sh """python tests/download-test-files.py -d -b ${board}"""
+}
+
+void create_test_script(String boardNotebooks) {
+  // Create the script - stating what set of notebooks to use
+  if(boardNotebooks == "alveo_notebooks")
+    sh """echo "#!/bin/bash
+. /opt/xilinx/xrt/setup.sh
+. /home/fionno/anaconda3/bin/activate
+python -m pytest -m ${boardNotebooks}" >> run-tests.sh
+    """
+  else
+    sh """echo "#!/bin/bash
+. /etc/profile.d/pynq_venv.sh
+. /etc/profile.d/xrt_setup.sh
+python -m pytest -m ${boardNotebooks}" >> run-tests.sh
+    """
+
+  // Give permissions to script
+  sh 'chmod 777 run-tests.sh'
 }
