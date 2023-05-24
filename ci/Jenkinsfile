@@ -2,6 +2,9 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
   }
+  parameters {
+    booleanParam(name: 'zcu104-available', defaultValue: false, description: 'Set this value to true if the ZCU104 board is available and configured correctly')
+  }
   agent none
   stages {
 	stage('Run Notebooks') {
@@ -96,6 +99,41 @@ pipeline {
 			}
 			success {
 			  echo 'U250 tests passed'
+			}
+		  }
+		}
+		stage('Test ZCU104 notebooks') {
+		  when {
+		    // beforeAgent set to 'true' to prevent an offline agent hanging the stage
+		    beforeAgent true
+		    expression { params['zcu104-available'] }
+		  }
+		  agent {
+			label 'finn-zcu104'
+		  }
+		  environment {
+			USER_XILINX = credentials('pynq-z1-credentials')
+		  }
+		  steps {
+			clean_finn_examples_clone()
+			download_all_files('ZCU104')
+
+			// Create a script to run as root on the ZCU104 agent
+			create_test_script('zcu_notebooks')
+
+			// Execute the script as the root user - needed for ZCU104
+			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
+		  }
+		  post {
+			always {
+			  // Delete the created ZCU104 test script
+			  sh 'rm run-tests.sh'
+			}
+			failure {
+			  echo 'Failed to run ZCU104 tests'
+			}
+			success {
+			  echo 'ZCU104 tests passed'
 			}
 		  }
 		}
