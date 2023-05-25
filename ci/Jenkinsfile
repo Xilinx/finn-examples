@@ -51,19 +51,7 @@ pipeline {
 		  }
 		  steps {
 			cleanLocalCloneDir()
-
-			// For release job: unstash previously generated bitstreams for testing
-			// For non-release job: download existing bitstreams for testing
-			if (params['isRelease']) {
-			  downloadTestData()
-			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
-			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
-			    unstash name: "bitfile_stash"
-			    sh 'unzip Pynq-Z1.zip'
-			  }
-			} else {
-			  downloadTestDataAndBitstreams('Pynq-Z1')
-			}
+			getBoardFiles('Pynq-Z1')
 
 			// Create a script to run as root on the Pynq-Z1 agent
 			createTestScript('pynq_notebooks')
@@ -92,19 +80,7 @@ pipeline {
 		  }
 		  steps {
 			cleanLocalCloneDir()
-
-			// For release job: unstash previously generated bitstreams for testing
-			// For non-release job: download existing bitstreams for testing
-			if (params['isRelease']) {
-			  downloadTestData()
-			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
-			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
-			    unstash name: "bitfile_stash"
-			    sh 'unzip Ultra96.zip'
-			  }
-			} else {
-			  downloadTestDataAndBitstreams('Ultra96')
-			}
+			getBoardFiles('Ultra96')
 
 			// Create a script to run as root on the Ultra96 agent
 			createTestScript('ultra96_notebooks')
@@ -130,23 +106,8 @@ pipeline {
 		  }
 		  steps {
 			cleanLocalCloneDir()
-
-			// For release job: unstash previously generated bitstreams for testing
-			// For non-release job: download existing bitstreams for testing
-			if (params['isRelease']) {
-			  downloadTestData()
-			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
-			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
-			    unstash name: "bitfile_stash"
-			    sh 'unzip U250.zip'
-			    // FIXME: The finn-examples driver expects to see directory 'xilinx_u250_gen3x16_xdma_shell_2_1' or bitstream download fails
-				sh 'mv U250 xilinx_u250_gen3x16_xdma_shell_2_1'
-			  }
-			} else {
-			  downloadTestDataAndBitstreams('xilinx_u250_gen3x16_xdma_2_1_202010_1')
-              // FIXME: The finn-examples driver expects to see directory 'xilinx_u250_gen3x16_xdma_shell_2_1' or bitstream download fails
-			  sh 'mv finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_2_1_202010_1 finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_shell_2_1'
-			}
+			getBoardFiles('U250')
+			u250Workaround()
 
 			// Create a script to run as root on the U250 agent
 			createTestScript('alveo_notebooks')
@@ -180,19 +141,7 @@ pipeline {
 		  }
 		  steps {
 			cleanLocalCloneDir()
-
-			// For release job: unstash previously generated bitstreams for testing
-			// For non-release job: download existing bitstreams for testing
-			if (params['isRelease']) {
-			  downloadTestData()
-			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
-			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
-			    unstash name: "bitfile_stash"
-			    sh 'unzip ZCU104.zip'
-			  }
-			} else {
-			  downloadTestDataAndBitstreams('ZCU104')
-			}
+			getBoardFiles('ZCU104')
 
 			// Create a script to run as root on the ZCU104 agent
 			createTestScript('zcu_notebooks')
@@ -241,6 +190,37 @@ void downloadTestData() {
 
 void downloadTestDataAndBitstreams(String board) {
   sh """python tests/download-test-files.py -d -b ${board}"""
+}
+
+void getBoardFiles(String board) {
+  // For release job: unstash previously generated bitstreams for testing
+  // For non-release job: download existing bitstreams for testing
+  if (params['isRelease']) {
+    downloadTestData()
+    sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
+    dir('finn_examples/bitfiles/bitfiles.zip.d') {
+    unstash name: "bitfile_stash"
+      sh """unzip ${board}.zip"""
+    }
+  } else {
+	if (board == "U250") {
+      downloadTestDataAndBitstreams('xilinx_u250_gen3x16_xdma_shell_2_1')
+	} else {
+      downloadTestDataAndBitstreams(board)
+	}
+  }
+}
+
+void u250Workaround() {
+  // FIXME: The finn-examples driver expects to see directory 'xilinx_u250_gen3x16_xdma_shell_2_1'
+  // or the bitstream download fails
+  dir('finn_examples/bitfiles/bitfiles.zip.d') {
+    if (params['isRelease']) {
+      sh 'mv U250 xilinx_u250_gen3x16_xdma_shell_2_1'
+    } else {
+      sh 'mv xilinx_u250_gen3x16_xdma_2_1_202010_1 xilinx_u250_gen3x16_xdma_shell_2_1'
+    }
+  }
 }
 
 void createTestScript(String boardNotebooks) {
