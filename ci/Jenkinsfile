@@ -220,7 +220,7 @@ void createTestScript(String boardNotebooks) {
   if(boardNotebooks == "alveo_notebooks")
     sh """echo "#!/bin/bash
 . /opt/xilinx/xrt/setup.sh
-. /home/fionno/anaconda3/bin/activate
+. ${CONDA_ENV_ACTIVATE}
 python -m pytest -m ${boardNotebooks}" >> run-tests.sh
     """
   else
