@@ -203,23 +203,15 @@ void getBoardFiles(String board) {
       sh """unzip ${board}.zip"""
     }
   } else {
-	if (board == "U250") {
-      downloadTestDataAndBitstreams('xilinx_u250_gen3x16_xdma_shell_2_1')
-	} else {
-      downloadTestDataAndBitstreams(board)
-	}
+    downloadTestDataAndBitstreams(board)
   }
 }
 
 void u250Workaround() {
-  // FIXME: The finn-examples driver expects to see directory 'xilinx_u250_gen3x16_xdma_shell_2_1'
-  // or the bitstream download fails
+  // FIXME: The installed Pynq driver expects to see directory
+  // 'xilinx_u250_gen3x16_xdma_shell_2_1' or else the bitstream download fails.
   dir('finn_examples/bitfiles/bitfiles.zip.d') {
-    if (params['isRelease']) {
-      sh 'mv U250 xilinx_u250_gen3x16_xdma_shell_2_1'
-    } else {
-      sh 'mv xilinx_u250_gen3x16_xdma_2_1_202010_1 xilinx_u250_gen3x16_xdma_shell_2_1'
-    }
+    sh 'find . -name \'*250*\' -exec mv {} xilinx_u250_gen3x16_xdma_shell_2_1 \;'
   }
 }
 
