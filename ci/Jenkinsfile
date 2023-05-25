@@ -40,8 +40,8 @@ pipeline {
 		}
 	  }
 	}
-	stage('Run Notebooks') {
-        parallel {
+	stage('Run Notebooks on Hardware') {
+      parallel {
 		stage('Test Pynq-Z1 notebooks') {
 		  agent {
 			label 'finn-pynq'
@@ -127,10 +127,6 @@ pipeline {
 		stage('Test Alveo U250 notebooks') {
 		  agent {
 			label 'finn-build-55'
-		  }
-		  environment {
-			USER_XILINX = credentials('pynq-z1-credentials')
-			IMAGENET_VAL_PATH = '/scratch/imagenet-validation-dataset'
 		  }
 		  steps {
 			clean_finn_examples_clone()
