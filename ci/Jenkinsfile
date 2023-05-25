@@ -3,10 +3,43 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
   }
   parameters {
+    booleanParam(name: 'isRelease', defaultValue: false, description: 'Set this value to true if doing a release test cycle')
     booleanParam(name: 'zcu104-available', defaultValue: false, description: 'Set this value to true if the ZCU104 board is available and configured correctly')
   }
   agent none
   stages {
+	stage('Build') {
+	  when {
+		// beforeAgent set to 'true' to prevent an offline agent hanging the stage
+		beforeAgent true
+		expression { params['isRelease'] }
+	  }
+	  agent {
+		label 'finn-build'
+	  }
+	  steps {
+		clean_finn_examples_clone()
+		dir('build') {
+		  sh './get-finn.sh'
+		  sh './build-all.sh'
+		}
+	  }
+	}
+	stage('Prepare Bitstreams') {
+	  when {
+		// beforeAgent set to 'true' to prevent an offline agent hanging the stage
+		beforeAgent true
+		expression { params['isRelease'] }
+	  }
+	  agent {
+		label 'finn-build'
+	  }
+	  steps {
+		dir('build/release') {
+		  stash name: "bitfile_stash", includes: "Pynq-Z1.zip,U250.zip,Ultra96.zip,ZCU104.zip"
+		}
+	  }
+	}
 	stage('Run Notebooks') {
         parallel {
 		stage('Test Pynq-Z1 notebooks') {
@@ -18,7 +51,19 @@ pipeline {
 		  }
 		  steps {
 			clean_finn_examples_clone()
-			download_all_files('Pynq-Z1')
+
+			// For release job: unstash previously generated bitstreams for testing
+			// For non-release job: download existing bitstreams for testing
+			if (params['isRelease']) {
+			  download_data_files()
+			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
+			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
+			    unstash name: "bitfile_stash"
+			    sh 'unzip Pynq-Z1.zip'
+			  }
+			} else {
+			  download_all_files('Pynq-Z1')
+			}
 
 			// Create a script to run as root on the Pynq-Z1 agent
 			create_test_script('pynq_notebooks')
@@ -47,7 +92,19 @@ pipeline {
 		  }
 		  steps {
 			clean_finn_examples_clone()
-			download_all_files('Ultra96')
+
+			// For release job: unstash previously generated bitstreams for testing
+			// For non-release job: download existing bitstreams for testing
+			if (params['isRelease']) {
+			  download_data_files()
+			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
+			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
+			    unstash name: "bitfile_stash"
+			    sh 'unzip Ultra96.zip'
+			  }
+			} else {
+			  download_all_files('Ultra96')
+			}
 
 			// Create a script to run as root on the Ultra96 agent
 			create_test_script('ultra96_notebooks')
@@ -77,12 +134,26 @@ pipeline {
 		  }
 		  steps {
 			clean_finn_examples_clone()
-			download_all_files('xilinx_u250_gen3x16_xdma_2_1_202010_1')
+
+			// For release job: unstash previously generated bitstreams for testing
+			// For non-release job: download existing bitstreams for testing
+			if (params['isRelease']) {
+			  download_data_files()
+			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
+			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
+			    unstash name: "bitfile_stash"
+			    sh 'unzip U250.zip'
+			    // FIXME: The finn-examples driver expects to see directory 'xilinx_u250_gen3x16_xdma_shell_2_1' or bitstream download fails
+				sh 'mv U250 xilinx_u250_gen3x16_xdma_shell_2_1'
+			  }
+			} else {
+			  download_all_files('xilinx_u250_gen3x16_xdma_2_1_202010_1')
+              // FIXME: The finn-examples driver expects to see directory 'xilinx_u250_gen3x16_xdma_shell_2_1' or bitstream download fails
+			  sh 'mv finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_2_1_202010_1 finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_shell_2_1'
+			}
 
 			// Create a script to run as root on the U250 agent
 			create_test_script('alveo_notebooks')
-
-            sh 'mv finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_2_1_202010_1 finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_shell_2_1'
 
 			// Execute the script as the root user - needed for U250
 			sh './run-tests.sh'
@@ -113,7 +184,19 @@ pipeline {
 		  }
 		  steps {
 			clean_finn_examples_clone()
-			download_all_files('ZCU104')
+
+			// For release job: unstash previously generated bitstreams for testing
+			// For non-release job: download existing bitstreams for testing
+			if (params['isRelease']) {
+			  download_data_files()
+			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
+			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
+			    unstash name: "bitfile_stash"
+			    sh 'unzip ZCU104.zip'
+			  }
+			} else {
+			  download_all_files('ZCU104')
+			}
 
 			// Create a script to run as root on the ZCU104 agent
 			create_test_script('zcu_notebooks')
@@ -154,6 +237,10 @@ void postSuccess(String board) {
 void clean_finn_examples_clone() {
   sh 'rm -rf finn_examples/bitfiles/bitfiles.zip.d'
   sh 'python tests/download-test-files.py -r'
+}
+
+void download_data_files() {
+  sh 'python tests/download-test-files.py -d'
 }
 
 void download_all_files(String board) {
