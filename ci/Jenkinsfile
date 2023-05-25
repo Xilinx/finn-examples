@@ -211,7 +211,8 @@ void u250Workaround() {
   // FIXME: The installed Pynq driver expects to see directory
   // 'xilinx_u250_gen3x16_xdma_shell_2_1' or else the bitstream download fails.
   dir('finn_examples/bitfiles/bitfiles.zip.d') {
-    sh 'find . -name \'*250*\' -exec mv {} xilinx_u250_gen3x16_xdma_shell_2_1 \\;'
+    sh 'rm *.zip'
+    sh 'mv ./* xilinx_u250_gen3x16_xdma_shell_2_1'
   }
 }
 
