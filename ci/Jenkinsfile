@@ -28,14 +28,13 @@ pipeline {
 		  }
 		  post {
 			always {
-			  // Delete the created Pynq-Z1 test script
-			  sh 'rm run-tests.sh'
+			  postCleanup()
 			}
 			failure {
-			  echo 'Failed to run Pynq-Z1 tests'
+			  postFailure('Pynq-Z1')
 			}
 			success {
-			  echo 'Pynq-Z1 tests passed'
+			  postSuccess('Pynq-Z1')
 			}
 		  }
 		}
@@ -58,14 +57,13 @@ pipeline {
 		  }
 		  post {
 			always {
-			  // Delete the created Alveo test script
-			  sh 'rm run-tests.sh'
+			  postCleanup()
 			}
 			failure {
-			  echo 'Failed to run Ultra96 tests'
+			  postFailure('Ultra96')
 			}
 			success {
-			  echo 'Ultra96 tests passed'
+			  postSuccess('Ultra96')
 			}
 		  }
 		}
@@ -91,14 +89,13 @@ pipeline {
 		  }
 		  post {
 			always {
-			  // Delete the created Alveo test script
-			  sh 'rm run-tests.sh'
+			  postCleanup()
 			}
 			failure {
-			  echo 'Failed to run U250 tests'
+			  postFailure('U250')
 			}
 			success {
-			  echo 'U250 tests passed'
+			  postSuccess('U250')
 			}
 		  }
 		}
@@ -126,20 +123,32 @@ pipeline {
 		  }
 		  post {
 			always {
-			  // Delete the created ZCU104 test script
-			  sh 'rm run-tests.sh'
+			  postCleanup()
 			}
 			failure {
-			  echo 'Failed to run ZCU104 tests'
+			  postFailure('ZCU104')
 			}
 			success {
-			  echo 'ZCU104 tests passed'
+			  postSuccess('ZCU104')
 			}
 		  }
 		}
 	  }
 	}
   }
+}
+
+void postCleanup() {
+  // Delete the created test script
+  sh 'rm run-tests.sh'
+}
+
+void postFailure(String board) {
+  echo "Failed to run ${board} tests"
+}
+
+void postSuccess(String board) {
+  echo "${board} tests passed"
 }
 
 void clean_finn_examples_clone() {
