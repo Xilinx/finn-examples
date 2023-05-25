@@ -181,15 +181,15 @@ void postSuccess(String board) {
 
 void cleanLocalCloneDir() {
   sh 'rm -rf finn_examples/bitfiles/bitfiles.zip.d'
-  sh 'python tests/download-test-files.py -r'
+  sh 'python ci/download-test-files.py -r'
 }
 
 void downloadTestData() {
-  sh 'python tests/download-test-files.py -d'
+  sh 'python ci/download-test-files.py -d'
 }
 
 void downloadTestDataAndBitstreams(String board) {
-  sh """python tests/download-test-files.py -d -b ${board}"""
+  sh """python ci/download-test-files.py -d -b ${board}"""
 }
 
 void getBoardFiles(String board) {
