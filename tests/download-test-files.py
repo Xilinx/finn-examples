@@ -21,7 +21,6 @@ def runcmd(cmd, verbose = False, *args, **kwargs):
         cmd,
         stdout = subprocess.PIPE,
         stderr = subprocess.PIPE,
-        #text = True,
         shell = True
     )
     std_out, std_err = process.communicate()
@@ -55,36 +54,32 @@ if __name__ == "__main__":
         runcmd('rm -rf *.zip')
         os.chdir(root_dir + bit_links_dir)
         runcmd('rm -rf {}'.format(bitfile_zip_dir))
-        print("Deleted")
+        print("Files deleted")
         sys.exit()
 
+    # Download the data files needed for certain notebooks
     if args.data:
         os.chdir(root_dir + data_links_dir)
 
         for link_file in glob.glob("*.link"):
-            print(link_file)
             url = load_data_links(link_file)
             runcmd('wget {}'.format(url))
             zip_file = os.path.basename(url)
             runcmd('unzip {}'.format(zip_file))
 
-        # do the same for bitfiles - need a switch statement based on board chosen
-        # this script should take in a board to select which bitstreams to download
-        if args.board:
-            print(args.board)
-            os.chdir(root_dir + bit_links_dir)
+    # Download bitstreams for the requested board
+    if args.board:
+        os.chdir(root_dir + bit_links_dir)
 
-            bitfile = "bitfiles.zip.link"
-            bitfile_zip_dir = "bitfiles.zip.d"
-            print(bitfile)
-            print(bitfile_zip_dir)
-            bitfile_url = load_bitfile_links(bitfile, args.board)
+        bitfile = "bitfiles.zip.link"
+        bitfile_zip_dir = "bitfiles.zip.d"
+        bitfile_url = load_bitfile_links(bitfile, args.board)
 
-            # make bitstream dir and
-            runcmd('mkdir {}'.format(bitfile_zip_dir))
-            os.chdir(bitfile_zip_dir)
-            runcmd('wget {}'.format(bitfile_url))
-            zip_file = os.path.basename(bitfile_url)
-            runcmd('unzip {}'.format(zip_file))
+        # make bitstream dir and
+        runcmd('mkdir {}'.format(bitfile_zip_dir))
+        os.chdir(bitfile_zip_dir)
+        runcmd('wget {}'.format(bitfile_url))
+        zip_file = os.path.basename(bitfile_url)
+        runcmd('unzip {}'.format(zip_file))
 
 print("Done")
