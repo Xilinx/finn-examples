@@ -18,7 +18,7 @@ pipeline {
 		label 'finn-build'
 	  }
 	  steps {
-		clean_finn_examples_clone()
+		cleanLocalCloneDir()
 		dir('build') {
 		  sh './get-finn.sh'
 		  sh './build-all.sh'
@@ -50,23 +50,23 @@ pipeline {
 			USER_XILINX = credentials('pynq-z1-credentials')
 		  }
 		  steps {
-			clean_finn_examples_clone()
+			cleanLocalCloneDir()
 
 			// For release job: unstash previously generated bitstreams for testing
 			// For non-release job: download existing bitstreams for testing
 			if (params['isRelease']) {
-			  download_data_files()
+			  downloadTestData()
 			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
 			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
 			    unstash name: "bitfile_stash"
 			    sh 'unzip Pynq-Z1.zip'
 			  }
 			} else {
-			  download_all_files('Pynq-Z1')
+			  downloadTestDataAndBitstreams('Pynq-Z1')
 			}
 
 			// Create a script to run as root on the Pynq-Z1 agent
-			create_test_script('pynq_notebooks')
+			createTestScript('pynq_notebooks')
 
 			// Execute the script as the root user - needed for Pynq-Z1
 			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
@@ -91,23 +91,23 @@ pipeline {
 			USER_XILINX = credentials('pynq-z1-credentials')
 		  }
 		  steps {
-			clean_finn_examples_clone()
+			cleanLocalCloneDir()
 
 			// For release job: unstash previously generated bitstreams for testing
 			// For non-release job: download existing bitstreams for testing
 			if (params['isRelease']) {
-			  download_data_files()
+			  downloadTestData()
 			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
 			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
 			    unstash name: "bitfile_stash"
 			    sh 'unzip Ultra96.zip'
 			  }
 			} else {
-			  download_all_files('Ultra96')
+			  downloadTestDataAndBitstreams('Ultra96')
 			}
 
 			// Create a script to run as root on the Ultra96 agent
-			create_test_script('ultra96_notebooks')
+			createTestScript('ultra96_notebooks')
 
 			// Execute the script as the root user - needed for Ultra96
 			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
@@ -129,12 +129,12 @@ pipeline {
 			label 'finn-build-55'
 		  }
 		  steps {
-			clean_finn_examples_clone()
+			cleanLocalCloneDir()
 
 			// For release job: unstash previously generated bitstreams for testing
 			// For non-release job: download existing bitstreams for testing
 			if (params['isRelease']) {
-			  download_data_files()
+			  downloadTestData()
 			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
 			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
 			    unstash name: "bitfile_stash"
@@ -143,13 +143,13 @@ pipeline {
 				sh 'mv U250 xilinx_u250_gen3x16_xdma_shell_2_1'
 			  }
 			} else {
-			  download_all_files('xilinx_u250_gen3x16_xdma_2_1_202010_1')
+			  downloadTestDataAndBitstreams('xilinx_u250_gen3x16_xdma_2_1_202010_1')
               // FIXME: The finn-examples driver expects to see directory 'xilinx_u250_gen3x16_xdma_shell_2_1' or bitstream download fails
 			  sh 'mv finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_2_1_202010_1 finn_examples/bitfiles/bitfiles.zip.d/xilinx_u250_gen3x16_xdma_shell_2_1'
 			}
 
 			// Create a script to run as root on the U250 agent
-			create_test_script('alveo_notebooks')
+			createTestScript('alveo_notebooks')
 
 			// Execute the script as the root user - needed for U250
 			sh './run-tests.sh'
@@ -179,23 +179,23 @@ pipeline {
 			USER_XILINX = credentials('pynq-z1-credentials')
 		  }
 		  steps {
-			clean_finn_examples_clone()
+			cleanLocalCloneDir()
 
 			// For release job: unstash previously generated bitstreams for testing
 			// For non-release job: download existing bitstreams for testing
 			if (params['isRelease']) {
-			  download_data_files()
+			  downloadTestData()
 			  sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
 			  dir('finn_examples/bitfiles/bitfiles.zip.d') {
 			    unstash name: "bitfile_stash"
 			    sh 'unzip ZCU104.zip'
 			  }
 			} else {
-			  download_all_files('ZCU104')
+			  downloadTestDataAndBitstreams('ZCU104')
 			}
 
 			// Create a script to run as root on the ZCU104 agent
-			create_test_script('zcu_notebooks')
+			createTestScript('zcu_notebooks')
 
 			// Execute the script as the root user - needed for ZCU104
 			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
@@ -230,20 +230,20 @@ void postSuccess(String board) {
   echo "${board} tests passed"
 }
 
-void clean_finn_examples_clone() {
+void cleanLocalCloneDir() {
   sh 'rm -rf finn_examples/bitfiles/bitfiles.zip.d'
   sh 'python tests/download-test-files.py -r'
 }
 
-void download_data_files() {
+void downloadTestData() {
   sh 'python tests/download-test-files.py -d'
 }
 
-void download_all_files(String board) {
+void downloadTestDataAndBitstreams(String board) {
   sh """python tests/download-test-files.py -d -b ${board}"""
 }
 
-void create_test_script(String boardNotebooks) {
+void createTestScript(String boardNotebooks) {
   // Create the script - stating what set of notebooks to use
   if(boardNotebooks == "alveo_notebooks")
     sh """echo "#!/bin/bash
