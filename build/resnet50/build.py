@@ -31,6 +31,7 @@ import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
 from warnings import warn
 import os
+import shutil
 # custom steps for resnet50v1.5
 from custom_steps import (
     step_resnet50_tidy,
@@ -144,5 +145,3 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
-
-
