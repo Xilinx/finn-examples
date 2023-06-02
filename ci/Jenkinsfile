@@ -50,6 +50,12 @@ pipeline {
 			USER_XILINX = credentials('pynq-z1-credentials')
 		  }
 		  steps {
+			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+			  script {
+			    // Check if the agent is offline
+			    failOnNodeOffline('finn-pynq')
+			  }
+			}
 			cleanLocalCloneDir()
 			getBoardFiles('Pynq-Z1')
 
@@ -79,6 +85,12 @@ pipeline {
 			USER_XILINX = credentials('pynq-z1-credentials')
 		  }
 		  steps {
+			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+			  script {
+			    // Check if the agent is offline
+			    failOnNodeOffline('finn-ultra96')
+			  }
+			}
 			cleanLocalCloneDir()
 			getBoardFiles('Ultra96')
 
@@ -105,6 +117,12 @@ pipeline {
 			label 'finn-build-55'
 		  }
 		  steps {
+			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+			  script {
+			    // Check if the agent is offline
+			    failOnNodeOffline('finn-build-55')
+			  }
+			}
 			cleanLocalCloneDir()
 			getBoardFiles('U250')
 			u250Workaround()
@@ -233,4 +251,23 @@ python -m pytest -m ${boardNotebooks}" >> run-tests.sh
 
   // Give permissions to script
   sh 'chmod 777 run-tests.sh'
+}
+
+void failOnNodeOffline(String labelName) {
+  Label label = Jenkins.instance.getLabel(labelName)
+
+  if (label) {
+    List<Node> nodes = Jenkins.instance.getNodes()
+
+    nodes.each { node ->
+      if (node.getAssignedLabels().contains(label)) {
+        def computer = node.toComputer()
+        if (computer && computer.isOffline()) {
+          error("Agent ${node.displayName} is offline")
+        }
+      }
+    }
+  } else {
+    error("Label ${labelName} not found")
+  }
 }
