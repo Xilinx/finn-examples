@@ -8,6 +8,16 @@ pipeline {
   }
   agent none
   stages {
+	stage('Check Boards Are Online') {
+	  agent none
+	  steps {
+	    script {
+	      env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
+	      env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
+	      env.ALVEO_HOST_ONLINE = isNodeOnline('finn-build-55')
+	    }
+	  }
+	}
 	stage('Build') {
 	  when {
 		// beforeAgent set to 'true' to prevent an offline agent hanging the stage
@@ -43,6 +53,12 @@ pipeline {
 	stage('Run Notebooks on Hardware') {
       parallel {
 		stage('Test Pynq-Z1 notebooks') {
+		  when {
+		    beforeAgent true
+		    expression {
+		      return env.PYNQ_ONLINE == 'true'
+		    }
+		  }
 		  agent {
 			label 'finn-pynq'
 		  }
@@ -72,6 +88,12 @@ pipeline {
 		  }
 		}
 		stage('Test Ultra96 notebooks') {
+		  when {
+		    beforeAgent true
+		    expression {
+		      return env.ULTRA96_ONLINE == 'true'
+		    }
+		  }
 		  agent {
 			label 'finn-ultra96'
 		  }
@@ -101,6 +123,12 @@ pipeline {
 		  }
 		}
 		stage('Test Alveo U250 notebooks') {
+		  when {
+		    beforeAgent true
+		    expression {
+		      return env.ALVEO_HOST_ONLINE == 'true'
+		    }
+		  }
 		  agent {
 			label 'finn-build-55'
 		  }
@@ -161,6 +189,20 @@ pipeline {
 			}
 		  }
 		}
+	  }
+	}
+	stage('Check Stage Results') {
+	  agent none
+	  steps {
+	    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+	      script {
+	        // Check if any agent's tests (stages) were skipped due to being offline
+	        def overallResult = checkAllBoards()
+	        if (!overallResult) {
+	          error('One or more conditions failed')
+	        }
+	      }
+	    }
 	  }
 	}
   }
@@ -233,4 +275,46 @@ python -m pytest -m ${boardNotebooks}" >> run-tests.sh
 
   // Give permissions to script
   sh 'chmod 777 run-tests.sh'
+}
+
+void isNodeOnline(String labelName) {
+  Label label = Jenkins.instance.getLabel(labelName)
+  def agentOnline = false
+
+  if (label) {
+    List<Node> nodes = Jenkins.instance.getNodes()
+
+    nodes.each { node ->
+      if (node.getAssignedLabels().contains(label)) {
+        def computer = node.toComputer()
+        if (computer && computer.isOnline()) {
+          agentOnline = true
+        } else {
+          echo """Agent ${node.displayName} is offline"""
+        }
+      }
+    }
+  } else {
+    echo """Node with label ${labelName} not found"""
+  }
+
+  return agentOnline
+}
+
+def checkAllBoards() {
+  def overallResult = true
+
+  if (env.PYNQ_ONLINE == 'false') {
+    overallResult = false
+  }
+
+  if (env.ALVEO_HOST_ONLINE == 'false') {
+    overallResult = false
+  }
+
+  if (env.ULTRA96_ONLINE == 'false') {
+    overallResult = false
+  }
+
+  return overallResult
 }
