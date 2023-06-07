@@ -317,5 +317,9 @@ def checkAllBoards() {
     overallResult = false
   }
 
+  if (env.ZCU104_ONLINE == 'false') {
+    overallResult = false
+  }
+
   return overallResult
 }
