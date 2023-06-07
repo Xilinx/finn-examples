@@ -4,7 +4,6 @@ pipeline {
   }
   parameters {
     booleanParam(name: 'isRelease', defaultValue: false, description: 'Set this value to true if doing a release test cycle')
-    booleanParam(name: 'zcu104-available', defaultValue: false, description: 'Set this value to true if the ZCU104 board is available and configured correctly')
   }
   agent none
   stages {
@@ -15,6 +14,7 @@ pipeline {
 	      env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
 	      env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
 	      env.ALVEO_HOST_ONLINE = isNodeOnline('finn-build-55')
+	      env.ZCU104_ONLINE = isNodeOnline('finn-zcu104')
 	    }
 	  }
 	}
@@ -157,9 +157,10 @@ pipeline {
 		}
 		stage('Test ZCU104 notebooks') {
 		  when {
-		    // beforeAgent set to 'true' to prevent an offline agent hanging the stage
 		    beforeAgent true
-		    expression { params['zcu104-available'] }
+		    expression {
+		      return env.ZCU104_ONLINE == 'true'
+		    }
 		  }
 		  agent {
 			label 'finn-zcu104'
