@@ -25,7 +25,7 @@ pipeline {
 		expression { params['isRelease'] }
 	  }
 	  agent {
-		label 'finn-build'
+		label 'finn-build-55'
 	  }
 	  steps {
 		cleanLocalCloneDir()
@@ -42,7 +42,7 @@ pipeline {
 		expression { params['isRelease'] }
 	  }
 	  agent {
-		label 'finn-build'
+		label 'finn-build-55'
 	  }
 	  steps {
 		dir('build/release') {
@@ -70,7 +70,7 @@ pipeline {
 			getBoardFiles('Pynq-Z1')
 
 			// Create a script to run as root on the Pynq-Z1 agent
-			createTestScript('pynq_notebooks')
+			createTestScript('pynq_notebooks', "finn-examples_pynq.xml")
 
 			// Execute the script as the root user - needed for Pynq-Z1
 			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
@@ -105,7 +105,7 @@ pipeline {
 			getBoardFiles('Ultra96')
 
 			// Create a script to run as root on the Ultra96 agent
-			createTestScript('ultra96_notebooks')
+			createTestScript('ultra96_notebooks', "finn-examples_ultra96.xml")
 
 			// Execute the script as the root user - needed for Ultra96
 			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
@@ -138,7 +138,7 @@ pipeline {
 			u250Workaround()
 
 			// Create a script to run as root on the U250 agent
-			createTestScript('alveo_notebooks')
+			createTestScript('alveo_notebooks', "finn-examples_u250.xml")
 
 			// Execute the script as the root user - needed for U250
 			sh './run-tests.sh'
@@ -173,7 +173,7 @@ pipeline {
 			getBoardFiles('ZCU104')
 
 			// Create a script to run as root on the ZCU104 agent
-			createTestScript('zcu_notebooks')
+			createTestScript('zcu_notebooks', "finn-examples_zcu104.xml")
 
 			// Execute the script as the root user - needed for ZCU104
 			sh 'echo $USER_XILINX_PSW | sudo -S ./run-tests.sh'
@@ -259,19 +259,19 @@ void u250Workaround() {
   }
 }
 
-void createTestScript(String boardNotebooks) {
+void createTestScript(String boardNotebooks, String testResultsFilename) {
   // Create the script - stating what set of notebooks to use
   if(boardNotebooks == "alveo_notebooks")
     sh """echo "#!/bin/bash
 . /opt/xilinx/xrt/setup.sh
 . ${CONDA_ENV_ACTIVATE}
-python -m pytest -m ${boardNotebooks}" >> run-tests.sh
+python -m pytest -m ${boardNotebooks} --junitxml=${testResultsFilename}" >> run-tests.sh
     """
   else
     sh """echo "#!/bin/bash
 . /etc/profile.d/pynq_venv.sh
 . /etc/profile.d/xrt_setup.sh
-python -m pytest -m ${boardNotebooks}" >> run-tests.sh
+python -m pytest -m ${boardNotebooks} --junitxml=${testResultsFilename}" >> run-tests.sh
     """
 
   // Give permissions to script
