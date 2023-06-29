@@ -193,14 +193,14 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model.set_tensor_datatype(model.graph.input[0].name, DataType["UINT8"])
     model = model.transform(InferDataLayouts())
 
-    try:
-        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import (
-            InferDoublePackedConv,
-        )
+#    try:
+#        from finnexperimental.transformation.fpgadataflow.infer_doublepacked_dsp import (
+#            InferDoublePackedConv,
+#        )
 
-        model = model.transform(InferDoublePackedConv([1]))
-    except Exception:
-        print(" FINN Experimental not available. Using non-packed convolution ")
+#        model = model.transform(InferDoublePackedConv([1]))
+#    except Exception:
+#        print(" FINN Experimental not available. Using non-packed convolution ")
 
     model = model.transform(DoubleToSingleFloat())
     model = model.transform(InferDataTypes())
@@ -299,7 +299,7 @@ def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig)
 def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
         try:
-            from finn.analysis.partitioning import partition
+            from finnexperimental.analysis.partitioning import partition
 
             # apply partitioning of the model, restricting the first and last layers
             # to SLR0

@@ -31,6 +31,7 @@ import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
 from warnings import warn
 import os
+import shutil
 # custom steps for resnet50v1.5
 from custom_steps import (
     step_resnet50_tidy,
@@ -95,13 +96,13 @@ for platform_name in platforms_to_build:
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
 
-    try:
-        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
-        folding_config_file="folding_config/U250_folding_config.json"
-        print("DoublePackedConv detected")
-    except:
-        warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ")
-        folding_config_file="folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
+#    try:
+#        from finnexperimental.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
+#        folding_config_file="folding_config/U250_folding_config.json"
+#        print("DoublePackedConv detected")
+#    except:
+#        warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ")
+    folding_config_file="folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
@@ -144,5 +145,3 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
-
-
