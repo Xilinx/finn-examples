@@ -35,7 +35,7 @@ import shutil
 # custom steps
 from custom_steps import step_pre_streamline, step_convert_final_layers
 
-model_name = "vgg10-radioml-w4a4"
+model_name = "radioml_w4a4_small_tidy"
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104"]
