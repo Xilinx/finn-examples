@@ -13,7 +13,7 @@ pipeline {
 	    script {
 	      env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
 	      env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
-	      env.ALVEO_HOST_ONLINE = isNodeOnline('finn-build-55')
+	      env.ALVEO_HOST_ONLINE = isNodeOnline('finn-u250')
 	      env.ZCU104_ONLINE = isNodeOnline('finn-zcu104')
 	    }
 	  }
@@ -25,7 +25,7 @@ pipeline {
 		expression { params['isRelease'] }
 	  }
 	  agent {
-		label 'finn-build-55'
+		label 'finn-build'
 	  }
 	  steps {
 		cleanLocalCloneDir()
@@ -42,7 +42,7 @@ pipeline {
 		expression { params['isRelease'] }
 	  }
 	  agent {
-		label 'finn-build-55'
+		label 'finn-build'
 	  }
 	  steps {
 		dir('build/release') {
@@ -130,7 +130,7 @@ pipeline {
 		    }
 		  }
 		  agent {
-			label 'finn-build-55'
+			label 'finn-u250'
 		  }
 		  steps {
 			cleanLocalCloneDir()
