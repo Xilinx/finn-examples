@@ -245,6 +245,9 @@ pipeline {
 	  post {
         always {
           script {
+	        // Delete previous build's XML test results
+	        sh 'rm *.xml'
+
             // Only unstash for stages that ran
             unstashSuccessfulStage(env.TEST_PYNQ, "finn_examples_test_PynqZ1")
             unstashSuccessfulStage(env.TEST_ULTRA96, "finn_examples_test_Ultra96")
@@ -281,6 +284,8 @@ void unstashSuccessfulStage(String stageEnvVariableSet, String stashName) {
 }
 
 void cleanLocalCloneDir() {
+  // This removes previour run's test reports, bitstreams and test files
+  sh 'rm *.xml'
   sh 'rm -rf finn_examples/bitfiles/bitfiles.zip.d'
   sh 'python ci/download-test-files.py -r'
 }
