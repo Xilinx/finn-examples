@@ -73,12 +73,16 @@ pipeline {
 		        createTestScript('pynq_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as the root user - needed for zynq platforms
+				// Use an env variable to help collect test results later in pipeline
+                env.TEST_PYNQ = "SUCCESS"
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
 		      }
 		    }
 		  }
 		  post {
 			always {
+			  // Collect the results file on the slave node by stashing
+              stash name: "finn_examples_test_PynqZ1", includes: "finn-examples_${env.BOARD}.xml"
 			  postCleanup()
 			}
 			failure {
@@ -113,12 +117,16 @@ pipeline {
 		        createTestScript('ultra96_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as the root user - needed for zynq platforms
+				// Use an env variable to help collect test results later in pipeline
+                env.TEST_ULTRA96 = "SUCCESS"
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
 		      }
 		    }
 		  }
 		  post {
 			always {
+			  // Collect the results file on the slave node by stashing
+              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
 			  postCleanup()
 			}
 			failure {
@@ -153,12 +161,16 @@ pipeline {
 		        createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as non-root user - root permissions not needed
+				// Use an env variable to help collect test results later in pipeline
+                env.TEST_U250 = "SUCCESS"
 		        sh './run-tests.sh'
 		      }
 		    }
 		  }
 		  post {
 			always {
+			  // Collect the results file on the slave node by stashing
+              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
 			  postCleanup()
 			}
 			failure {
@@ -193,12 +205,16 @@ pipeline {
 		        createTestScript('zcu_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as the root user - needed for zynq platforms
+				// Use an env variable to help collect test results later in pipeline
+                env.TEST_ZCU104 = "SUCCESS"
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
 		      }
 		    }
 		  }
 		  post {
 			always {
+			  // Collect the results file on the slave node by stashing
+              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
 			  postCleanup()
 			}
 			failure {
@@ -212,7 +228,9 @@ pipeline {
 	  }
 	}
 	stage('Check Stage Results') {
-	  agent none
+	  agent {
+		label 'finn-build'
+	  }
 	  steps {
 	    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
 	      script {
@@ -224,6 +242,21 @@ pipeline {
 	      }
 	    }
 	  }
+	  post {
+        always {
+          script {
+            // Only unstash for stages that ran
+            unstashSuccessfulStage(env.TEST_PYNQ, "finn_examples_test_PynqZ1")
+            unstashSuccessfulStage(env.TEST_ULTRA96, "finn_examples_test_Ultra96")
+            unstashSuccessfulStage(env.TEST_U250, "finn_examples_test_U250")
+            unstashSuccessfulStage(env.TEST_ZCU104, "finn_examples_test_ZCU104")
+
+            // Plot what XML files were created during the test run
+            archiveArtifacts artifacts: "*.xml"
+            junit '**/*.xml'
+          }
+        }
+      }
 	}
   }
 }
@@ -239,6 +272,12 @@ void postFailure(String board) {
 
 void postSuccess(String board) {
   echo "${board} tests passed"
+}
+
+void unstashSuccessfulStage(String stageEnvVariableSet, String stashName) {
+  if (stageEnvVariableSet) {
+    unstash stashName
+  }
 }
 
 void cleanLocalCloneDir() {
