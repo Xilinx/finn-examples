@@ -68,10 +68,10 @@ pipeline {
 		        cleanLocalCloneDir()
 		        getBoardFiles('Pynq-Z1')
 
-		        // Create a script to run as root on the Pynq-Z1 agent
+		        // Create test script
 		        createTestScript('pynq_notebooks', "finn-examples_pynq.xml")
 
-		        // Execute the script as the root user - needed for Pynq-Z1
+		        // Execute the script as the root user - needed for zynq platforms
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
 		      }
 		    }
@@ -107,10 +107,10 @@ pipeline {
 		        cleanLocalCloneDir()
 		        getBoardFiles('Ultra96')
 
-		        // Create a script to run as root on the Ultra96 agent
+		        // Create test script
 		        createTestScript('ultra96_notebooks', "finn-examples_ultra96.xml")
 
-		        // Execute the script as the root user - needed for Ultra96
+		        // Execute the script as the root user - needed for zynq platforms
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
 		      }
 		    }
@@ -144,10 +144,10 @@ pipeline {
 		        getBoardFiles('U250')
 		        u250Workaround()
 
-		        // Create a script to run as root on the U250 agent
+		        // Create test script
 		        createTestScript('alveo_notebooks', "finn-examples_u250.xml")
 
-		        // Execute the script as the root user - needed for U250
+		        // Execute the script as non-root user - root permissions not needed
 		        sh './run-tests.sh'
 		      }
 		    }
@@ -183,10 +183,10 @@ pipeline {
 		        cleanLocalCloneDir()
 		        getBoardFiles('ZCU104')
 
-		        // Create a script to run as root on the ZCU104 agent
+		        // Create test script
 		        createTestScript('zcu_notebooks', "finn-examples_zcu104.xml")
 
-		        // Execute the script as the root user - needed for ZCU104
+		        // Execute the script as the root user - needed for zynq platforms
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
 		      }
 		    }
