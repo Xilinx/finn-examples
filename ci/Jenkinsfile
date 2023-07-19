@@ -7,17 +7,6 @@ pipeline {
   }
   agent none
   stages {
-	stage('Check Boards Are Online') {
-	  agent none
-	  steps {
-	    script {
-	      env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
-	      env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
-	      env.ALVEO_HOST_ONLINE = isNodeOnline('finn-u250')
-	      env.ZCU104_ONLINE = isNodeOnline('finn-zcu104')
-	    }
-	  }
-	}
 	stage('Build') {
 	  when {
 		// beforeAgent set to 'true' to prevent an offline agent hanging the stage
@@ -48,6 +37,17 @@ pipeline {
 		dir('build/release') {
 		  stash name: "bitfile_stash", includes: "Pynq-Z1.zip,U250.zip,Ultra96.zip,ZCU104.zip"
 		}
+	  }
+	}
+	stage('Check Boards Are Online') {
+	  agent none
+	  steps {
+	    script {
+	      env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
+	      env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
+	      env.ALVEO_HOST_ONLINE = isNodeOnline('finn-u250')
+	      env.ZCU104_ONLINE = isNodeOnline('finn-zcu104')
+	    }
 	  }
 	}
 	stage('Run Notebooks on Hardware') {
