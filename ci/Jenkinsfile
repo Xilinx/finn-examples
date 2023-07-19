@@ -17,6 +17,11 @@ pipeline {
 		cleanLocalCloneDir()
 		dir('build') {
 		  sh './get-finn.sh'
+		  // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
+		  // in order to build bitstreams/run build script with Jenkins.
+		  dir('finn') {
+		    sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+		  }
 		  sh './build-all.sh'
 		}
 	  }
