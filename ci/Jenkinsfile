@@ -207,7 +207,9 @@ pipeline {
 		        // Execute the script as the root user - needed for zynq platforms
 				// Use an env variable to help collect test results later in pipeline
                 env.TEST_ZCU104 = "SUCCESS"
-		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+		        // RADIOML_PATH needs to be passed to the root bash shell
+				// This is for the radio_with_cnns notebook
+                sh 'echo $USER_CREDENTIALS_PSW | sudo -S --preserve-env=RADIOML_PATH ./run-tests.sh'
 		      }
 		    }
 		  }
