@@ -60,16 +60,17 @@ pipeline {
 			label 'finn-pynq'
 		  }
 		  environment {
+			BOARD = 'Pynq-Z1'
 			USER_CREDENTIALS = credentials('pynq-z1-credentials')
 		  }
 		  steps {
 		    catchError(stageResult: 'FAILURE') {
 		      script {
 		        cleanLocalCloneDir()
-		        getBoardFiles('Pynq-Z1')
+		        getBoardFiles(env.BOARD)
 
 		        // Create test script
-		        createTestScript('pynq_notebooks', "finn-examples_pynq.xml")
+		        createTestScript('pynq_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as the root user - needed for zynq platforms
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
@@ -81,10 +82,10 @@ pipeline {
 			  postCleanup()
 			}
 			failure {
-			  postFailure('Pynq-Z1')
+			  postFailure(env.BOARD)
 			}
 			success {
-			  postSuccess('Pynq-Z1')
+			  postSuccess(env.BOARD)
 			}
 		  }
 		}
@@ -99,16 +100,17 @@ pipeline {
 			label 'finn-ultra96'
 		  }
 		  environment {
+			BOARD = 'Ultra96'
 			USER_CREDENTIALS = credentials('pynq-z1-credentials')
 		  }
 		  steps {
 		    catchError(stageResult: 'FAILURE') {
 		      script {
 		        cleanLocalCloneDir()
-		        getBoardFiles('Ultra96')
+		        getBoardFiles(env.BOARD)
 
 		        // Create test script
-		        createTestScript('ultra96_notebooks', "finn-examples_ultra96.xml")
+		        createTestScript('ultra96_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as the root user - needed for zynq platforms
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
@@ -120,10 +122,10 @@ pipeline {
 			  postCleanup()
 			}
 			failure {
-			  postFailure('Ultra96')
+			  postFailure(env.BOARD)
 			}
 			success {
-			  postSuccess('Ultra96')
+			  postSuccess(env.BOARD)
 			}
 		  }
 		}
@@ -137,15 +139,18 @@ pipeline {
 		  agent {
 			label 'finn-u250'
 		  }
+		  environment {
+            BOARD = 'U250'
+          }
 		  steps {
 		    catchError(stageResult: 'FAILURE') {
 		      script {
 				cleanLocalCloneDir()
-		        getBoardFiles('U250')
+		        getBoardFiles(env.BOARD)
 		        u250Workaround()
 
 		        // Create test script
-		        createTestScript('alveo_notebooks', "finn-examples_u250.xml")
+		        createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as non-root user - root permissions not needed
 		        sh './run-tests.sh'
@@ -157,10 +162,10 @@ pipeline {
 			  postCleanup()
 			}
 			failure {
-			  postFailure('U250')
+			  postFailure(env.BOARD)
 			}
 			success {
-			  postSuccess('U250')
+			  postSuccess(env.BOARD)
 			}
 		  }
 		}
@@ -175,16 +180,17 @@ pipeline {
 			label 'finn-zcu104'
 		  }
 		  environment {
+			BOARD = 'ZCU104'
 			USER_CREDENTIALS = credentials('pynq-z1-credentials')
 		  }
 		  steps {
 		    catchError(stageResult: 'FAILURE') {
 		      script {
 		        cleanLocalCloneDir()
-		        getBoardFiles('ZCU104')
+		        getBoardFiles(env.BOARD)
 
 		        // Create test script
-		        createTestScript('zcu_notebooks', "finn-examples_zcu104.xml")
+		        createTestScript('zcu_notebooks', "finn-examples_${env.BOARD}.xml")
 
 		        // Execute the script as the root user - needed for zynq platforms
 		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
@@ -196,10 +202,10 @@ pipeline {
 			  postCleanup()
 			}
 			failure {
-			  postFailure('ZCU104')
+			  postFailure(env.BOARD)
 			}
 			success {
-			  postSuccess('ZCU104')
+			  postSuccess(env.BOARD)
 			}
 		  }
 		}
