@@ -63,14 +63,18 @@ pipeline {
 			USER_CREDENTIALS = credentials('pynq-z1-credentials')
 		  }
 		  steps {
-			cleanLocalCloneDir()
-			getBoardFiles('Pynq-Z1')
+		    catchError(stageResult: 'FAILURE') {
+		      script {
+		        cleanLocalCloneDir()
+		        getBoardFiles('Pynq-Z1')
 
-			// Create a script to run as root on the Pynq-Z1 agent
-			createTestScript('pynq_notebooks', "finn-examples_pynq.xml")
+		        // Create a script to run as root on the Pynq-Z1 agent
+		        createTestScript('pynq_notebooks', "finn-examples_pynq.xml")
 
-			// Execute the script as the root user - needed for Pynq-Z1
-			sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+		        // Execute the script as the root user - needed for Pynq-Z1
+		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+		      }
+		    }
 		  }
 		  post {
 			always {
@@ -98,14 +102,18 @@ pipeline {
 			USER_CREDENTIALS = credentials('pynq-z1-credentials')
 		  }
 		  steps {
-			cleanLocalCloneDir()
-			getBoardFiles('Ultra96')
+		    catchError(stageResult: 'FAILURE') {
+		      script {
+		        cleanLocalCloneDir()
+		        getBoardFiles('Ultra96')
 
-			// Create a script to run as root on the Ultra96 agent
-			createTestScript('ultra96_notebooks', "finn-examples_ultra96.xml")
+		        // Create a script to run as root on the Ultra96 agent
+		        createTestScript('ultra96_notebooks', "finn-examples_ultra96.xml")
 
-			// Execute the script as the root user - needed for Ultra96
-			sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+		        // Execute the script as the root user - needed for Ultra96
+		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+		      }
+		    }
 		  }
 		  post {
 			always {
@@ -130,15 +138,19 @@ pipeline {
 			label 'finn-u250'
 		  }
 		  steps {
-			cleanLocalCloneDir()
-			getBoardFiles('U250')
-			u250Workaround()
+		    catchError(stageResult: 'FAILURE') {
+		      script {
+				cleanLocalCloneDir()
+		        getBoardFiles('U250')
+		        u250Workaround()
 
-			// Create a script to run as root on the U250 agent
-			createTestScript('alveo_notebooks', "finn-examples_u250.xml")
+		        // Create a script to run as root on the U250 agent
+		        createTestScript('alveo_notebooks', "finn-examples_u250.xml")
 
-			// Execute the script as the root user - needed for U250
-			sh './run-tests.sh'
+		        // Execute the script as the root user - needed for U250
+		        sh './run-tests.sh'
+		      }
+		    }
 		  }
 		  post {
 			always {
@@ -166,14 +178,18 @@ pipeline {
 			USER_CREDENTIALS = credentials('pynq-z1-credentials')
 		  }
 		  steps {
-			cleanLocalCloneDir()
-			getBoardFiles('ZCU104')
+		    catchError(stageResult: 'FAILURE') {
+		      script {
+		        cleanLocalCloneDir()
+		        getBoardFiles('ZCU104')
 
-			// Create a script to run as root on the ZCU104 agent
-			createTestScript('zcu_notebooks', "finn-examples_zcu104.xml")
+		        // Create a script to run as root on the ZCU104 agent
+		        createTestScript('zcu_notebooks', "finn-examples_zcu104.xml")
 
-			// Execute the script as the root user - needed for ZCU104
-			sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+		        // Execute the script as the root user - needed for ZCU104
+		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+		      }
+		    }
 		  }
 		  post {
 			always {
