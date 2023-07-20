@@ -34,8 +34,6 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 # subdirs for all finn-examples build folders
 BUILD_FOLDERS="bnn-pynq kws mobilenet-v1 resnet50 vgg10-radioml cybersecurity-mlp"
-# all HW platforms we build for
-PLATFORMS="Pynq-Z1 Ultra96 ZCU104 U250"
 
 # fetch all models (if there are models to fetch), continue on error
 for BUILD_FOLDER in $BUILD_FOLDERS; do
@@ -59,11 +57,22 @@ for BUILD_FOLDER in $BUILD_FOLDERS; do
     cp -r $SCRIPTPATH/$BUILD_FOLDER/release/* $RELEASE_TARGET || true
 done
 
-# create zipfiles for finn-examples upload
+# create zip files for finn-examples upload
 cd $RELEASE_TARGET
 rm -rf *.zip
-for PLATFORM in $PLATFORMS; do
-    zip -r $PLATFORM.zip $PLATFORM/ || true
-    MD5SUM=$(md5sum $PLATFORM.zip)
-    echo "$PLATFORM.zip : $MD5SUM" >> md5sum.log
+for dir in */; do
+    # remove trailing slash to get the directory name
+    dir_name="${dir%/}"
+
+    # check if it is a directory we are zipping
+    if [ -d "$dir_name" ]; then
+        zip -r "${dir_name}.zip" "$dir_name" || true
+    fi
+done
+
+# calculate the MD5sum for each of the zip files
+zip_files=(*.zip)
+for zip_file in "${zip_files[@]}"; do
+    md5sum_value=$(md5sum "$zip_file" | awk '{print $1}')
+    echo "$zip_file : $md5sum_value" >> md5sum.log
 done
