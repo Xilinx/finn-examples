@@ -33,6 +33,10 @@ SCRIPT=$(readlink -f "$0")
 # absolute path this script is in, thus /home/user/bin
 SCRIPTPATH=$(dirname "$SCRIPT")
 
+# clean old build files if present
+RELEASE_TARGET=$SCRIPTPATH/release
+rm -rf $RELEASE_TARGET || true
+
 # collect all local folders, each are considered build folders
 LOCAL_BUILD_FOLDERS=$(find . -maxdepth 1 -type d -printf "%P ")
 
@@ -55,7 +59,6 @@ for BUILD_FOLDER in ${BUILD_FOLDERS[@]}; do
 done
 
 # gather all release folders, continue on error
-RELEASE_TARGET=$SCRIPTPATH/release
 mkdir -p $RELEASE_TARGET
 for BUILD_FOLDER in ${BUILD_FOLDERS[@]}; do
     cp -r $SCRIPTPATH/$BUILD_FOLDER/release/* $RELEASE_TARGET || true
@@ -63,7 +66,6 @@ done
 
 # create zip files for finn-examples upload
 cd $RELEASE_TARGET
-rm -rf *.zip
 for dir in */; do
     # remove trailing slash to get the directory name
     dir_name="${dir%/}"
