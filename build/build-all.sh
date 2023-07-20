@@ -37,11 +37,13 @@ BUILD_FOLDERS="bnn-pynq kws mobilenet-v1 resnet50 vgg10-radioml cybersecurity-ml
 # all HW platforms we build for
 PLATFORMS="Pynq-Z1 Ultra96 ZCU104 U250"
 
-# fetch all models, continue on error
+# fetch all models (if there are models to fetch), continue on error
 for BUILD_FOLDER in $BUILD_FOLDERS; do
-    cd $SCRIPTPATH/$BUILD_FOLDER/models
-    rm -rf *.zip *.onnx *.npz
-    ./download-model.sh || true
+    if [ -d "$SCRIPTPATH/$BUILD_FOLDER/models" ]; then
+        cd $SCRIPTPATH/$BUILD_FOLDER/models
+        rm -rf *.zip *.onnx *.npz
+        ./download-model.sh || true
+    fi
 done
 
 # run all build scripts, continue on error
