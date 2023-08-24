@@ -291,8 +291,8 @@ void unstashSuccessfulStage(String stageEnvVariableSet, String stashName) {
 }
 
 void cleanLocalCloneDir() {
-  // This removes previour run's test reports, bitstreams and test files
-  sh 'rm *.xml'
+  // This removes previous run's test reports, bitstreams and test files
+  sh 'rm -f *.xml'
   sh 'rm -rf finn_examples/bitfiles/bitfiles.zip.d'
   sh 'python ci/download-test-files.py -r'
 }
