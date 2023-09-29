@@ -16,7 +16,7 @@ pipeline {
 	  steps {
 		cleanLocalCloneDir()
 		dir('build') {
-		  sh './get-finn.sh'
+		  sh './get-finn-dev.sh'
 		  // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
 		  // in order to build bitstreams/run build script with Jenkins.
 		  dir('finn') {
