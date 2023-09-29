@@ -32,7 +32,6 @@
 SCRIPT=$(readlink -f "$0")
 # absolute path this script is in, thus /home/user/bin
 SCRIPTPATH=$(dirname "$SCRIPT")
-echo "TEST: $SCRIPTPATH\n"
 
 # clean old build files if present
 RELEASE_TARGET=$SCRIPTPATH/release
@@ -40,7 +39,6 @@ rm -rf $RELEASE_TARGET || true
 
 # collect all local folders, each are considered build folders
 LOCAL_BUILD_FOLDERS=$(find . -maxdepth 1 -type d -printf "%P ")
-echo "TEST: $LOCAL_BUILD_FOLDERS\n"
 
 # remove trailing spaces and store the directory names in an array
 IFS=' ' read -r -a BUILD_FOLDERS <<< "$LOCAL_BUILD_FOLDERS"
@@ -57,11 +55,8 @@ done
 # run all build scripts, continue on error
 cd $SCRIPTPATH/finn
 for BUILD_FOLDER in ${BUILD_FOLDERS[@]}; do
-    echo "BUILD_FOLDER: $BUILD_FOLDER"
     ./run-docker.sh build_custom $SCRIPTPATH/$BUILD_FOLDER || true
 done
-
-exit 0
 
 # gather all release folders, continue on error
 mkdir -p $RELEASE_TARGET
