@@ -26,22 +26,40 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from custom_steps import custom_step_add_pre_proc, custom_step_qonnx_tidy_up
+from custom_steps import *
 
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
-from finn.builder.build_dataflow_steps import step_qonnx_to_finn, step_tidy_up
+from finn.builder.build_dataflow_steps import *
 
-model_name = "espcn-bsd300"
+# model_name = "espcn-bsd300"
+model_name = "espcn-bsd300-base"
+
 
 espcn_build_steps = [
     custom_step_qonnx_tidy_up,
     custom_step_add_pre_proc,
     step_qonnx_to_finn,
     step_tidy_up,
+    custom_step_streamline,
+    custom_step_convert_to_hls,
+    "step_minimize_bit_width",
+    "step_create_dataflow_partition",
+    "step_target_fps_parallelization",
+    "step_apply_folding_config",
+    "step_generate_estimate_reports",
+    "step_hls_codegen",
+    "step_hls_ipgen",
+    "step_set_fifo_depths",
+    "step_create_stitched_ip",
+    "step_measure_rtlsim_performance",
+    "step_out_of_context_synthesis",
+    "step_synthesize_bitfile",
+    "step_make_pynq_driver",
+    "step_deployment_package",
 ]
 
-model_file = "models/espcn-bsd300.onnx"
+model_file = "quant_espcn_x2_w4a4_qonnx_export/qonnx_model.onnx"
 
 cfg = build_cfg.DataflowBuildConfig(
     steps=espcn_build_steps,
@@ -49,13 +67,28 @@ cfg = build_cfg.DataflowBuildConfig(
     synth_clk_period_ns=10.0,
     target_fps=10000,
     fpga_part="xck26-sfvc784-2LV-c",
+    shell_flow_type = build_cfg.ShellFlowType.VIVADO_ZYNQ,
+    board = "KV260_SOM",
     enable_build_pdb_debug=True,
-    verbose=True,
+    verbose=False,
+    split_large_fifos = True,
+    folding_config_file = "fixed_fifo_folding.json",
+    auto_fifo_depths = False,
+    # auto_fifo_strategy = build_cfg.AutoFIFOSizingMethod.CHARACTERIZE,
+    verify_input_npy = "quant_espcn_x2_w4a4_qonnx_export/input.npy",
+    verify_expected_output_npy = "quant_espcn_x2_w4a4_qonnx_export/output.npy",
     verify_steps=[
         build_cfg.VerificationStepType.QONNX_TO_FINN_PYTHON,
         build_cfg.VerificationStepType.TIDY_UP_PYTHON,
+        build_cfg.VerificationStepType.STREAMLINED_PYTHON,
+        build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,
     ],
-    generate_outputs=[],
+    generate_outputs=[
+        build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
+        # build_cfg.DataflowOutputType.STITCHED_IP,
+        # build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
+        build_cfg.DataflowOutputType.BITFILE,
+    ],
 )
 
 build.build_dataflow_cfg(model_file, cfg)

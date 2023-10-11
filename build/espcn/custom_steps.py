@@ -42,10 +42,20 @@ from qonnx.transformation.infer_datatypes import InferDataTypes
 from qonnx.transformation.infer_shapes import InferShapes
 from qonnx.transformation.merge_onnx_models import MergeONNXModels
 from qonnx.transformation.subpixel_to_deconv import SubPixelToDeconvolution
+from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
+from qonnx.transformation.infer_data_layouts import InferDataLayouts
 
-from finn.builder.build_dataflow_config import DataflowBuildConfig
+import finn.transformation.streamline.absorb as absorb
+import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
+from finn.transformation.streamline import Streamline
+from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
+from finn.transformation.streamline.reorder import MoveScalarMulPastConvTranspose
+from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
+from finn.transformation.fpgadataflow.infer_pixel_padding_deconv import InferPixelPaddingDeconv
+
+from finn.builder.build_dataflow_config import DataflowBuildConfig, VerificationStepType
+from finn.builder.build_dataflow_steps import verify_step
 from finn.util.pytorch import ToTensor
-
 
 def custom_step_qonnx_tidy_up(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferShapes())
@@ -77,4 +87,67 @@ def custom_step_add_pre_proc(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(RemoveStaticGraphInputs())
     model = model.transform(RemoveUnusedTensors())
 
+    return model
+
+def custom_step_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
+    """Run streamlining on given model. Streamlining involves moving floating point
+    scale/shift parameters around, collapsing adjacent ones into a single parameter,
+    then absorbing the scale/shift into the following `MultiThreshold` node.
+    Streamlining requires careful topology design and cannot be applied to all
+    topologies.
+    """
+
+    model = model.transform(absorb.AbsorbSignBiasIntoMultiThreshold())
+    model = model.transform(Streamline())
+    # breakpoint()
+    model = model.transform(MoveScalarMulPastConvTranspose())
+    model = model.transform(absorb.AbsorbMulIntoMultiThreshold())
+    need_lowering = len(model.get_nodes_by_op_type("Conv")) > 0
+    if need_lowering:
+        model = model.transform(LowerConvsToMatMul())
+        model = model.transform(absorb.AbsorbConsecutiveTransposes())
+        model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
+  
+    model = model.transform(Streamline())
+    model = model.transform(absorb.AbsorbConsecutiveTransposes())
+    model = model.transform(InferDataLayouts())
+    model = model.transform(RemoveUnusedTensors())
+
+    if VerificationStepType.STREAMLINED_PYTHON in cfg._resolve_verification_steps():
+        verify_step(model, cfg, "streamlined_python", need_parent=False)
+
+    return model
+
+
+def custom_step_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
+    """Convert eligible nodes to `HLSCustomOp` subclasses that represent HLS
+    layers. Which nodes and particular configurations can be converted to HLS
+    is limited, see the source code of the `convert_to_hls` module for more."""
+
+
+    mem_mode = cfg.default_mem_mode.value
+    if cfg.standalone_thresholds:
+        # doing this first causes all threshold layers to be standalone
+        model = model.transform(to_hls.InferThresholdingLayer())
+    need_convtranspose = len(model.get_nodes_by_op_type("ConvTranspose")) > 0
+    if need_convtranspose:
+        model = model.transform(InferPixelPaddingDeconv())
+        model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
+        model = model.transform(RoundAndClipThresholds())
+    # needed for non-bipolar MatMul layers
+    model = model.transform(to_hls.InferQuantizedMatrixVectorActivation(mem_mode))
+    # input quantization (if any) as standalone threshold
+    model = model.transform(to_hls.InferThresholdingLayer())
+    # needed for convolutions -- TODO always exec?
+    need_conv = len(model.get_nodes_by_op_type("Im2Col")) > 0
+    if need_conv:
+        if cfg.force_rtl_conv_inp_gen:
+            model = model.transform(to_hls.InferConvInpGen(use_rtl_variant=True))
+        else:
+            model = model.transform(to_hls.InferConvInpGen())
+    # get rid of Tranpose -> Tranpose identity seq
+    model = model.transform(absorb.AbsorbConsecutiveTransposes())
+    model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
+    model = model.transform(GiveUniqueNodeNames())
+    model = model.transform(InferDataLayouts())
     return model
