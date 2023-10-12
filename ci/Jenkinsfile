@@ -16,7 +16,7 @@ pipeline {
 	  steps {
 		cleanLocalCloneDir()
 		dir('build') {
-		  sh './get-finn-dev.sh'
+		  getFinn()
 		  // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
 		  // in order to build bitstreams/run build script with Jenkins.
 		  dir('finn') {
@@ -392,4 +392,22 @@ def checkAllBoards() {
   }
 
   return overallResult
+}
+
+void getFinn() {
+	// Using shell commands due to git plugin not behaving when cloning a new repo into
+	// an existing one. Likely a way to do this, but shell commands are sufficient
+
+	// Cleanup existing checkout
+	sh "rm -rf finn"
+
+	// Clone FINN repo into finn directory and checkout correct branch
+	sh "git clone https://github.com/Xilinx/finn finn"
+	sh "git -C finn checkout testing/jenkins-integration"
+
+	// WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
+	// in order to build bitstreams/run build script with Jenkins.
+	dir('finn') {
+		sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+	}
 }
