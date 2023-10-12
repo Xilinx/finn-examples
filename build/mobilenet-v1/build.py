@@ -95,6 +95,7 @@ def select_build_steps(platform):
             step_mobilenet_convert_to_hls_layers,
             "step_create_dataflow_partition",
             "step_apply_folding_config",
+            "step_minimize_bit_width",
             "step_generate_estimate_reports",
             "step_hls_codegen",
             "step_hls_ipgen",
