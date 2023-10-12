@@ -1,0 +1,475 @@
+{
+  "Defaults": {
+    "mem_mode":["decoupled",["MatrixVectorActivation","Thresholding_Batch"]]
+  },
+  "FMPadding_Batch_0": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_0": {
+    "SIMD": 1,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_0": {
+    "PE": 1,
+    "SIMD": 27,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_0": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_0": {
+    "PE": 1
+  },
+  "FMPadding_Batch_1": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_1": {
+    "SIMD": 8,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_1": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_1": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_2": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_2": {
+    "SIMD": 8,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_2": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_2": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_0": {
+    "PE": 1
+  },
+  "Thresholding_Batch_3": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_1": {
+    "PE": 1
+  },
+  "FMPadding_Batch_3": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_3": {
+    "SIMD": 8,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_3": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_4": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_4": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_4": {
+    "SIMD": 8,
+    "ram_style": "block"
+  },
+  "MatrixVectorActivation_4": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_5": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_1": {
+    "PE": 1
+  },
+  "Thresholding_Batch_6": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_2": {
+    "PE": 1
+  },
+  "FMPadding_Batch_5": {
+    "SIMD": 1
+  },
+  "DownSampler_0": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_5": {
+    "SIMD": 2,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_5": {
+    "PE": 1,
+    "SIMD": 32,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "MatrixVectorActivation_6": {
+    "PE": 8,
+    "SIMD": 24,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_7": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_8": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_6": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_6": {
+    "SIMD": 4,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_7": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_9": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_2": {
+    "PE": 1
+  },
+  "Thresholding_Batch_10": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_3": {
+    "PE": 1
+  },
+  "FMPadding_Batch_7": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_7": {
+    "SIMD": 4,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_8": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_11": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_8": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_8": {
+    "SIMD": 4,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_9": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_12": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_3": {
+    "PE": 1
+  },
+  "Thresholding_Batch_13": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_4": {
+    "PE": 1
+  },
+  "FMPadding_Batch_9": {
+    "SIMD": 1
+  },
+  "DownSampler_1": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_9": {
+    "SIMD": 1,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_10": {
+    "PE": 1,
+    "SIMD": 32,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "MatrixVectorActivation_11": {
+    "PE": 8,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_14": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_15": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_10": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_10": {
+    "SIMD": 2,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_12": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_16": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_4": {
+    "PE": 1
+  },
+  "Thresholding_Batch_17": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_5": {
+    "PE": 1
+  },
+  "FMPadding_Batch_11": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_11": {
+    "SIMD": 2,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_13": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_18": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_12": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_12": {
+    "SIMD": 2,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_14": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_19": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_5": {
+    "PE": 1
+  },
+  "Thresholding_Batch_20": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_6": {
+    "PE": 1
+  },
+  "FMPadding_Batch_13": {
+    "SIMD": 1
+  },
+  "DownSampler_2": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_13": {
+    "SIMD": 1,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_15": {
+    "PE": 1,
+    "SIMD": 32,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "MatrixVectorActivation_16": {
+    "PE": 8,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_21": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_22": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_14": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_14": {
+    "SIMD": 1,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_17": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_23": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_6": {
+    "PE": 1
+  },
+  "Thresholding_Batch_24": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "DuplicateStreams_Batch_7": {
+    "PE": 1
+  },
+  "FMPadding_Batch_15": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_15": {
+    "SIMD": 1,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_18": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "ultra",
+    "resType": "dsp",
+    "runtime_writeable_weights": 1
+  },
+  "Thresholding_Batch_25": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "FMPadding_Batch_16": {
+    "SIMD": 1
+  },
+  "ConvolutionInputGenerator_16": {
+    "SIMD": 1,
+    "ram_style": "ultra"
+  },
+  "MatrixVectorActivation_19": {
+    "PE": 16,
+    "SIMD": 24,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  },
+  "Thresholding_Batch_26": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "AddStreams_Batch_7": {
+    "PE": 1
+  },
+  "Thresholding_Batch_27": {
+    "PE": 1,
+    "ram_style": "block",
+    "runtime_writeable_weights": 0
+  },
+  "ConvolutionInputGenerator_17": {
+    "SIMD": 1,
+    "ram_style": "block"
+  },
+  "Pool_Batch_0": {
+    "PE": 1
+  },
+  "MatrixVectorActivation_20": {
+    "PE": 1,
+    "SIMD": 1,
+    "ram_style": "block",
+    "resType": "dsp",
+    "runtime_writeable_weights": 0
+  }
+}
