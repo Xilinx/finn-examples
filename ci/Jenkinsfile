@@ -334,7 +334,7 @@ void createTestScript(String boardNotebooks, String testResultsFilename) {
   if(boardNotebooks == "alveo_notebooks")
     sh """echo "#!/bin/bash
 . /opt/xilinx/xrt/setup.sh
-. ${CONDA_ENV_ACTIVATE}
+. ${VENV_ACTIVATE}
 python -m pytest -m ${boardNotebooks} --junitxml=${testResultsFilename}" >> run-tests.sh
     """
   else
