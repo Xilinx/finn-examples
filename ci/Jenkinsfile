@@ -312,7 +312,7 @@ void getBoardFiles(String board) {
     downloadTestData()
     sh 'mkdir -p finn_examples/bitfiles/bitfiles.zip.d'
     dir('finn_examples/bitfiles/bitfiles.zip.d') {
-    unstash name: "bitfile_stash"
+      unstash name: "bitfile_stash"
       sh """unzip ${board}.zip"""
     }
   } else {
@@ -322,10 +322,10 @@ void getBoardFiles(String board) {
 
 void u250Workaround() {
   // FIXME: The installed Pynq driver expects to see directory
-  // 'xilinx_u250_gen3x16_xdma_shell_2_1' or else the bitstream download fails.
+  // 'xilinx_u250_gen3x16_xdma_shell_4_1' or else the bitstream download fails.
   dir('finn_examples/bitfiles/bitfiles.zip.d') {
     sh 'rm *.zip'
-    sh 'mv ./* xilinx_u250_gen3x16_xdma_shell_2_1'
+    sh 'mv ./* xilinx_u250_gen3x16_xdma_shell_4_1'
   }
 }
 
