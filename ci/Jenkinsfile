@@ -403,7 +403,7 @@ void getFinn() {
 
     // Clone FINN repo into finn directory and checkout correct branch
     sh "git clone https://github.com/Xilinx/finn finn"
-    sh "git -C finn checkout testing/jenkins-integration"
+    sh "git -C finn checkout dev"
 
     // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
     // in order to build bitstreams/run build script with Jenkins.
