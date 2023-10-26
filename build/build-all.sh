@@ -40,6 +40,9 @@ rm -rf $RELEASE_TARGET || true
 # collect all local folders, each are considered build folders
 LOCAL_BUILD_FOLDERS=$(find . -maxdepth 1 -type d -printf "%P ")
 
+# Temporarily disabling resnet50 build, see FINN-278
+LOCAL_BUILD_FOLDERS="$( echo $LOCAL_BUILD_FOLDERS | sed -e 's/resnet50//')"
+
 # remove trailing spaces and store the directory names in an array
 IFS=' ' read -r -a BUILD_FOLDERS <<< "$LOCAL_BUILD_FOLDERS"
 

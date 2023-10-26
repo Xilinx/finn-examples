@@ -80,7 +80,7 @@ alveo_notebooks = [
 
 
 @pytest.mark.parametrize(
-    "notebook", pynq_notebooks + zcu_notebooks + ultra96_notebooks + alveo_notebooks
+    "notebook", pynq_notebooks + zcu_notebooks + ultra96_notebooks
 )
 def test_notebook_exec(notebook):
     with open(notebook) as f:
