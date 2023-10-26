@@ -75,7 +75,7 @@ pipeline {
                 getBoardFiles(env.BOARD)
 
                 // Create test script
-                createTestScript('pynq_notebooks', "finn-examples_${env.BOARD}.xml")
+                createTestScript('pynq_notebooks', "finn-examples_${env.BOARD}")
 
                 // Execute the script as the root user - needed for zynq platforms
                 // Use an env variable to help collect test results later in pipeline
@@ -87,7 +87,7 @@ pipeline {
           post {
             always {
               // Collect the results file on the slave node by stashing
-              stash name: "finn_examples_test_PynqZ1", includes: "finn-examples_${env.BOARD}.xml"
+              stash name: "finn_examples_test_PynqZ1", includes: "finn-examples_${env.BOARD}.xml,finn-examples_${env.BOARD}.html"
               postCleanup()
             }
             failure {
@@ -119,7 +119,7 @@ pipeline {
                 getBoardFiles(env.BOARD)
 
                 // Create test script
-                createTestScript('ultra96_notebooks', "finn-examples_${env.BOARD}.xml")
+                createTestScript('ultra96_notebooks', "finn-examples_${env.BOARD}")
 
                 // Execute the script as the root user - needed for zynq platforms
                 // Use an env variable to help collect test results later in pipeline
@@ -131,7 +131,7 @@ pipeline {
           post {
             always {
               // Collect the results file on the slave node by stashing
-              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
+              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml,finn-examples_${env.BOARD}.html"
               postCleanup()
             }
             failure {
@@ -163,7 +163,7 @@ pipeline {
                 u250Workaround()
 
                 // Create test script
-                createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}.xml")
+                createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}")
 
                 // Execute the script as non-root user - root permissions not needed
                 // Use an env variable to help collect test results later in pipeline
@@ -175,7 +175,7 @@ pipeline {
           post {
             always {
               // Collect the results file on the slave node by stashing
-              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
+              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml,finn-examples_${env.BOARD}.html"
               postCleanup()
             }
             failure {
@@ -207,7 +207,7 @@ pipeline {
                 getBoardFiles(env.BOARD)
 
                 // Create test script
-                createTestScript('zcu_notebooks', "finn-examples_${env.BOARD}.xml")
+                createTestScript('zcu_notebooks', "finn-examples_${env.BOARD}")
 
                 // Execute the script as the root user - needed for zynq platforms
                 // Use an env variable to help collect test results later in pipeline
@@ -221,7 +221,7 @@ pipeline {
           post {
             always {
               // Collect the results file on the slave node by stashing
-              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
+              stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml,finn-examples_${env.BOARD}.html"
               postCleanup()
             }
             failure {
@@ -253,17 +253,26 @@ pipeline {
         always {
           script {
             // Delete previous build's XML test results
-            sh 'rm *.xml'
+            sh 'mkdir -p reports'
+            cleanPreviousBuildFiles('reports')
 
-            // Only unstash for stages that ran
-            unstashSuccessfulStage(env.TEST_PYNQ, "finn_examples_test_PynqZ1")
-            unstashSuccessfulStage(env.TEST_ULTRA96, "finn_examples_test_Ultra96")
-            unstashSuccessfulStage(env.TEST_U250, "finn_examples_test_U250")
-            unstashSuccessfulStage(env.TEST_ZCU104, "finn_examples_test_ZCU104")
+            dir('reports') {
+                // Only unstash for stages that ran
+                unstashSuccessfulStage(env.TEST_PYNQ, "finn_examples_test_PynqZ1")
+                unstashSuccessfulStage(env.TEST_ULTRA96, "finn_examples_test_Ultra96")
+                unstashSuccessfulStage(env.TEST_U250, "finn_examples_test_U250")
+                unstashSuccessfulStage(env.TEST_ZCU104, "finn_examples_test_ZCU104")
+            }
+
+            // Combine individual HTML files to one single report
+            sh './run-docker.sh pytest_html_merger -i reports/ -o reports/test_report_final.html'
+
+            // Archive the XML & HTML test results
+            archiveArtifacts artifacts: "reports/*.xml"
+            archiveArtifacts artifacts: "reports/*.html"
 
             // Plot what XML files were created during the test run
-            archiveArtifacts artifacts: "*.xml"
-            junit '**/*.xml'
+            junit 'reports/*.xml'
           }
         }
       }
@@ -287,6 +296,14 @@ void postSuccess(String board) {
 void unstashSuccessfulStage(String stageEnvVariableSet, String stashName) {
   if (stageEnvVariableSet) {
     unstash stashName
+  }
+}
+
+void cleanPreviousBuildFiles(String buildDir) {
+  // Delete any build files from a previous build
+  // Previous build folders affect findCopyZip() and can cause the stage to fail
+  if (!buildDir.empty) {
+    sh "rm -rf ${buildDir}"
   }
 }
 
@@ -335,13 +352,13 @@ void createTestScript(String boardNotebooks, String testResultsFilename) {
     sh """echo "#!/bin/bash
 . /opt/xilinx/xrt/setup.sh
 . ${VENV_ACTIVATE}
-python -m pytest -m ${boardNotebooks} --junitxml=${testResultsFilename}" >> run-tests.sh
+python -m pytest -m ${boardNotebooks} --junitxml=${testResultsFilename}.xml --html=${testResultsFilename}.html --self-contained-html" >> run-tests.sh
     """
   else
     sh """echo "#!/bin/bash
 . /etc/profile.d/pynq_venv.sh
 . /etc/profile.d/xrt_setup.sh
-python -m pytest -m ${boardNotebooks} --junitxml=${testResultsFilename}" >> run-tests.sh
+python -m pytest -m ${boardNotebooks} --junitxml=${testResultsFilename}.xml --html=${testResultsFilename}.html --self-contained-html" >> run-tests.sh
     """
 
   // Give permissions to script
