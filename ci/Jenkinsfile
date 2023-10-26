@@ -4,256 +4,256 @@ pipeline {
   }
   agent none
   stages {
-	stage('Build') {
-	  when {
-		// beforeAgent set to 'true' to prevent an offline agent hanging the stage
-		beforeAgent true
-		expression { params['isRelease'] }
-	  }
-	  agent {
-		label 'finn-build'
-	  }
-	  steps {
-		cleanLocalCloneDir()
-		dir('build') {
-		  getFinn()
-		  // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
-		  // in order to build bitstreams/run build script with Jenkins.
-		  dir('finn') {
-		    sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
-		  }
-		  sh './build-all.sh'
-		}
-	  }
-	}
-	stage('Prepare Bitstreams') {
-	  when {
-		// beforeAgent set to 'true' to prevent an offline agent hanging the stage
-		beforeAgent true
-		expression { params['isRelease'] }
-	  }
-	  agent {
-		label 'finn-build'
-	  }
-	  steps {
-		dir('build/release') {
-		  stash name: "bitfile_stash", includes: "Pynq-Z1.zip,U250.zip,Ultra96.zip,ZCU104.zip"
-		}
-	  }
-	}
-	stage('Check Boards Are Online') {
-	  agent none
-	  steps {
-	    script {
-	      env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
-	      env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
-	      env.ALVEO_HOST_ONLINE = isNodeOnline('finn-u250')
-	      env.ZCU104_ONLINE = isNodeOnline('finn-zcu104')
-	    }
-	  }
-	}
-	stage('Run Notebooks on Hardware') {
+    stage('Build') {
+      when {
+        // beforeAgent set to 'true' to prevent an offline agent hanging the stage
+        beforeAgent true
+        expression { params['isRelease'] }
+      }
+      agent {
+        label 'finn-build'
+      }
+      steps {
+        cleanLocalCloneDir()
+        dir('build') {
+          getFinn()
+          // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
+          // in order to build bitstreams/run build script with Jenkins.
+          dir('finn') {
+            sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+          }
+          sh './build-all.sh'
+        }
+      }
+    }
+    stage('Prepare Bitstreams') {
+      when {
+        // beforeAgent set to 'true' to prevent an offline agent hanging the stage
+        beforeAgent true
+        expression { params['isRelease'] }
+      }
+      agent {
+        label 'finn-build'
+      }
+      steps {
+        dir('build/release') {
+          stash name: "bitfile_stash", includes: "Pynq-Z1.zip,U250.zip,Ultra96.zip,ZCU104.zip"
+        }
+      }
+    }
+    stage('Check Boards Are Online') {
+      agent none
+      steps {
+        script {
+          env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
+          env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
+          env.ALVEO_HOST_ONLINE = isNodeOnline('finn-u250')
+          env.ZCU104_ONLINE = isNodeOnline('finn-zcu104')
+        }
+      }
+    }
+    stage('Run Notebooks on Hardware') {
       parallel {
-		stage('Test Pynq-Z1 notebooks') {
-		  when {
-		    beforeAgent true
-		    expression {
-		      return env.PYNQ_ONLINE == 'true'
-		    }
-		  }
-		  agent {
-			label 'finn-pynq'
-		  }
-		  environment {
-			BOARD = 'Pynq-Z1'
-			USER_CREDENTIALS = credentials('pynq-z1-credentials')
-		  }
-		  steps {
-		    catchError(stageResult: 'FAILURE') {
-		      script {
-		        cleanLocalCloneDir()
-		        getBoardFiles(env.BOARD)
+        stage('Test Pynq-Z1 notebooks') {
+          when {
+            beforeAgent true
+            expression {
+              return env.PYNQ_ONLINE == 'true'
+            }
+          }
+          agent {
+            label 'finn-pynq'
+          }
+          environment {
+            BOARD = 'Pynq-Z1'
+            USER_CREDENTIALS = credentials('pynq-z1-credentials')
+          }
+          steps {
+            catchError(stageResult: 'FAILURE') {
+              script {
+                cleanLocalCloneDir()
+                getBoardFiles(env.BOARD)
 
-		        // Create test script
-		        createTestScript('pynq_notebooks', "finn-examples_${env.BOARD}.xml")
+                // Create test script
+                createTestScript('pynq_notebooks', "finn-examples_${env.BOARD}.xml")
 
-		        // Execute the script as the root user - needed for zynq platforms
-				// Use an env variable to help collect test results later in pipeline
+                // Execute the script as the root user - needed for zynq platforms
+                // Use an env variable to help collect test results later in pipeline
                 env.TEST_PYNQ = "SUCCESS"
-		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
-		      }
-		    }
-		  }
-		  post {
-			always {
-			  // Collect the results file on the slave node by stashing
+                sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+              }
+            }
+          }
+          post {
+            always {
+              // Collect the results file on the slave node by stashing
               stash name: "finn_examples_test_PynqZ1", includes: "finn-examples_${env.BOARD}.xml"
-			  postCleanup()
-			}
-			failure {
-			  postFailure(env.BOARD)
-			}
-			success {
-			  postSuccess(env.BOARD)
-			}
-		  }
-		}
-		stage('Test Ultra96 notebooks') {
-		  when {
-		    beforeAgent true
-		    expression {
-		      return env.ULTRA96_ONLINE == 'true'
-		    }
-		  }
-		  agent {
-			label 'finn-ultra96'
-		  }
-		  environment {
-			BOARD = 'Ultra96'
-			USER_CREDENTIALS = credentials('pynq-z1-credentials')
-		  }
-		  steps {
-		    catchError(stageResult: 'FAILURE') {
-		      script {
-		        cleanLocalCloneDir()
-		        getBoardFiles(env.BOARD)
+              postCleanup()
+            }
+            failure {
+              postFailure(env.BOARD)
+            }
+            success {
+              postSuccess(env.BOARD)
+            }
+          }
+        }
+        stage('Test Ultra96 notebooks') {
+          when {
+            beforeAgent true
+            expression {
+              return env.ULTRA96_ONLINE == 'true'
+            }
+          }
+          agent {
+            label 'finn-ultra96'
+          }
+          environment {
+            BOARD = 'Ultra96'
+            USER_CREDENTIALS = credentials('pynq-z1-credentials')
+          }
+          steps {
+            catchError(stageResult: 'FAILURE') {
+              script {
+                cleanLocalCloneDir()
+                getBoardFiles(env.BOARD)
 
-		        // Create test script
-		        createTestScript('ultra96_notebooks', "finn-examples_${env.BOARD}.xml")
+                // Create test script
+                createTestScript('ultra96_notebooks', "finn-examples_${env.BOARD}.xml")
 
-		        // Execute the script as the root user - needed for zynq platforms
-				// Use an env variable to help collect test results later in pipeline
+                // Execute the script as the root user - needed for zynq platforms
+                // Use an env variable to help collect test results later in pipeline
                 env.TEST_ULTRA96 = "SUCCESS"
-		        sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
-		      }
-		    }
-		  }
-		  post {
-			always {
-			  // Collect the results file on the slave node by stashing
+                sh 'echo $USER_CREDENTIALS_PSW | sudo -S ./run-tests.sh'
+              }
+            }
+          }
+          post {
+            always {
+              // Collect the results file on the slave node by stashing
               stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
-			  postCleanup()
-			}
-			failure {
-			  postFailure(env.BOARD)
-			}
-			success {
-			  postSuccess(env.BOARD)
-			}
-		  }
-		}
-		stage('Test Alveo U250 notebooks') {
-		  when {
-		    beforeAgent true
-		    expression {
-		      return env.ALVEO_HOST_ONLINE == 'true'
-		    }
-		  }
-		  agent {
-			label 'finn-u250'
-		  }
-		  environment {
+              postCleanup()
+            }
+            failure {
+              postFailure(env.BOARD)
+            }
+            success {
+              postSuccess(env.BOARD)
+            }
+          }
+        }
+        stage('Test Alveo U250 notebooks') {
+          when {
+            beforeAgent true
+            expression {
+              return env.ALVEO_HOST_ONLINE == 'true'
+            }
+          }
+          agent {
+            label 'finn-u250'
+          }
+          environment {
             BOARD = 'U250'
           }
-		  steps {
-		    catchError(stageResult: 'FAILURE') {
-		      script {
-				cleanLocalCloneDir()
-		        getBoardFiles(env.BOARD)
-		        u250Workaround()
+          steps {
+            catchError(stageResult: 'FAILURE') {
+              script {
+                cleanLocalCloneDir()
+                getBoardFiles(env.BOARD)
+                u250Workaround()
 
-		        // Create test script
-		        createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}.xml")
+                // Create test script
+                createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}.xml")
 
-		        // Execute the script as non-root user - root permissions not needed
-				// Use an env variable to help collect test results later in pipeline
+                // Execute the script as non-root user - root permissions not needed
+                // Use an env variable to help collect test results later in pipeline
                 env.TEST_U250 = "SUCCESS"
-		        sh './run-tests.sh'
-		      }
-		    }
-		  }
-		  post {
-			always {
-			  // Collect the results file on the slave node by stashing
+                sh './run-tests.sh'
+              }
+            }
+          }
+          post {
+            always {
+              // Collect the results file on the slave node by stashing
               stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
-			  postCleanup()
-			}
-			failure {
-			  postFailure(env.BOARD)
-			}
-			success {
-			  postSuccess(env.BOARD)
-			}
-		  }
-		}
-		stage('Test ZCU104 notebooks') {
-		  when {
-		    beforeAgent true
-		    expression {
-		      return env.ZCU104_ONLINE == 'true'
-		    }
-		  }
-		  agent {
-			label 'finn-zcu104'
-		  }
-		  environment {
-			BOARD = 'ZCU104'
-			USER_CREDENTIALS = credentials('pynq-z1-credentials')
-		  }
-		  steps {
-		    catchError(stageResult: 'FAILURE') {
-		      script {
-		        cleanLocalCloneDir()
-		        getBoardFiles(env.BOARD)
+              postCleanup()
+            }
+            failure {
+              postFailure(env.BOARD)
+            }
+            success {
+              postSuccess(env.BOARD)
+            }
+          }
+        }
+        stage('Test ZCU104 notebooks') {
+          when {
+            beforeAgent true
+            expression {
+              return env.ZCU104_ONLINE == 'true'
+            }
+          }
+          agent {
+            label 'finn-zcu104'
+          }
+          environment {
+            BOARD = 'ZCU104'
+            USER_CREDENTIALS = credentials('pynq-z1-credentials')
+          }
+          steps {
+            catchError(stageResult: 'FAILURE') {
+              script {
+                cleanLocalCloneDir()
+                getBoardFiles(env.BOARD)
 
-		        // Create test script
-		        createTestScript('zcu_notebooks', "finn-examples_${env.BOARD}.xml")
+                // Create test script
+                createTestScript('zcu_notebooks', "finn-examples_${env.BOARD}.xml")
 
-		        // Execute the script as the root user - needed for zynq platforms
-				// Use an env variable to help collect test results later in pipeline
+                // Execute the script as the root user - needed for zynq platforms
+                // Use an env variable to help collect test results later in pipeline
                 env.TEST_ZCU104 = "SUCCESS"
-		        // RADIOML_PATH needs to be passed to the root bash shell
-				// This is for the radio_with_cnns notebook
+                // RADIOML_PATH needs to be passed to the root bash shell
+                // This is for the radio_with_cnns notebook
                 sh 'echo $USER_CREDENTIALS_PSW | sudo -S --preserve-env=RADIOML_PATH ./run-tests.sh'
-		      }
-		    }
-		  }
-		  post {
-			always {
-			  // Collect the results file on the slave node by stashing
+              }
+            }
+          }
+          post {
+            always {
+              // Collect the results file on the slave node by stashing
               stash name: "finn_examples_test_${env.BOARD}", includes: "finn-examples_${env.BOARD}.xml"
-			  postCleanup()
-			}
-			failure {
-			  postFailure(env.BOARD)
-			}
-			success {
-			  postSuccess(env.BOARD)
-			}
-		  }
-		}
-	  }
-	}
-	stage('Check Stage Results') {
-	  agent {
-		label 'finn-build'
-	  }
-	  steps {
-	    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-	      script {
-	        // Check if any agent's tests (stages) were skipped due to being offline
-	        def overallResult = checkAllBoards()
-	        if (!overallResult) {
-	          error('One or more conditions failed')
-	        }
-	      }
-	    }
-	  }
-	  post {
+              postCleanup()
+            }
+            failure {
+              postFailure(env.BOARD)
+            }
+            success {
+              postSuccess(env.BOARD)
+            }
+          }
+        }
+      }
+    }
+    stage('Check Stage Results') {
+      agent {
+        label 'finn-build'
+      }
+      steps {
+        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+          script {
+            // Check if any agent's tests (stages) were skipped due to being offline
+            def overallResult = checkAllBoards()
+            if (!overallResult) {
+              error('One or more conditions failed')
+            }
+          }
+        }
+      }
+      post {
         always {
           script {
-	        // Delete previous build's XML test results
-	        sh 'rm *.xml'
+            // Delete previous build's XML test results
+            sh 'rm *.xml'
 
             // Only unstash for stages that ran
             unstashSuccessfulStage(env.TEST_PYNQ, "finn_examples_test_PynqZ1")
@@ -267,7 +267,7 @@ pipeline {
           }
         }
       }
-	}
+    }
   }
 }
 
@@ -395,19 +395,19 @@ def checkAllBoards() {
 }
 
 void getFinn() {
-	// Using shell commands due to git plugin not behaving when cloning a new repo into
-	// an existing one. Likely a way to do this, but shell commands are sufficient
+    // Using shell commands due to git plugin not behaving when cloning a new repo into
+    // an existing one. Likely a way to do this, but shell commands are sufficient
 
-	// Cleanup existing checkout
-	sh "rm -rf finn"
+    // Cleanup existing checkout
+    sh "rm -rf finn"
 
-	// Clone FINN repo into finn directory and checkout correct branch
-	sh "git clone https://github.com/Xilinx/finn finn"
-	sh "git -C finn checkout testing/jenkins-integration"
+    // Clone FINN repo into finn directory and checkout correct branch
+    sh "git clone https://github.com/Xilinx/finn finn"
+    sh "git -C finn checkout testing/jenkins-integration"
 
-	// WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
-	// in order to build bitstreams/run build script with Jenkins.
-	dir('finn') {
-		sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
-	}
+    // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
+    // in order to build bitstreams/run build script with Jenkins.
+    dir('finn') {
+        sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+    }
 }
