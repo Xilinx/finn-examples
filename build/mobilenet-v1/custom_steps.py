@@ -125,9 +125,7 @@ def step_mobilenet_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     return model
 
 
-def step_mobilenet_convert_to_hls_layers_separate_th(
-    model: ModelWrapper, cfg: DataflowBuildConfig
-):
+def step_mobilenet_convert_to_hls_layers_separate_th(model: ModelWrapper, cfg: DataflowBuildConfig):
     mem_mode = cfg.default_mem_mode.value
     model = model.transform(to_hls.InferPool_Batch())
     model = model.transform(to_hls.InferConvInpGen())
