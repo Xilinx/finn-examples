@@ -73,7 +73,6 @@ model_name = (
 model_file = "models/" + model_name + ".onnx"
 
 # Change the ONNX opset from version 9 to 11, which adds support for the TopK node
-from qonnx.core.modelwrapper import ModelWrapper
 model = ModelWrapper(model_file)
 model.model.opset_import[0].version = 11
 model_file = model_file.replace(".onnx", "_opset-11.onnx")
