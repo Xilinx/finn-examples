@@ -227,13 +227,38 @@ def get_driver_mode():
     driver_modes = {"edge": "zynq-iodma", "pcie": "alveo"}
     return driver_modes[get_edge_or_pcie()]
 
+# The Alveo 'deployment' platform name doesn't match the device name reported by Pynq
+# To workaround, check against a list of supported pynq platforms. If the reported
+# device name is not in this list, check against a map of alveo platforms and
+# translate the name to 'deployment' if found. Otherwise, it is an unsupported (in
+# FINN-Examples) platform.
+def check_platform_is_valid(platform):
+    pynq_platforms = [
+        "Pynq-Z1",
+        "ZCU104",
+        "Ultra96"
+    ]
+
+    alveo_platforms = {
+        "xilinx_u250_gen3x16_xdma_shell_2_1": "xilinx_u250_gen3x16_xdma_2_1_202010_1",
+        "xilinx_u250_gen3x16_xdma_shell_4_1": "xilinx_u250_gen3x16_xdma_4_1_202210_1",
+        "xilinx_u55c_gen3x16_xdma_base_3": "xilinx_u55c_gen3x16_xdma_3_202210_1"
+    }
+
+    if platform in pynq_platforms:
+        return platform
+    elif platform in alveo_platforms:
+        return alveo_platforms[platform]
+    else:
+        raise Exception("Platform not currently supported by FINN-Examples")
 
 def resolve_target_platform(target_platform):
     if target_platform is None:
-        return pynq.Device.active_device.name
+        platform = pynq.Device.active_device.name
     else:
         assert target_platform in [x.name for x in pynq.Device.devices]
-        return target_platform
+        platform = target_platform
+    return check_platform_is_valid(platform)
 
 def kws_mlp(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
