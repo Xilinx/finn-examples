@@ -173,7 +173,6 @@ def step_resnet50_streamline_nonlinear(model: ModelWrapper, cfg: DataflowBuildCo
 
 
 def step_resnet50_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
-
     for iter_id in range(4):
         model = step_resnet50_streamline_linear(model, cfg)
         model = step_resnet50_streamline_nonlinear(model, cfg)
@@ -193,14 +192,14 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model.set_tensor_datatype(model.graph.input[0].name, DataType["UINT8"])
     model = model.transform(InferDataLayouts())
 
-#    try:
-#        from finnexperimental.transformation.fpgadataflow.infer_doublepacked_dsp import (
-#            InferDoublePackedConv,
-#        )
+    #    try:
+    #        from finnexperimental.transformation.fpgadataflow.infer_doublepacked_dsp import (
+    #            InferDoublePackedConv,
+    #        )
 
-#        model = model.transform(InferDoublePackedConv([1]))
-#    except Exception:
-#        print(" FINN Experimental not available. Using non-packed convolution ")
+    #        model = model.transform(InferDoublePackedConv([1]))
+    #    except Exception:
+    #        print(" FINN Experimental not available. Using non-packed convolution ")
 
     model = model.transform(DoubleToSingleFloat())
     model = model.transform(InferDataTypes())
@@ -282,15 +281,11 @@ def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig)
         "mem_mode",
         "runtime_writeable_weights",
     ]
-    extract_model_config_to_json(
-        model, cfg.output_dir + "/final_hw_config.json", hw_attrs
-    )
+    extract_model_config_to_json(model, cfg.output_dir + "/final_hw_config.json", hw_attrs)
 
     # after FIFOs are ready to go, call PrepareIP and HLSSynthIP again
     # this will only run for the new nodes (e.g. FIFOs and DWCs)
-    model = model.transform(
-        PrepareIP(cfg._resolve_fpga_part(), cfg._resolve_hls_clk_period())
-    )
+    model = model.transform(PrepareIP(cfg._resolve_fpga_part(), cfg._resolve_hls_clk_period()))
     model = model.transform(HLSSynthIP())
     model = model.transform(ReplaceVerilogRelPaths())
     return model
