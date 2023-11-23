@@ -85,13 +85,11 @@ alveo_notebooks = [
 def test_notebook_exec(notebook):
     with open(notebook) as f:
         nb = nbformat.read(f, as_version=4)
-        ep = ExecutePreprocessor(
-            timeout=notebook_timeout_seconds, kernel_name="python3"
-        )
+        ep = ExecutePreprocessor(timeout=notebook_timeout_seconds, kernel_name="python3")
 
         # debug only for now...
         notebook_dump = notebook.replace(".ipynb", ".dump")
-        with open(notebook_dump, 'w') as f:
+        with open(notebook_dump, "w") as f:
             f.write(str(ep.preprocess(nb)))
 
         try:
