@@ -160,7 +160,6 @@ pipeline {
               script {
                 cleanLocalCloneDir()
                 getBoardFiles(env.BOARD)
-                u250Workaround()
 
                 // Create test script
                 createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}")
@@ -334,15 +333,6 @@ void getBoardFiles(String board) {
     }
   } else {
     downloadTestDataAndBitstreams(board)
-  }
-}
-
-void u250Workaround() {
-  // FIXME: The installed Pynq driver expects to see directory
-  // 'xilinx_u250_gen3x16_xdma_shell_4_1' or else the bitstream download fails.
-  dir('finn_examples/bitfiles/bitfiles.zip.d') {
-    sh 'rm *.zip'
-    sh 'mv ./* xilinx_u250_gen3x16_xdma_shell_4_1'
   }
 }
 
