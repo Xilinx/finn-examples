@@ -15,7 +15,7 @@
         "url": "https://github.com/Xilinx/finn-examples/releases/download/rn50-u250/xilinx_u250_xdma_201830_2.zip",
         "md5sum": "042cc5602c8a39d7541f1d79946c0b68"
     },
-    "xilinx_u250_gen3x16_xdma_2_1_202010_1": {
+    "U250": {
         "url": "https://github.com/Xilinx/finn-examples/releases/download/v0.0.6/xilinx_u250_gen3x16_xdma_2_1_202010_1.zip",
         "md5sum": "59a61f233376ab0e340835034db50449"
     }

@@ -53,6 +53,7 @@ resnet50_build_steps = [
     step_resnet50_convert_to_hls,
     "step_create_dataflow_partition",
     "step_apply_folding_config",
+    "step_minimize_bit_width",
     "step_generate_estimate_reports",
     "step_hls_codegen",
     "step_hls_ipgen",
