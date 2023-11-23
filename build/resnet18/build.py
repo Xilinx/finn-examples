@@ -7,6 +7,7 @@ from resnet18_custom_steps import (
     step_resnet18_streamline,
     step_resnet18_lower,
     step_resnet18_to_hls,
+    step_resnet50_slr_floorplan,
 )
 from finn.util.basic import (
     pynq_part_map, alveo_part_map, alveo_default_platform
@@ -31,11 +32,7 @@ BOARDS = ["U250"]
 SYNTH_CLK_PERIOD_NS = 4.0
 
 # The folding config file we'll apply to the model.
-FOLDING_CONFIG_FILE = "folding_config/U250_folding_config_100k_RTL.json"
-
-# The liveness threshold for setting FIFO depths.
-# TODO: RELEVANT COMMENT EXPLAINING THRESHOLD
-LIVENESS_THRESHOLD = 15000000
+FOLDING_CONFIG_FILE = "folding_config/U250_folding_config_100k.json"
 
 # TODO: RELEVANT COMMENT
 VERIFICATION_IN_OUT_PAIR = ("verification/golden_input.npy",
@@ -43,8 +40,6 @@ VERIFICATION_IN_OUT_PAIR = ("verification/golden_input.npy",
 
 # TODO: RELEVANT COMMENT
 USE_RTL_NODES = False
-
-os.environ["LIVENESS_THRESHOLD"] = f"{LIVENESS_THRESHOLD}"
 
 resnet18_build_steps = [
     "step_qonnx_to_finn",
@@ -55,6 +50,7 @@ resnet18_build_steps = [
     step_resnet18_to_hls,
     "step_create_dataflow_partition",
     "step_apply_folding_config",
+    "step_minimize_bit_width",
     "step_generate_estimate_reports",
     "step_hls_codegen",
     "step_hls_ipgen",
@@ -62,6 +58,7 @@ resnet18_build_steps = [
     "step_create_stitched_ip",
     # Uncomment if you want RTL simulation reports! 
     # "step_measure_rtlsim_performance",
+    step_resnet50_slr_floorplan,
     "step_synthesize_bitfile",
     "step_make_pynq_driver",
     "step_deployment_package",

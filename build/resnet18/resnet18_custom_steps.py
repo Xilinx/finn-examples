@@ -3,7 +3,10 @@
 # Used in all steps.
 from qonnx.core.modelwrapper import ModelWrapper
 from qonnx.util.cleanup import cleanup_model
-from finn.builder.build_dataflow_config import DataflowBuildConfig
+from finn.builder.build_dataflow_config import (
+    DataflowBuildConfig,
+    ShellFlowType,
+)
 
 # Step: Attach Pre-Processing Model
 from qonnx.transformation.merge_onnx_models import MergeONNXModels
@@ -192,3 +195,38 @@ def step_resnet18_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig) -> Model
     
     # Clean up the model before returning.
     return cleanup_model(model)
+
+def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
+    if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
+        try:
+            from finnexperimental.analysis.partitioning import partition
+
+            # apply partitioning of the model, restricting the first and last layers
+            # to SLR0
+            default_slr = 0
+            abs_anchors = [(0, [default_slr]), (-1, [default_slr])]
+            # increase resource limits to make partitioning feasible, except for SLR0
+            # which also has DDR subsystem
+            limits = np.array(
+                [
+                    [0.75, 0.5, 0.7, 0.6, 0.6],
+                    [1, 0.7, 0.9, 0.8, 0.8],
+                    [1, 0.7, 0.9, 0.8, 0.8],
+                    [1, 0.7, 0.9, 0.8, 0.8],
+                ]
+            )
+            floorplan = partition(
+                model,
+                cfg.synth_clk_period_ns,
+                cfg.board,
+                abs_anchors=abs_anchors,
+                multivariant=False,
+                linear_cuts=True,
+                limits=limits,
+            )[0]
+            # apply floorplan to model
+            model = model.transform(ApplyConfig(floorplan))
+            print("SLR floorplanning applied")
+        except Exception:
+            print("No SLR floorplanning applied")
+    return model
