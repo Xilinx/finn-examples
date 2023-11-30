@@ -16,13 +16,20 @@ pipeline {
       steps {
         cleanLocalCloneDir()
         dir('build') {
+          // Make sure we have the latest FINN dev
           getFinn()
-          // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
-          // in order to build bitstreams/run build script with Jenkins.
-          dir('finn') {
-            sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+
+          script {
+            // Build all examples, we list the builds to allow easy inclusion/exclusion
+            def buildList = ["bnn-pynq",
+                             "cybersecurity-mlp",
+                             "kws",
+                             "mobilenet-v1",
+                             "resnet50",
+                             "vgg10-radioml"]
+            createParallelBuilds(buildList)
+            createReleaseArea(buildList)
           }
-          sh './build-all.sh'
         }
       }
     }
@@ -37,7 +44,7 @@ pipeline {
       }
       steps {
         dir('build/release') {
-          stash name: "bitfile_stash", includes: "Pynq-Z1.zip,U250.zip,Ultra96.zip,ZCU104.zip"
+          stash name: "bitfile_stash", includes: "*.zip"
         }
       }
     }
@@ -275,6 +282,55 @@ pipeline {
           }
         }
       }
+    }
+  }
+}
+
+void createParallelBuilds(buildList) {
+  parallel buildList.collectEntries {
+    ["${it}", generateStage(it)]
+  }
+}
+
+def generateStage(job) {
+  return {
+    stage(job) {
+      // Download model if available
+      dir(job) {
+        if (fileExists('models/download-model.sh')) {
+          dir('models') {
+            sh "rm -rf *.zip *.onnx *.npz"
+            sh "./download-model.sh"
+          }
+        }
+      }
+
+      // Run build script
+      dir('finn') {
+        sh "./run-docker.sh build_custom ../${job}"
+      }
+    }
+  }
+}
+
+void createReleaseArea(buildList) {
+  sh "rm -rf release"
+  sh "mkdir -p release"
+
+  // Gather all release folders
+  buildList.each {
+    if(fileExists("${it}/release")) {
+      sh "cp -r ${it}/release/* release"
+    }
+  }
+
+  // Create zip files + MD5sum for finn-examples upload
+  dir('release') {
+    def releaseDirs = findFiles()
+    releaseDirs.each {
+      sh "zip -r ${it.name}.zip ${it.name}"
+      def md5sum_val = sh(script: "md5sum ${it.name}.zip | awk \'{print \$1}\'", returnStdout: true)
+      sh "echo '${it.name}.zip : ${md5sum_val} ' >> md5sum.log"
     }
   }
 }
