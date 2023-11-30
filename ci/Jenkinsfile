@@ -160,7 +160,7 @@ pipeline {
             label 'finn-u250'
           }
           environment {
-            BOARD = 'U250'
+            BOARD = 'xilinx_u250_gen3x16_xdma_2_1_202010_1'
           }
           steps {
             catchError(stageResult: 'FAILURE') {
