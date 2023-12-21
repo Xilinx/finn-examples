@@ -32,15 +32,15 @@ import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
 from finn.builder.build_dataflow_steps import *
 
-# model_name = "espcn-bsd300"
-model_name = "espcn-bsd300-base"
+model_name = "espcn-bsd300"
+
 
 
 espcn_build_steps = [
     custom_step_qonnx_tidy_up,
     custom_step_add_pre_proc,
-    step_qonnx_to_finn,
-    step_tidy_up,
+    "step_qonnx_to_finn",
+    "step_tidy_up",
     custom_step_streamline,
     custom_step_convert_to_hls,
     "step_minimize_bit_width",
@@ -59,24 +59,24 @@ espcn_build_steps = [
     "step_deployment_package",
 ]
 
-model_file = "quant_espcn_x2_w4a4_qonnx_export/qonnx_model.onnx"
+model_file = "quant_espcn_x2_w4a4_base/qonnx_model.onnx"
 
 cfg = build_cfg.DataflowBuildConfig(
     steps=espcn_build_steps,
     output_dir="output_%s_kriasom" % (model_name),
-    synth_clk_period_ns=10.0,
+    synth_clk_period_ns=5.0,
     target_fps=10000,
     fpga_part="xck26-sfvc784-2LV-c",
     shell_flow_type = build_cfg.ShellFlowType.VIVADO_ZYNQ,
     board = "KV260_SOM",
-    enable_build_pdb_debug=True,
+    enable_build_pdb_debug=False,
     verbose=False,
     split_large_fifos = True,
-    folding_config_file = "fixed_fifo_folding.json",
+    folding_config_file = "folding_config_chrc_cap.json",
     auto_fifo_depths = False,
-    # auto_fifo_strategy = build_cfg.AutoFIFOSizingMethod.CHARACTERIZE,
-    verify_input_npy = "quant_espcn_x2_w4a4_qonnx_export/input.npy",
-    verify_expected_output_npy = "quant_espcn_x2_w4a4_qonnx_export/output.npy",
+    rtlsim_batch_size = 100,
+    verify_input_npy = "quant_espcn_x2_w4a4_base/input.npy",
+    verify_expected_output_npy = "quant_espcn_x2_w4a4_base/output.npy",
     verify_steps=[
         build_cfg.VerificationStepType.QONNX_TO_FINN_PYTHON,
         build_cfg.VerificationStepType.TIDY_UP_PYTHON,
@@ -85,8 +85,8 @@ cfg = build_cfg.DataflowBuildConfig(
     ],
     generate_outputs=[
         build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
-        # build_cfg.DataflowOutputType.STITCHED_IP,
-        # build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
+        build_cfg.DataflowOutputType.STITCHED_IP,
+        build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
         build_cfg.DataflowOutputType.BITFILE,
     ],
 )
