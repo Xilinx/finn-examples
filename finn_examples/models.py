@@ -35,6 +35,7 @@ import pynq
 from qonnx.core.datatype import DataType
 from finn_examples.driver import FINNExampleOverlay
 
+
 _mnist_fc_io_shape_dict = {
     "idt" : [DataType['UINT8']],
     "odt" : [DataType['UINT8']],
@@ -165,6 +166,22 @@ _unsw_nb15_mlp_io_shape_dict = {
     "num_outputs" : 1,
 }
 
+_espcn_super_res_io_shape_dict = {
+    "idt" : [DataType['UINT8']],
+    "odt" : [DataType['UINT8']],
+    "ishape_normal" : [(1, 128, 128, 3)],
+    "oshape_normal" : [(1, 256, 256, 3)],
+    "ishape_folded" : [(1, 128, 128, 3, 1)],
+    "oshape_folded" : [(1, 256, 256, 1, 3)],
+    "ishape_packed" : [(1, 128, 128, 3, 1)],
+    "oshape_packed" : [(1, 256, 256, 1, 3)],
+    "input_dma_name" : ['idma0'],
+    "output_dma_name" : ['odma0'],
+    "number_of_external_weights": 0,
+    "num_inputs" : 1,
+    "num_outputs" : 1,
+}
+
 # from https://github.com/Xilinx/PYNQ-HelloWorld/blob/master/setup.py
 # get current platform: either edge or pcie
 
@@ -235,12 +252,14 @@ def resolve_target_platform(target_platform):
         assert target_platform in [x.name for x in pynq.Device.devices]
         return target_platform
 
+    
 def kws_mlp(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
     model_name = "kwsmlp-w3a3"
     filename = find_bitfile(model_name, target_platform)
     return FINNExampleOverlay(filename, driver_mode, _gscv2_mlp_io_shape_dict)
+
 
 def tfc_w1a1_mnist(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
@@ -357,4 +376,18 @@ def mlp_w2a2_unsw_nb15(target_platform=None):
         driver_mode,
         _unsw_nb15_mlp_io_shape_dict,
         fclk_mhz=fclk_mhz
+    )
+
+
+def espcn_w4a4_super_res(target_platform=None):
+    target_platform = resolve_target_platform(target_platform)
+    driver_mode = get_driver_mode()
+    model_name = "espcn-super_res-w4a4"
+    filename = find_bitfile(model_name, target_platform)
+    fclk_mhz = 200.0
+    return FINNExampleOverlay(
+        filename,
+        driver_mode,
+        _espcn_super_res_io_shape_dict,
+        fclk_mhz=fclk_mhz,
     )
