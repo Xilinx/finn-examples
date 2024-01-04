@@ -31,41 +31,41 @@ import pkg_resources as pk
 import os
 import platform
 import pynq
-
 from qonnx.core.datatype import DataType
+
 from finn_examples.driver import FINNExampleOverlay
 
 
 _mnist_fc_io_shape_dict = {
-    "idt" : [DataType['UINT8']],
-    "odt" : [DataType['UINT8']],
-    "ishape_normal" : [(1, 784)],
-    "oshape_normal" : [(1, 1)],
-    "ishape_folded" : [(1, 16, 49)],
-    "oshape_folded" : [(1, 1, 1)],
-    "ishape_packed" : [(1, 16, 49)],
-    "oshape_packed" : [(1, 1, 1)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0'],
+    "idt": [DataType["UINT8"]],
+    "odt": [DataType["UINT8"]],
+    "ishape_normal": [(1, 784)],
+    "oshape_normal": [(1, 1)],
+    "ishape_folded": [(1, 16, 49)],
+    "oshape_folded": [(1, 1, 1)],
+    "ishape_packed": [(1, 16, 49)],
+    "oshape_packed": [(1, 1, 1)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _cifar10_cnv_io_shape_dict = {
-    "idt" : [DataType['UINT8']],
-    "odt" : [DataType['UINT8']],
-    "ishape_normal" : [(1, 32, 32, 3)],
-    "oshape_normal" : [(1, 1)],
-    "ishape_folded" : [(1, 32, 32, 3, 1)],
-    "oshape_folded" : [(1, 1, 1)],
-    "ishape_packed" : [(1, 32, 32, 3, 1)],
-    "oshape_packed" : [(1, 1, 1)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0'],
+    "idt": [DataType["UINT8"]],
+    "odt": [DataType["UINT8"]],
+    "ishape_normal": [(1, 32, 32, 3)],
+    "oshape_normal": [(1, 1)],
+    "ishape_folded": [(1, 32, 32, 3, 1)],
+    "oshape_folded": [(1, 1, 1)],
+    "ishape_packed": [(1, 32, 32, 3, 1)],
+    "oshape_packed": [(1, 1, 1)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _bincop_cnv_io_shape_dict = {
@@ -77,27 +77,27 @@ _bincop_cnv_io_shape_dict = {
     "oshape_folded": [(1, 1, 1)],
     "ishape_packed": [(1, 1, 72, 72, 1, 3)],
     "oshape_packed": [(1, 1, 1)],
-    "input_dma_name" : ["idma0"],
-    "output_dma_name" : ["odma0"],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _imagenet_top5inds_io_shape_dict = {
-    "idt" : [DataType['UINT8']],
-    "odt" : [DataType['UINT16']],
-    "ishape_normal" : [(1, 224, 224, 3)],
-    "oshape_normal" : [(1, 1, 1, 5)],
-    "ishape_folded" : [(1, 224, 224, 3, 1)],
-    "oshape_folded" : [(1, 1, 1, 5, 1)],
-    "ishape_packed" : [(1, 224, 224, 3, 1)],
-    "oshape_packed" : [(1, 1, 1, 5, 2)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0'],
+    "idt": [DataType["UINT8"]],
+    "odt": [DataType["UINT16"]],
+    "ishape_normal": [(1, 224, 224, 3)],
+    "oshape_normal": [(1, 1, 1, 5)],
+    "ishape_folded": [(1, 224, 224, 3, 1)],
+    "oshape_folded": [(1, 1, 1, 5, 1)],
+    "ishape_packed": [(1, 224, 224, 3, 1)],
+    "oshape_packed": [(1, 1, 1, 5, 2)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 # resnet50 uses a different io_shape_dict due to
@@ -107,63 +107,63 @@ _imagenet_resnet50_top5inds_io_shape_dict = {
     "odt": [DataType["UINT16"]],
     "ishape_normal": [(1, 224, 224, 3)],
     "oshape_normal": [(1, 5)],
-    "ishape_folded": [(1, 224, 224, 3)],
+    "ishape_folded": [(1, 224, 224, 1, 3)],
     "oshape_folded": [(1, 5, 1)],
-    "ishape_packed": [(1, 224, 224, 3)],
+    "ishape_packed": [(1, 224, 224, 1, 3)],
     "oshape_packed": [(1, 5, 2)],
-    "input_dma_name" : ['idma1'],
-    "output_dma_name" : ['odma1'],
+    "input_dma_name": ["idma1"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 1,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _radioml_io_shape_dict = {
-    "idt" : [DataType['INT8']],
-    "odt" : [DataType['UINT8']],
-    "ishape_normal" : [(1, 1024, 1, 2)],
-    "oshape_normal" : [(1, 1)],
-    "ishape_folded" : [(1, 1024, 1, 1, 2)],
-    "oshape_folded" : [(1, 1, 1)],
-    "ishape_packed" : [(1, 1024, 1, 1, 2)],
-    "oshape_packed" : [(1, 1, 1)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0'],
+    "idt": [DataType["INT8"]],
+    "odt": [DataType["UINT8"]],
+    "ishape_normal": [(1, 1024, 1, 2)],
+    "oshape_normal": [(1, 1)],
+    "ishape_folded": [(1, 1024, 1, 1, 2)],
+    "oshape_folded": [(1, 1, 1)],
+    "ishape_packed": [(1, 1024, 1, 1, 2)],
+    "oshape_packed": [(1, 1, 1)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _gscv2_mlp_io_shape_dict = {
-    "idt" : [DataType['INT8']],
-    "odt" : [DataType['UINT8']],
-    "ishape_normal" : [(1, 490)],
-    "oshape_normal" : [(1, 1)],
-    "ishape_folded" : [(1, 49, 10)],
-    "oshape_folded" : [(1, 1, 1)],
-    "ishape_packed" : [(1, 49, 10)],
-    "oshape_packed" : [(1, 1, 1)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0'],
+    "idt": [DataType["INT8"]],
+    "odt": [DataType["UINT8"]],
+    "ishape_normal": [(1, 490)],
+    "oshape_normal": [(1, 1)],
+    "ishape_folded": [(1, 49, 10)],
+    "oshape_folded": [(1, 1, 1)],
+    "ishape_packed": [(1, 49, 10)],
+    "oshape_packed": [(1, 1, 1)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _unsw_nb15_mlp_io_shape_dict = {
-    "idt" : [DataType['BIPOLAR']],
-    "odt" : [DataType['BIPOLAR']],
-    "ishape_normal" : [(1, 600)],
-    "oshape_normal" : [(1, 1)],
-    "ishape_folded" : [(1, 15, 40)],
-    "oshape_folded" : [(1, 1, 1)],
-    "ishape_packed" : [(1, 15, 5)],
-    "oshape_packed" : [(1, 1, 1)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0'],
+    "idt": [DataType["BIPOLAR"]],
+    "odt": [DataType["BIPOLAR"]],
+    "ishape_normal": [(1, 600)],
+    "oshape_normal": [(1, 1)],
+    "ishape_folded": [(1, 15, 40)],
+    "oshape_folded": [(1, 1, 1)],
+    "ishape_packed": [(1, 15, 5)],
+    "oshape_packed": [(1, 1, 1)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _espcn_super_res_io_shape_dict = {
@@ -201,9 +201,7 @@ def find_bitfile(model_name, target_platform):
     bitfile_ext = bitfile_exts[get_edge_or_pcie()]
     bitfile_name = "%s.%s" % (model_name, bitfile_ext)
     bitfile_candidates = [
-        pk.resource_filename(
-            "finn_examples", "bitfiles/%s/%s" % (target_platform, bitfile_name)
-        ),
+        pk.resource_filename("finn_examples", "bitfiles/%s/%s" % (target_platform, bitfile_name)),
         pk.resource_filename(
             "finn_examples",
             "bitfiles/bitfiles.zip.d/%s/%s" % (target_platform, bitfile_name),
@@ -221,9 +219,7 @@ def find_bitfile(model_name, target_platform):
 def find_runtime_weights(model_name, target_platform):
     weight_dir = "%s_runtime_weights" % (model_name)
     weight_dir_candidates = [
-        pk.resource_filename(
-            "finn_examples", "bitfiles/%s/%s" % (target_platform, weight_dir)
-        ),
+        pk.resource_filename("finn_examples", "bitfiles/%s/%s" % (target_platform, weight_dir)),
         pk.resource_filename(
             "finn_examples",
             "bitfiles/bitfiles.zip.d/%s/%s" % (target_platform, weight_dir),
@@ -252,7 +248,7 @@ def resolve_target_platform(target_platform):
         assert target_platform in [x.name for x in pynq.Device.devices]
         return target_platform
 
-    
+
 def kws_mlp(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
@@ -372,10 +368,7 @@ def mlp_w2a2_unsw_nb15(target_platform=None):
     filename = find_bitfile(model_name, target_platform)
     fclk_mhz = 100.0
     return FINNExampleOverlay(
-        filename,
-        driver_mode,
-        _unsw_nb15_mlp_io_shape_dict,
-        fclk_mhz=fclk_mhz
+        filename, driver_mode, _unsw_nb15_mlp_io_shape_dict, fclk_mhz=fclk_mhz
     )
 
 
