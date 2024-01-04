@@ -40,6 +40,7 @@ alveo_platforms = []
 # Note: only zynq platforms currently tested
 platforms_to_build = zynq_platforms + alveo_platforms
 
+
 # determine which shell flow to use for a given platform
 def platform_to_shell(platform):
     if platform in zynq_platforms:
@@ -48,6 +49,7 @@ def platform_to_shell(platform):
         return build_cfg.ShellFlowType.VITIS_ALVEO
     else:
         raise Exception("Unknown platform, can't determine ShellFlowType")
+
 
 # Define model name
 model_name = "unsw_nb15-mlp-w2a2"
@@ -71,21 +73,21 @@ for platform_name in platforms_to_build:
     os.makedirs(platform_dir, exist_ok=True)
     # Set up the build configuration for this model
     cfg = build_cfg.DataflowBuildConfig(
-        output_dir = "output_%s_%s" % (model_name, release_platform_name),
-        mvau_wwidth_max = 80,
-        target_fps = 1000000,
-        synth_clk_period_ns = 10.0,
-        board = platform_name,
-        shell_flow_type = shell_flow_type,
-        vitis_platform = vitis_platform,
-        vitis_opt_strategy = build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
-        generate_outputs = [
+        output_dir="output_%s_%s" % (model_name, release_platform_name),
+        mvau_wwidth_max=80,
+        target_fps=1000000,
+        synth_clk_period_ns=10.0,
+        board=platform_name,
+        shell_flow_type=shell_flow_type,
+        vitis_platform=vitis_platform,
+        vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
+        generate_outputs=[
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
         ],
-        save_intermediate_models=True
+        save_intermediate_models=True,
     )
 
     # Export MLP model to FINN-ONNX
@@ -94,11 +96,7 @@ for platform_name in platforms_to_build:
     build.build_dataflow_cfg(model, cfg)
     # Copy bitfiles into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
-    filtes_to_check_and_copy = [
-        "finn-accel.bit",
-        "finn-accel.hwh",
-        "finn-accel.xclbin"
-    ]
+    filtes_to_check_and_copy = ["finn-accel.bit", "finn-accel.hwh", "finn-accel.xclbin"]
     for f in filtes_to_check_and_copy:
         src_file = bitfile_gen_dir + "/" + f
         dst_file = platform_dir + "/" + f.replace("finn-accel", model_name)
