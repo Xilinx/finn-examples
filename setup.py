@@ -65,7 +65,7 @@ class _unzip_overlays(dist_build):
     def run(self):
         cmd = self.get_finalized_command("build_py")
         for package, f, build_dir, _ in cmd.data_files:
-            for (dirpath, dirnames, filenames) in os.walk(build_dir):
+            for dirpath, dirnames, filenames in os.walk(build_dir):
                 for f in filenames:
                     if f.endswith(".zip"):
                         zip_path = dirpath + "/" + f
@@ -86,11 +86,7 @@ class build_py(_build_py):
 def extend_package(path):
     if os.path.isdir(path):
         data_files.extend(
-            [
-                os.path.join("..", root, f)
-                for root, _, files in os.walk(path)
-                for f in files
-            ]
+            [os.path.join("..", root, f) for root, _, files in os.walk(path) for f in files]
         )
     elif os.path.isfile(path):
         data_files.append(os.path.join("..", path))
@@ -131,9 +127,7 @@ setup(
         ':python_version<"3.6"': ["matplotlib<3.1", "ipython==7.9"],
         ':python_version>="3.6"': ["matplotlib"],
     },
-    entry_points={
-        "pynq.notebooks": ["finn_examples = {}.notebooks".format(module_name)]
-    },
+    entry_points={"pynq.notebooks": ["finn_examples = {}.notebooks".format(module_name)]},
     cmdclass={"build_py": build_py, "unzip_overlays": _unzip_overlays},
     license="Apache License 2.0",
 )
