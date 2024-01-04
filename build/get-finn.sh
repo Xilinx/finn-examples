@@ -30,7 +30,7 @@
 # URL for git repo to be cloned
 REPO_URL=https://github.com/hleblevec/finn-fork
 # commit hash for repo
-REPO_COMMIT=75212fc73db643fc1dca85c49ed3914b964da1ae
+REPO_COMMIT=6c51d5e7633791f7ba65f8969a5f0ed7d2c0125a
 # directory (under the same folder as this script) to clone to
 REPO_DIR=finn
 
