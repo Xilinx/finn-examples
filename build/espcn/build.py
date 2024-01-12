@@ -26,14 +26,18 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from custom_steps import *
+from custom_steps import (
+    custom_step_export_verification,
+    custom_step_qonnx_tidy_up,
+    custom_step_add_pre_proc,
+    custom_step_streamline,
+    custom_step_convert_to_hls,
+)
 
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
-from finn.builder.build_dataflow_steps import *
 
 model_name = "espcn-bsd300"
-
 
 
 espcn_build_steps = [
@@ -68,16 +72,16 @@ cfg = build_cfg.DataflowBuildConfig(
     synth_clk_period_ns=5.0,
     target_fps=10000,
     fpga_part="xck26-sfvc784-2LV-c",
-    shell_flow_type = build_cfg.ShellFlowType.VIVADO_ZYNQ,
-    board = "KV260_SOM",
+    shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
+    board="KV260_SOM",
     enable_build_pdb_debug=True,
     verbose=False,
-    split_large_fifos = True,
-    folding_config_file = "folding_config_chrc_cap.json",
-    auto_fifo_depths = False,
-    rtlsim_batch_size = 100,
-    verify_input_npy = "quant_espcn_x2_w4a4_base/input.npy",
-    verify_expected_output_npy = "quant_espcn_x2_w4a4_base/output.npy",
+    split_large_fifos=True,
+    folding_config_file="folding_config_chrc_cap.json",
+    auto_fifo_depths=False,
+    rtlsim_batch_size=100,
+    verify_input_npy="quant_espcn_x2_w4a4_base/input.npy",
+    verify_expected_output_npy="quant_espcn_x2_w4a4_base/output.npy",
     verify_steps=[
         build_cfg.VerificationStepType.QONNX_TO_FINN_PYTHON,
         build_cfg.VerificationStepType.TIDY_UP_PYTHON,
