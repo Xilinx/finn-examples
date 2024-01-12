@@ -57,11 +57,17 @@ from finn.builder.build_dataflow_config import DataflowBuildConfig, Verification
 from finn.builder.build_dataflow_steps import verify_step
 from finn.util.pytorch import ToTensor
 
+def custom_step_export_verification(model: ModelWrapper, cfg: DataflowBuildConfig):
+    model = model.transform(InferShapes())
+    verify_step(model, cfg, "onnx_export", need_parent=False)
+    return model
+
 def custom_step_qonnx_tidy_up(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferShapes())
     # QONNX transformations
     model = model.transform(SubPixelToDeconvolution())
     model = model.transform(InferShapes())
+    verify_step(model, cfg, "tidy_up", need_parent=False)
     return model
 
 
@@ -86,6 +92,7 @@ def custom_step_add_pre_proc(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferDataTypes())
     model = model.transform(RemoveStaticGraphInputs())
     model = model.transform(RemoveUnusedTensors())
+    verify_step(model, cfg, "pre_proc", need_parent=False)
 
     return model
 

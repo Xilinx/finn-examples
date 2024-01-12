@@ -37,6 +37,7 @@ model_name = "espcn-bsd300"
 
 
 espcn_build_steps = [
+    custom_step_export_verification,
     custom_step_qonnx_tidy_up,
     custom_step_add_pre_proc,
     "step_qonnx_to_finn",
@@ -69,7 +70,7 @@ cfg = build_cfg.DataflowBuildConfig(
     fpga_part="xck26-sfvc784-2LV-c",
     shell_flow_type = build_cfg.ShellFlowType.VIVADO_ZYNQ,
     board = "KV260_SOM",
-    enable_build_pdb_debug=False,
+    enable_build_pdb_debug=True,
     verbose=False,
     split_large_fifos = True,
     folding_config_file = "folding_config_chrc_cap.json",
