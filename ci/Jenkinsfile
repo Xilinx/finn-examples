@@ -291,23 +291,27 @@ void createParallelBuilds(buildList) {
 
 def generateStage(job) {
   return {
-    stage(job) {
-      // Make sure we have the latest FINN dev
-      getFinn("finn-${job}")
+    withEnv(["FINN_HOST_BUILD_DIR=${env.FINN_HOST_BUILD_DIR}/${job}"]) {
+      stage(job) {
+        cleanPreviousBuildFiles("${env.FINN_HOST_BUILD_DIR}")
 
-      // Download model if available
-      dir(job) {
-        if (fileExists('models/download-model.sh')) {
-          dir('models') {
-            sh "rm -rf *.zip *.onnx *.npz"
-            sh "./download-model.sh"
+        // Make sure we have the latest FINN dev
+        getFinn("finn-${job}")
+
+        // Download model if available
+        dir(job) {
+          if (fileExists('models/download-model.sh')) {
+            dir('models') {
+              sh "rm -rf *.zip *.onnx *.npz"
+              sh "./download-model.sh"
+            }
           }
         }
-      }
 
-      // Run build script
-      dir("finn-${job}") {
-        sh "./run-docker.sh build_custom ../${job}"
+        // Run build script
+        dir("finn-${job}") {
+          sh "./run-docker.sh build_custom ../${job}"
+        }
       }
     }
   }
