@@ -474,7 +474,7 @@ void getFinn(String repoName) {
 
     // Clone FINN repo into finn directory and checkout correct branch
     sh "git clone https://github.com/Xilinx/finn ${repoName}"
-    sh "git -C ${repoName} checkout dev"
+    sh "git -C ${repoName} checkout ${env.FINN_TARGET_BRANCH}"
 
     // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
     // in order to build bitstreams/run build script with Jenkins.
