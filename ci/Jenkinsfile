@@ -293,24 +293,28 @@ def generateStage(job) {
   return {
     withEnv(["FINN_HOST_BUILD_DIR=${env.FINN_HOST_BUILD_DIR}/${job}"]) {
       stage(job) {
-        cleanPreviousBuildFiles("${env.FINN_HOST_BUILD_DIR}")
+        catchError(stageResult: 'Failure') {
+          script {
+            cleanPreviousBuildFiles("${env.FINN_HOST_BUILD_DIR}")
 
-        // Make sure we have the latest FINN dev
-        getFinn("finn-${job}")
+            // Make sure we have the latest FINN dev
+            getFinn("finn-${job}")
 
-        // Download model if available
-        dir(job) {
-          if (fileExists('models/download-model.sh')) {
-            dir('models') {
-              sh "rm -rf *.zip *.onnx *.npz"
-              sh "./download-model.sh"
+            // Download model if available
+            dir(job) {
+              if (fileExists('models/download-model.sh')) {
+                dir('models') {
+                  sh "rm -rf *.zip *.onnx *.npz"
+                  sh "./download-model.sh"
+                }
+              }
+            }
+
+            // Run build script
+            dir("finn-${job}") {
+              sh "./run-docker.sh build_custom ../${job}"
             }
           }
-        }
-
-        // Run build script
-        dir("finn-${job}") {
-          sh "./run-docker.sh build_custom ../${job}"
         }
       }
     }
@@ -474,7 +478,9 @@ void getFinn(String repoName) {
 
     // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
     // in order to build bitstreams/run build script with Jenkins.
+    // Furthermore, remove pdb from the command to avoid hanging in the debugger on fail
     dir(repoName) {
         sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+        sh "sed -i -e 's/-mpdb -cc -cq//g' run-docker.sh"
     }
 }
