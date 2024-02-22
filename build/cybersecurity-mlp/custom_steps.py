@@ -34,7 +34,8 @@ from brevitas.nn import QuantLinear, QuantReLU, QuantIdentity
 import torch
 import torch.nn as nn
 import brevitas.onnx as bo
-from brevitas.quant_tensor import QuantTensor
+from qonnx.core.modelwrapper import ModelWrapper
+from qonnx.core.datatype import DataType
 
 
 # Define export wrapper
@@ -105,11 +106,13 @@ def custom_step_mlp_export(model_name):
     input_a = 2 * input_a - 1
     scale = 1.0
     input_t = torch.from_numpy(input_a * scale)
-    input_qt = QuantTensor(
-        input_t, scale=torch.tensor(scale), bit_width=torch.tensor(1.0), signed=True
-    )
 
     # Export to ONNX
-    bo.export_finn_onnx(model_for_export, export_path=ready_model_filename, input_t=input_qt)
+    bo.export_qonnx(model_for_export, export_path=ready_model_filename, input_t=input_t)
+
+    # Set input datatype for FINN's InferDataType transformation to infer the right datatypes
+    model = ModelWrapper(ready_model_filename)
+    model.set_tensor_datatype(model.graph.input[0].name, DataType["BIPOLAR"])
+    model.save(ready_model_filename)
 
     return ready_model_filename
