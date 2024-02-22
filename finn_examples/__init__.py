@@ -37,12 +37,18 @@
 
 import sys
 
-import finn_examples.finn.util.data_packing as data_packing
 import finn_examples.qonnx as qonnx
-import finn_examples.qonnx.core.datatype as datatype
-import finn_examples.qonnx.util.basic as basic
 
 sys.modules["qonnx"] = qonnx
+
+import finn_examples.qonnx.core.datatype as datatype  # noqa: E402
+
 sys.modules["qonnx.core.datatype"] = datatype
+
+import finn_examples.qonnx.util.basic as basic  # noqa: E402
+
 sys.modules["qonnx.util.basic"] = basic
+
+import finn_examples.finn.util.data_packing as data_packing  # noqa: E402
+
 sys.modules["finn.util.data_packing"] = data_packing
