@@ -35,8 +35,8 @@ import shutil
 # custom steps for mobilenetv1
 from custom_steps import (
     step_mobilenet_streamline,
-    step_mobilenet_convert_to_hls_layers,
-    step_mobilenet_convert_to_hls_layers_separate_th,
+    step_mobilenet_convert_to_hw_layers,
+    step_mobilenet_convert_to_hw_layers_separate_th,
     step_mobilenet_lower_convs,
     step_mobilenet_slr_floorplan,
 )
@@ -75,7 +75,7 @@ def select_build_steps(platform):
         return [
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
-            step_mobilenet_convert_to_hls_layers_separate_th,
+            step_mobilenet_convert_to_hw_layers_separate_th,
             "step_create_dataflow_partition",
             "step_specialize_layers",
             "step_apply_folding_config",
@@ -93,7 +93,7 @@ def select_build_steps(platform):
         return [
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
-            step_mobilenet_convert_to_hls_layers,
+            step_mobilenet_convert_to_hw_layers,
             "step_create_dataflow_partition",
             "step_specialize_layers",
             "step_apply_folding_config",
