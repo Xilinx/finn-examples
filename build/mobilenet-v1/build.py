@@ -44,9 +44,9 @@ from custom_steps import (
 model_name = "mobilenetv1-w4a4"
 
 # which platforms to build the networks for
-#zynq_platforms = ["ZCU102", "ZCU104"]
+# zynq_platforms = ["ZCU102", "ZCU104"]
 zynq_platforms = ["ZCU102"]
-#alveo_platforms = ["U50", "U200", "U250", "U280"]
+# alveo_platforms = ["U50", "U200", "U250", "U280"]
 alveo_platforms = ["U250"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
@@ -78,6 +78,7 @@ def select_build_steps(platform):
             step_mobilenet_convert_to_hls_layers_separate_th,
             "step_create_dataflow_partition",
             "step_apply_folding_config",
+            "step_minimize_bit_width",
             "step_generate_estimate_reports",
             "step_hls_codegen",
             "step_hls_ipgen",
@@ -94,6 +95,7 @@ def select_build_steps(platform):
             step_mobilenet_convert_to_hls_layers,
             "step_create_dataflow_partition",
             "step_apply_folding_config",
+            "step_minimize_bit_width",
             "step_generate_estimate_reports",
             "step_hls_codegen",
             "step_hls_ipgen",
@@ -165,4 +167,3 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
-

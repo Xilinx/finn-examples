@@ -1,11 +1,42 @@
+# Copyright (C) 2023, Advanced Micro Devices, Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of FINN nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+exclude: '^docs/conf.py'
+
 default_language_version:
-    python: python3
+    python: python3.10
 
 repos:
-- repo: git://github.com/pre-commit/pre-commit-hooks
-  rev: v3.2.0
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
   hooks:
   - id: trailing-whitespace
+    exclude: '\.dat$'
   - id: check-added-large-files
   - id: check-ast
   - id: check-json
@@ -13,26 +44,28 @@ repos:
   - id: check-xml
   - id: check-yaml
   - id: debug-statements
+    exclude: '^src/finn/builder/build_dataflow.py$'
   - id: end-of-file-fixer
   - id: requirements-txt-fixer
   - id: mixed-line-ending
     args: ['--fix=no']
 
-- repo: git://github.com/PyCQA/isort
-  rev: 5.5.3
+- repo: https://github.com/PyCQA/isort
+  rev: 5.12.0
   hooks:
   - id: isort
 
-- repo: git://github.com/psf/black
-  rev: stable
+- repo: https://github.com/psf/black
+  rev: 23.3.0
   hooks:
   - id: black
     language_version: python3
+    args: [--line-length=100]
 
-- repo: https://gitlab.com/pycqa/flake8
-  rev: 3.8.3
+- repo: https://github.com/PyCQA/flake8
+  rev: 6.0.0
   hooks:
   - id: flake8
     # black-compatible flake-8 config
-    args: ['--max-line-length=88',  # black default
+    args: ['--max-line-length=100',  # black default
            '--extend-ignore=E203']  # E203 is not PEP8 compliant
