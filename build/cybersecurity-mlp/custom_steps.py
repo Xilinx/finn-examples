@@ -38,7 +38,6 @@ from brevitas.quant_tensor import QuantTensor
 from qonnx.core.modelwrapper import ModelWrapper
 from qonnx.core.datatype import DataType
 
-
 # Define export wrapper
 class CybSecMLPForExport(nn.Module):
     def __init__(self, my_pretrained_model):
@@ -109,7 +108,9 @@ def custom_step_mlp_export(model_name):
     input_t = torch.from_numpy(input_a * scale)
 
     # Export to ONNX
-    bo.export_finn_onnx(model_for_export, export_path=ready_model_filename, input_t=input_qt)
+    bo.export_qonnx(
+        model_for_export, export_path=ready_model_filename, input_t=input_t
+    )
 
     # Set input datatype for FINN's InferDataType transformation to infer the right datatypes
     model = ModelWrapper(ready_model_filename)
