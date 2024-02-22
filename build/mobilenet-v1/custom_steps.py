@@ -89,7 +89,7 @@ def step_mobilenet_lower_convs(model: ModelWrapper, cfg: DataflowBuildConfig):
 
 def step_mobilenet_convert_to_hw_layers(model: ModelWrapper, cfg: DataflowBuildConfig):
     mem_mode = cfg.default_mem_mode.value
-    model = model.transform(to_hls.InferPool_Batch())
+    model = model.transform(to_hls.InferPool())
     model = model.transform(to_hls.InferConvInpGen())
     model = model.transform(to_hls.InferVectorVectorActivation())
     model = model.transform(to_hls.InferQuantizedMatrixVectorActivation(mem_mode))
@@ -127,7 +127,7 @@ def step_mobilenet_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
 
 def step_mobilenet_convert_to_hw_layers_separate_th(model: ModelWrapper, cfg: DataflowBuildConfig):
     mem_mode = cfg.default_mem_mode.value
-    model = model.transform(to_hls.InferPool_Batch())
+    model = model.transform(to_hls.InferPool())
     model = model.transform(to_hls.InferConvInpGen())
     model = model.transform(to_hls.InferThresholdingLayer())
     model = model.transform(to_hls.InferVectorVectorActivation())
