@@ -34,7 +34,6 @@ from brevitas.nn import QuantLinear, QuantReLU, QuantIdentity
 import torch
 import torch.nn as nn
 import brevitas.onnx as bo
-from brevitas.quant_tensor import QuantTensor
 from qonnx.core.modelwrapper import ModelWrapper
 from qonnx.core.datatype import DataType
 
