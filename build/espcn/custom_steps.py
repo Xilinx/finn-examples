@@ -42,6 +42,7 @@ from qonnx.transformation.infer_datatypes import InferDataTypes
 from qonnx.transformation.infer_shapes import InferShapes
 from qonnx.transformation.merge_onnx_models import MergeONNXModels
 from qonnx.transformation.subpixel_to_deconv import SubPixelToDeconvolution
+from qonnx.transformation.resize_conv_to_deconv import ResizeConvolutionToDeconvolution
 from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 from qonnx.transformation.infer_data_layouts import InferDataLayouts
 
@@ -49,19 +50,30 @@ import finn.transformation.streamline.absorb as absorb
 import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
 from finn.transformation.streamline import Streamline
 from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
-from finn.transformation.streamline.reorder import MoveScalarMulPastConvTranspose
-from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
+from finn.transformation.streamline.reorder import (
+    MoveScalarMulPastConvTranspose,
+    MakeScaleResizeNHWC,
+)
 from finn.transformation.fpgadataflow.infer_pixel_padding_deconv import InferPixelPaddingDeconv
 
 from finn.builder.build_dataflow_config import DataflowBuildConfig, VerificationStepType
 from finn.builder.build_dataflow_steps import verify_step
 from finn.util.pytorch import ToTensor
 
+
+def custom_step_export_verification(model: ModelWrapper, cfg: DataflowBuildConfig):
+    model = model.transform(InferShapes())
+    # verify_step(model, cfg, "onnx_export", need_parent=False)
+    return model
+
+
 def custom_step_qonnx_tidy_up(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferShapes())
     # QONNX transformations
     model = model.transform(SubPixelToDeconvolution())
+    model = model.transform(ResizeConvolutionToDeconvolution(maintain_bit_width=False))
     model = model.transform(InferShapes())
+    # verify_step(model, cfg, "tidy_up", need_parent=False)
     return model
 
 
@@ -86,8 +98,10 @@ def custom_step_add_pre_proc(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferDataTypes())
     model = model.transform(RemoveStaticGraphInputs())
     model = model.transform(RemoveUnusedTensors())
+    # verify_step(model, cfg, "pre_proc", need_parent=False)
 
     return model
+
 
 def custom_step_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
     """Run streamlining on given model. Streamlining involves moving floating point
@@ -107,8 +121,10 @@ def custom_step_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
         model = model.transform(LowerConvsToMatMul())
         model = model.transform(absorb.AbsorbConsecutiveTransposes())
         model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
-  
+
     model = model.transform(Streamline())
+    model = model.transform(InferDataLayouts())
+    model = model.transform(MakeScaleResizeNHWC())
     model = model.transform(absorb.AbsorbConsecutiveTransposes())
     model = model.transform(InferDataLayouts())
     model = model.transform(RemoveUnusedTensors())
@@ -124,7 +140,6 @@ def custom_step_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     layers. Which nodes and particular configurations can be converted to HLS
     is limited, see the source code of the `convert_to_hls` module for more."""
 
-
     mem_mode = cfg.default_mem_mode.value
     if cfg.standalone_thresholds:
         # doing this first causes all threshold layers to be standalone
@@ -134,6 +149,9 @@ def custom_step_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
         model = model.transform(InferPixelPaddingDeconv())
         model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
         model = model.transform(RoundAndClipThresholds())
+    need_upsample = len(model.get_nodes_by_op_type("Resize")) > 0
+    if need_upsample:
+        model = model.transform(to_hls.InferUpsample())
     # needed for non-bipolar MatMul layers
     model = model.transform(to_hls.InferQuantizedMatrixVectorActivation(mem_mode))
     # input quantization (if any) as standalone threshold
