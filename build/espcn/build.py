@@ -27,7 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from custom_steps import (
-    custom_step_export_verification,
+    # custom_step_export_verification,
     custom_step_qonnx_tidy_up,
     custom_step_add_pre_proc,
     custom_step_streamline,
@@ -37,11 +37,11 @@ from custom_steps import (
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
 
-model_name = "espcn-bsd300"
+model_name = "espcn-bsd300-RCNNTDC"
 
 
 espcn_build_steps = [
-    custom_step_export_verification,
+    # custom_step_export_verification,
     custom_step_qonnx_tidy_up,
     custom_step_add_pre_proc,
     "step_qonnx_to_finn",
@@ -70,23 +70,27 @@ cfg = build_cfg.DataflowBuildConfig(
     steps=espcn_build_steps,
     output_dir="output_%s_kriasom" % (model_name),
     synth_clk_period_ns=5.0,
-    target_fps=10000,
+    target_fps=30,
     fpga_part="xck26-sfvc784-2LV-c",
     shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
     board="KV260_SOM",
     enable_build_pdb_debug=True,
-    verbose=False,
+    verbose=True,
     split_large_fifos=True,
-    folding_config_file="folding_config_chrc_cap.json",
+    folding_config_file="folding_config_rcnntdc_cap.json",
     auto_fifo_depths=False,
+    # auto_fifo_strategy = build_cfg.AutoFIFOSizingMethod.CHARACTERIZE,
     rtlsim_batch_size=100,
+    force_rtl_conv_inp_gen=False,
+    # start_step="step_hls_ipgen",
+    # stop_step = "step_generate_estimate_reports",
     verify_input_npy="quant_espcn_x2_w4a4_base/input.npy",
     verify_expected_output_npy="quant_espcn_x2_w4a4_base/output.npy",
     verify_steps=[
-        build_cfg.VerificationStepType.QONNX_TO_FINN_PYTHON,
-        build_cfg.VerificationStepType.TIDY_UP_PYTHON,
-        build_cfg.VerificationStepType.STREAMLINED_PYTHON,
-        build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,
+        # build_cfg.VerificationStepType.QONNX_TO_FINN_PYTHON,
+        # build_cfg.VerificationStepType.TIDY_UP_PYTHON,
+        # build_cfg.VerificationStepType.STREAMLINED_PYTHON,
+        # build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,True
     ],
     generate_outputs=[
         build_cfg.DataflowOutputType.ESTIMATE_REPORTS,

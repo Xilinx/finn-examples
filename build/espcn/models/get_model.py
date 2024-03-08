@@ -33,7 +33,8 @@ import torch
 import numpy as np
 from brevitas.export import export_qonnx
 
-model = models.get_model_by_name("quant_espcn_x2_w4a4_base", True)
+# model = models.get_model_by_name("quant_espcn_x2_w4a4_base", True)
+model = models.quant_espcn_nnrc(upscale_factor=2, weight_bit_width=4, act_bit_width=4)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model = model.to(device)
 _, testloader = utils.get_bsd300_dataloaders(
