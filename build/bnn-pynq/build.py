@@ -54,6 +54,7 @@ for platform_name in platforms_to_build:
         cfg = build_cfg.DataflowBuildConfig(
             output_dir="output_%s_%s" % (model_name, release_platform_name),
             folding_config_file="folding_config/%s_folding_config.json" % model_name,
+            specialize_layers_config_file="specialize_layers_config.json",
             synth_clk_period_ns=10.0,
             board=platform_name,
             shell_flow_type=shell_flow_type,
