@@ -132,6 +132,7 @@ for platform_name in platforms_to_build:
         steps=select_build_steps(platform_name),
         output_dir="output_%s_%s" % (model_name, release_platform_name),
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
+        specialize_layers_config_file="specialize_layers_config.json",
         synth_clk_period_ns=select_clk_period(platform_name),
         board=platform_name,
         shell_flow_type=shell_flow_type,

@@ -1,0 +1,261 @@
+{
+    "Defaults": {},
+    "ConvolutionInputGenerator_0": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_0": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_0": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_0": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_1": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_0": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_1": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_1": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_2": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_1": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_2": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_1": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_3": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_2": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_4": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_2": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_3": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_2": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_5": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_3": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_6": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_3": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_4": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_3": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_7": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_4": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_8": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_4": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_5": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_4": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_9": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_5": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_10": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_5": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_6": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_5": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_11": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_6": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_12": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_6": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_7": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_6": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_13": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_7": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_14": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_7": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_8": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_7": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_15": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_8": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_16": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_8": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_9": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_8": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_17": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_9": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_18": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_9": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_10": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_9": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_19": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_10": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_20": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_10": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_11": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_10": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_21": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_11": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_22": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_11": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_12": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_11": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_23": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_12": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_24": {
+      "preferred_impl_style": "hls"
+    },
+    "FMPadding_12": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_13": {
+      "preferred_impl_style": "hls"
+    },
+    "VectorVectorActivation_12": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_25": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_13": {
+      "preferred_impl_style": "hls"
+    },
+    "Thresholding_26": {
+      "preferred_impl_style": "hls"
+    },
+    "ConvolutionInputGenerator_14": {
+      "preferred_impl_style": "hls"
+    },
+    "Pool_0": {
+      "preferred_impl_style": "hls"
+    },
+    "MVAU_14": {
+      "preferred_impl_style": "hls"
+    },
+    "ChannelwiseOp_0": {
+      "preferred_impl_style": "hls"
+    },
+    "LabelSelect_0": {
+      "preferred_impl_style": "hls"
+    }
+  }
