@@ -110,6 +110,7 @@ for platform_name in platforms_to_build:
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
+        specialize_layers_config_file="specialize_layers_config.json",
         auto_fifo_depths=True,
         standalone_thresholds=False,
         # enable extra performance optimizations (physopt)
