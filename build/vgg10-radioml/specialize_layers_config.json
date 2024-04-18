@@ -1,0 +1,102 @@
+{
+  "Defaults": {},
+  "FMPadding_0": {
+    "preferred_impl_style": "hls"
+  },
+  "ConvolutionInputGenerator_0": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_0": {
+    "preferred_impl_style": "hls"
+  },
+  "StreamingMaxPool_0": {
+    "preferred_impl_style": "hls"
+  },
+  "FMPadding_1": {
+    "preferred_impl_style": "hls"
+  },
+  "ConvolutionInputGenerator_1": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_1": {
+    "preferred_impl_style": "hls"
+  },
+  "StreamingMaxPool_1": {
+    "preferred_impl_style": "hls"
+  },
+  "FMPadding_2": {
+    "preferred_impl_style": "hls"
+  },
+  "ConvolutionInputGenerator_2": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_2": {
+    "preferred_impl_style": "hls"
+  },
+  "StreamingMaxPool_2": {
+    "preferred_impl_style": "hls"
+  },
+  "FMPadding_3": {
+    "preferred_impl_style": "hls"
+  },
+  "ConvolutionInputGenerator_3": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_3": {
+    "preferred_impl_style": "hls"
+  },
+  "StreamingMaxPool_3": {
+    "preferred_impl_style": "hls"
+  },
+  "FMPadding_4": {
+    "preferred_impl_style": "hls"
+  },
+  "ConvolutionInputGenerator_4": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_4": {
+    "preferred_impl_style": "hls"
+  },
+  "StreamingMaxPool_4": {
+    "preferred_impl_style": "hls"
+  },
+  "FMPadding_5": {
+    "preferred_impl_style": "hls"
+  },
+  "ConvolutionInputGenerator_5": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_5": {
+    "preferred_impl_style": "hls"
+  },
+  "StreamingMaxPool_5": {
+    "preferred_impl_style": "hls"
+  },
+  "FMPadding_6": {
+    "preferred_impl_style": "hls"
+  },
+  "ConvolutionInputGenerator_6": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_6": {
+    "preferred_impl_style": "hls"
+  },
+  "StreamingMaxPool_6": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_7": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_8": {
+    "preferred_impl_style": "hls"
+  },
+  "MVAU_9": {
+    "preferred_impl_style": "hls"
+  },
+  "ChannelwiseOp_0": {
+    "preferred_impl_style": "hls"
+  },
+  "LabelSelect_0": {
+    "preferred_impl_style": "hls"
+  }
+}

@@ -87,7 +87,7 @@ from qonnx.transformation.infer_shapes import InferShapes
 from qonnx.transformation.infer_datatypes import InferDataTypes
 from qonnx.transformation.infer_data_layouts import InferDataLayouts
 from qonnx.transformation.insert_topk import InsertTopK
-import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
+import finn.transformation.fpgadataflow.convert_to_hw_layers as to_hls
 from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 
 from finn.builder.build_dataflow_config import (
@@ -209,7 +209,7 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
         to_hls.InferAddStreamsLayer,
         LowerConvsToMatMul,
         to_hls.InferChannelwiseLinearLayer,
-        to_hls.InferPool_Batch,
+        to_hls.InferPool,
         AbsorbTransposeIntoMultiThreshold,
         RoundAndClipThresholds,
         to_hls.InferQuantizedMatrixVectorActivation,

@@ -3,3 +3,11 @@ requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2", "wheel", "pynq>=2.5.1
 
 [tool.setuptools_scm]
 write_to = "finn_examples/_version.py"
+
+[tool.pytest.ini_options]
+markers = [
+    "pynq_notebooks",
+    "zcu_notebooks",
+    "ultra96_notebooks",
+    "alveo_notebooks",
+]
