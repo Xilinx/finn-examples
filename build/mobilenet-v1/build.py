@@ -1,4 +1,5 @@
-# Copyright (c) 2020, Xilinx
+# Copyright (C) 2020-2022, Xilinx, Inc.
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -45,7 +46,7 @@ model_name = "mobilenetv1-w4a4"
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU102", "ZCU104"]
-alveo_platforms = []  # "U50", "U200", "U250", "U280"]
+alveo_platforms = ["U50", "U200", "U250", "U280"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
 
