@@ -34,7 +34,9 @@ from brevitas.nn import QuantLinear, QuantReLU, QuantIdentity
 import torch
 import torch.nn as nn
 import brevitas.onnx as bo
-from brevitas.quant_tensor import QuantTensor
+from qonnx.core.modelwrapper import ModelWrapper
+from qonnx.core.datatype import DataType
+
 
 # Define export wrapper
 class CybSecMLPForExport(nn.Module):
@@ -42,11 +44,7 @@ class CybSecMLPForExport(nn.Module):
         super(CybSecMLPForExport, self).__init__()
         self.pretrained = my_pretrained_model
         self.qnt_output = QuantIdentity(
-            quant_type='binary',
-            scaling_impl_type='const',
-            bit_width=1,
-            min_val=-1.0,
-            max_val=1.0
+            quant_type="binary", scaling_impl_type="const", bit_width=1, min_val=-1.0, max_val=1.0
         )
 
     def forward(self, x):
@@ -55,8 +53,9 @@ class CybSecMLPForExport(nn.Module):
         # input range for the trained network
         x = (x + torch.tensor([1.0]).to("cpu")) / 2.0
         out_original = self.pretrained(x)
-        out_final = self.qnt_output(out_original) # output as {-1, 1}
+        out_final = self.qnt_output(out_original)  # output as {-1, 1}
         return out_final
+
 
 def custom_step_mlp_export(model_name):
     # Define model parameters
@@ -82,12 +81,12 @@ def custom_step_mlp_export(model_name):
         nn.BatchNorm1d(hidden3),
         nn.Dropout(0.5),
         QuantReLU(bit_width=act_bit_width),
-        QuantLinear(hidden3, num_classes, bias=True, weight_bit_width=weight_bit_width)
+        QuantLinear(hidden3, num_classes, bias=True, weight_bit_width=weight_bit_width),
     )
 
     # Load pre-trained weights
     assets_dir = pk.resource_filename("finn.qnn-data", "cybsec-mlp/")
-    trained_state_dict = torch.load(assets_dir+"/state_dict.pth")["models_state_dict"][0]
+    trained_state_dict = torch.load(assets_dir + "/state_dict.pth")["models_state_dict"][0]
     model.load_state_dict(trained_state_dict, strict=False)
 
     # Network surgery: pad input size from 593 to 600 and convert bipolar to binary
@@ -107,15 +106,13 @@ def custom_step_mlp_export(model_name):
     input_a = 2 * input_a - 1
     scale = 1.0
     input_t = torch.from_numpy(input_a * scale)
-    input_qt = QuantTensor(
-        input_t, scale=torch.tensor(scale), bit_width=torch.tensor(1.0), signed=True
-    )
 
     # Export to ONNX
-    bo.export_finn_onnx(
-        model_for_export, export_path=ready_model_filename, input_t=input_qt
-    )
+    bo.export_qonnx(model_for_export, export_path=ready_model_filename, input_t=input_t)
+
+    # Set input datatype for FINN's InferDataType transformation to infer the right datatypes
+    model = ModelWrapper(ready_model_filename)
+    model.set_tensor_datatype(model.graph.input[0].name, DataType["BIPOLAR"])
+    model.save(ready_model_filename)
 
     return ready_model_filename
-
-    

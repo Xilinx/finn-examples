@@ -9,623 +9,623 @@
             "all"
         ],
         "mem_mode": [
-            "decoupled",
+            "internal_decoupled",
             [
-                "MatrixVectorActivation"
+                "MVAU"
             ]
         ]
     },
-    "FMPadding_Batch_0": {
+    "FMPadding_hls_0": {
         "SIMD": 3
     },
-    "ConvolutionInputGenerator_0": {
+    "ConvolutionInputGenerator_hls_0": {
         "SIMD": 3
     },
-    "MatrixVectorActivation_0": {
+    "MVAU_hls_0": {
         "SIMD": 3,
         "PE": 64
     },
-    "FMPadding_Batch_1": {
+    "FMPadding_hls_1": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_1": {
+    "ConvolutionInputGenerator_hls_1": {
         "SIMD": 4
     },
-    "Pool_Batch_0": {
+    "Pool_hls_0": {
         "PE": 4
     },
-    "DuplicateStreams_Batch_0": {
+    "DuplicateStreams_hls_0": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "MatrixVectorActivation_2": {
+    "MVAU_hls_2": {
         "PE": 2,
         "SIMD": 32
     },
-    "MatrixVectorActivation_1": {
+    "MVAU_hls_1": {
         "PE": 1,
         "SIMD": 16
     },
-    "FMPadding_Batch_2": {
+    "FMPadding_hls_2": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_2": {
+    "ConvolutionInputGenerator_hls_2": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_3": {
+    "MVAU_hls_3": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_4": {
+    "MVAU_hls_4": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_0": {
+    "AddStreams_hls_0": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_0": {
+    "Thresholding_hls_0": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_1": {
+    "DuplicateStreams_hls_1": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_1": {
+    "Thresholding_hls_1": {
         "PE": 2
     },
-    "Thresholding_Batch_2": {
+    "Thresholding_hls_2": {
         "PE": 2
     },
-    "MatrixVectorActivation_5": {
+    "MVAU_hls_5": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_3": {
+    "FMPadding_hls_3": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_3": {
+    "ConvolutionInputGenerator_hls_3": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_6": {
+    "MVAU_hls_6": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_7": {
+    "MVAU_hls_7": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_1": {
+    "AddStreams_hls_1": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_3": {
+    "Thresholding_hls_3": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_2": {
+    "DuplicateStreams_hls_2": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_4": {
+    "Thresholding_hls_4": {
         "PE": 2
     },
-    "Thresholding_Batch_5": {
+    "Thresholding_hls_5": {
         "PE": 2
     },
-    "MatrixVectorActivation_8": {
+    "MVAU_hls_8": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_4": {
+    "FMPadding_hls_4": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_4": {
+    "ConvolutionInputGenerator_hls_4": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_9": {
+    "MVAU_hls_9": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_10": {
+    "MVAU_hls_10": {
         "PE": 2,
         "SIMD": 64
     },
-    "AddStreams_Batch_2": {
+    "AddStreams_hls_2": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_6": {
+    "Thresholding_hls_6": {
         "PE": 2
     },
-    "Thresholding_Batch_7": {
+    "Thresholding_hls_7": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_3": {
+    "DuplicateStreams_hls_3": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "DownSampler_0": {
+    "DownSampler_hls_0": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_11": {
+    "MVAU_hls_11": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_12": {
+    "MVAU_hls_12": {
         "PE": 2,
         "SIMD": 64
     },
-    "FMPadding_Batch_5": {
+    "FMPadding_hls_5": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_5": {
+    "ConvolutionInputGenerator_hls_5": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_13": {
+    "MVAU_hls_13": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_14": {
+    "MVAU_hls_14": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_3": {
+    "AddStreams_hls_3": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_8": {
+    "Thresholding_hls_8": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_4": {
+    "DuplicateStreams_hls_4": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_9": {
+    "Thresholding_hls_9": {
         "PE": 2
     },
-    "Thresholding_Batch_10": {
+    "Thresholding_hls_10": {
         "PE": 2
     },
-    "MatrixVectorActivation_15": {
+    "MVAU_hls_15": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_6": {
+    "FMPadding_hls_6": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_6": {
+    "ConvolutionInputGenerator_hls_6": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_16": {
+    "MVAU_hls_16": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_17": {
+    "MVAU_hls_17": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_4": {
+    "AddStreams_hls_4": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_11": {
+    "Thresholding_hls_11": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_5": {
+    "DuplicateStreams_hls_5": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_12": {
+    "Thresholding_hls_12": {
         "PE": 2
     },
-    "Thresholding_Batch_13": {
+    "Thresholding_hls_13": {
         "PE": 2
     },
-    "MatrixVectorActivation_18": {
+    "MVAU_hls_18": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_7": {
+    "FMPadding_hls_7": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_7": {
+    "ConvolutionInputGenerator_hls_7": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_19": {
+    "MVAU_hls_19": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_20": {
+    "MVAU_hls_20": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_5": {
+    "AddStreams_hls_5": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_14": {
+    "Thresholding_hls_14": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_6": {
+    "DuplicateStreams_hls_6": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_15": {
+    "Thresholding_hls_15": {
         "PE": 2
     },
-    "Thresholding_Batch_16": {
+    "Thresholding_hls_16": {
         "PE": 2
     },
-    "MatrixVectorActivation_21": {
+    "MVAU_hls_21": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_8": {
+    "FMPadding_hls_8": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_8": {
+    "ConvolutionInputGenerator_hls_8": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_22": {
+    "MVAU_hls_22": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_23": {
+    "MVAU_hls_23": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_6": {
+    "AddStreams_hls_6": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_17": {
+    "Thresholding_hls_17": {
         "PE": 2
     },
-    "Thresholding_Batch_18": {
+    "Thresholding_hls_18": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_7": {
+    "DuplicateStreams_hls_7": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "DownSampler_1": {
+    "DownSampler_hls_1": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_24": {
+    "MVAU_hls_24": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_25": {
+    "MVAU_hls_25": {
         "PE": 2,
         "SIMD": 64
     },
-    "FMPadding_Batch_9": {
+    "FMPadding_hls_9": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_9": {
+    "ConvolutionInputGenerator_hls_9": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_26": {
+    "MVAU_hls_26": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_27": {
+    "MVAU_hls_27": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_7": {
+    "AddStreams_hls_7": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_19": {
+    "Thresholding_hls_19": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_8": {
+    "DuplicateStreams_hls_8": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_20": {
+    "Thresholding_hls_20": {
         "PE": 2
     },
-    "Thresholding_Batch_21": {
+    "Thresholding_hls_21": {
         "PE": 2
     },
-    "MatrixVectorActivation_28": {
+    "MVAU_hls_28": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_10": {
+    "FMPadding_hls_10": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_10": {
+    "ConvolutionInputGenerator_hls_10": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_29": {
+    "MVAU_hls_29": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_30": {
+    "MVAU_hls_30": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_8": {
+    "AddStreams_hls_8": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_22": {
+    "Thresholding_hls_22": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_9": {
+    "DuplicateStreams_hls_9": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_23": {
+    "Thresholding_hls_23": {
         "PE": 2
     },
-    "Thresholding_Batch_24": {
+    "Thresholding_hls_24": {
         "PE": 2
     },
-    "MatrixVectorActivation_31": {
+    "MVAU_hls_31": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_11": {
+    "FMPadding_hls_11": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_11": {
+    "ConvolutionInputGenerator_hls_11": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_32": {
+    "MVAU_hls_32": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_33": {
+    "MVAU_hls_33": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_9": {
+    "AddStreams_hls_9": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_25": {
+    "Thresholding_hls_25": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_10": {
+    "DuplicateStreams_hls_10": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_26": {
+    "Thresholding_hls_26": {
         "PE": 2
     },
-    "Thresholding_Batch_27": {
+    "Thresholding_hls_27": {
         "PE": 2
     },
-    "MatrixVectorActivation_34": {
+    "MVAU_hls_34": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_12": {
+    "FMPadding_hls_12": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_12": {
+    "ConvolutionInputGenerator_hls_12": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_35": {
+    "MVAU_hls_35": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_36": {
+    "MVAU_hls_36": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_10": {
+    "AddStreams_hls_10": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_28": {
+    "Thresholding_hls_28": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_11": {
+    "DuplicateStreams_hls_11": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_29": {
+    "Thresholding_hls_29": {
         "PE": 2
     },
-    "Thresholding_Batch_30": {
+    "Thresholding_hls_30": {
         "PE": 2
     },
-    "MatrixVectorActivation_37": {
+    "MVAU_hls_37": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_13": {
+    "FMPadding_hls_13": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_13": {
+    "ConvolutionInputGenerator_hls_13": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_38": {
+    "MVAU_hls_38": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_39": {
+    "MVAU_hls_39": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_11": {
+    "AddStreams_hls_11": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_31": {
+    "Thresholding_hls_31": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_12": {
+    "DuplicateStreams_hls_12": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_32": {
+    "Thresholding_hls_32": {
         "PE": 2
     },
-    "Thresholding_Batch_33": {
+    "Thresholding_hls_33": {
         "PE": 2
     },
-    "MatrixVectorActivation_40": {
+    "MVAU_hls_40": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_14": {
+    "FMPadding_hls_14": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_14": {
+    "ConvolutionInputGenerator_hls_14": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_41": {
+    "MVAU_hls_41": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_42": {
+    "MVAU_hls_42": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_12": {
+    "AddStreams_hls_12": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_34": {
+    "Thresholding_hls_34": {
         "PE": 2
     },
-    "Thresholding_Batch_35": {
+    "Thresholding_hls_35": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_13": {
+    "DuplicateStreams_hls_13": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "DownSampler_2": {
+    "DownSampler_hls_2": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_43": {
+    "MVAU_hls_43": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_44": {
+    "MVAU_hls_44": {
         "PE": 2,
         "SIMD": 64
     },
-    "FMPadding_Batch_15": {
+    "FMPadding_hls_15": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_15": {
+    "ConvolutionInputGenerator_hls_15": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_45": {
+    "MVAU_hls_45": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_46": {
+    "MVAU_hls_46": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_13": {
+    "AddStreams_hls_13": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_36": {
+    "Thresholding_hls_36": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_14": {
+    "DuplicateStreams_hls_14": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_37": {
+    "Thresholding_hls_37": {
         "PE": 2
     },
-    "Thresholding_Batch_38": {
+    "Thresholding_hls_38": {
         "PE": 2
     },
-    "MatrixVectorActivation_47": {
+    "MVAU_hls_47": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_16": {
+    "FMPadding_hls_16": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_16": {
+    "ConvolutionInputGenerator_hls_16": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_48": {
+    "MVAU_hls_48": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_49": {
+    "MVAU_hls_49": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_14": {
+    "AddStreams_hls_14": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_39": {
+    "Thresholding_hls_39": {
         "PE": 2
     },
-    "DuplicateStreams_Batch_15": {
+    "DuplicateStreams_hls_15": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_40": {
+    "Thresholding_hls_40": {
         "PE": 2
     },
-    "Thresholding_Batch_41": {
+    "Thresholding_hls_41": {
         "PE": 2
     },
-    "MatrixVectorActivation_50": {
+    "MVAU_hls_50": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_Batch_17": {
+    "FMPadding_hls_17": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_17": {
+    "ConvolutionInputGenerator_hls_17": {
         "SIMD": 4
     },
-    "MatrixVectorActivation_51": {
+    "MVAU_hls_51": {
         "PE": 2,
         "SIMD": 64
     },
-    "MatrixVectorActivation_52": {
+    "MVAU_hls_52": {
         "PE": 2,
         "SIMD": 32
     },
-    "AddStreams_Batch_15": {
+    "AddStreams_hls_15": {
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_Batch_42": {
+    "Thresholding_hls_42": {
         "PE": 2
     },
-    "ConvolutionInputGenerator_18": {
+    "ConvolutionInputGenerator_hls_18": {
         "SIMD": 4
     },
-    "Pool_Batch_1": {
+    "Pool_hls_1": {
         "PE": 4
     },
-    "MatrixVectorActivation_53": {
+    "MVAU_hls_53": {
         "PE": 1,
         "SIMD": 4,
         "mem_mode": "external"
     },
-    "LabelSelect_Batch_0": {
+    "LabelSelect_hls_0": {
         "outputDataType": "UINT16",
         "PE": 1
     },
-    "ChannelwiseOp_Batch_0": {
+    "ChannelwiseOp_hls_0": {
         "PE": 2
     },
-    "ChannelwiseOp_Batch_1": {
+    "ChannelwiseOp_hls_1": {
         "PE": 2
     },
-    "ChannelwiseOp_Batch_2": {
+    "ChannelwiseOp_hls_2": {
         "PE": 1
     }
 }

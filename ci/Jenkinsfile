@@ -16,13 +16,17 @@ pipeline {
       steps {
         cleanLocalCloneDir()
         dir('build') {
-          getFinn()
-          // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
-          // in order to build bitstreams/run build script with Jenkins.
-          dir('finn') {
-            sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+          script {
+            // Build all examples, we list the builds to allow easy inclusion/exclusion
+            def buildList = ["bnn-pynq",
+                             "cybersecurity-mlp",
+                             "kws",
+                             "mobilenet-v1",
+                             "resnet50",
+                             "vgg10-radioml"]
+            createParallelBuilds(buildList)
+            createReleaseArea(buildList)
           }
-          sh './build-all.sh'
         }
       }
     }
@@ -37,7 +41,7 @@ pipeline {
       }
       steps {
         dir('build/release') {
-          stash name: "bitfile_stash", includes: "Pynq-Z1.zip,U250.zip,Ultra96.zip,ZCU104.zip"
+          stash name: "bitfile_stash", includes: "*.zip"
         }
       }
     }
@@ -153,14 +157,13 @@ pipeline {
             label 'finn-u250'
           }
           environment {
-            BOARD = 'U250'
+            BOARD = 'xilinx_u250_gen3x16_xdma_2_1_202010_1'
           }
           steps {
             catchError(stageResult: 'FAILURE') {
               script {
                 cleanLocalCloneDir()
                 getBoardFiles(env.BOARD)
-                u250Workaround()
 
                 // Create test script
                 createTestScript('alveo_notebooks', "finn-examples_${env.BOARD}")
@@ -280,6 +283,66 @@ pipeline {
   }
 }
 
+void createParallelBuilds(buildList) {
+  parallel buildList.collectEntries {
+    ["${it}", generateStage(it)]
+  }
+}
+
+def generateStage(job) {
+  return {
+    withEnv(["FINN_HOST_BUILD_DIR=${env.FINN_HOST_BUILD_DIR}/${job}"]) {
+      stage(job) {
+        catchError(stageResult: 'Failure') {
+          script {
+            cleanPreviousBuildFiles("${env.FINN_HOST_BUILD_DIR}")
+
+            // Make sure we have the latest FINN dev
+            getFinn("finn-${job}")
+
+            // Download model if available
+            dir(job) {
+              if (fileExists('models/download-model.sh')) {
+                dir('models') {
+                  sh "rm -rf *.zip *.onnx *.npz"
+                  sh "./download-model.sh"
+                }
+              }
+            }
+
+            // Run build script
+            dir("finn-${job}") {
+              sh "./run-docker.sh build_custom ../${job}"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+void createReleaseArea(buildList) {
+  sh "rm -rf release"
+  sh "mkdir -p release"
+
+  // Gather all release folders
+  buildList.each {
+    if(fileExists("${it}/release")) {
+      sh "cp -r ${it}/release/* release"
+    }
+  }
+
+  // Create zip files + MD5sum for finn-examples upload
+  dir('release') {
+    def releaseDirs = findFiles()
+    releaseDirs.each {
+      sh "zip -r ${it.name}.zip ${it.name}"
+      def md5sum_val = sh(script: "md5sum ${it.name}.zip | awk \'{print \$1}\'", returnStdout: true)
+      sh "echo '${it.name}.zip : ${md5sum_val} ' >> md5sum.log"
+    }
+  }
+}
+
 void postCleanup() {
   // Delete the created test script
   sh 'rm run-tests.sh'
@@ -334,15 +397,6 @@ void getBoardFiles(String board) {
     }
   } else {
     downloadTestDataAndBitstreams(board)
-  }
-}
-
-void u250Workaround() {
-  // FIXME: The installed Pynq driver expects to see directory
-  // 'xilinx_u250_gen3x16_xdma_shell_4_1' or else the bitstream download fails.
-  dir('finn_examples/bitfiles/bitfiles.zip.d') {
-    sh 'rm *.zip'
-    sh 'mv ./* xilinx_u250_gen3x16_xdma_shell_4_1'
   }
 }
 
@@ -411,20 +465,22 @@ def checkAllBoards() {
   return overallResult
 }
 
-void getFinn() {
+void getFinn(String repoName) {
     // Using shell commands due to git plugin not behaving when cloning a new repo into
     // an existing one. Likely a way to do this, but shell commands are sufficient
 
     // Cleanup existing checkout
-    sh "rm -rf finn"
+    sh "rm -rf ${repoName}"
 
     // Clone FINN repo into finn directory and checkout correct branch
-    sh "git clone https://github.com/Xilinx/finn finn"
-    sh "git -C finn checkout dev"
+    sh "git clone https://github.com/Xilinx/finn ${repoName}"
+    sh "git -C ${repoName} checkout ${env.FINN_TARGET_BRANCH}"
 
     // WORKAROUND - Jenkins is not an interactive shell, deselect '-it',
     // in order to build bitstreams/run build script with Jenkins.
-    dir('finn') {
+    // Furthermore, remove pdb from the command to avoid hanging in the debugger on fail
+    dir(repoName) {
         sh "sed -i '/DOCKER_INTERACTIVE=\"-it\"/d' run-docker.sh"
+        sh "sed -i -e 's/-mpdb -cc -cq//g' run-docker.sh"
     }
 }

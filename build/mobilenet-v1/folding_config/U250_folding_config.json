@@ -1,499 +1,325 @@
 {
   "Defaults": {},
-  "StreamingFIFO_0": {
-    "ram_style": "ultra",
-    "depth": 512,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_0": {
+    "depth": 512
   },
-  "ConvolutionInputGenerator_0": {
-    "SIMD": 3,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_0": {
+    "SIMD": 3
   },
-  "MatrixVectorActivation_0": {
+  "MVAU_rtl_0": {
     "PE": 32,
     "SIMD": 3,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
     "resType": "dsp"
   },
-  "FMPadding_Batch_0": {
+  "FMPadding_rtl_0": {
     "SIMD": 32
   },
-  "StreamingFIFO_3": {
-    "ram_style": "auto",
-    "depth": 256,
-    "impl_style": "rtl"
+  "StreamingFIFO_rtl_3": {
+    "depth": 256
   },
-  "ConvolutionInputGenerator_1": {
-    "SIMD": 32,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_1": {
+    "SIMD": 32
   },
-  "VectorVectorActivation_0": {
+  "VVAU_hls_0": {
     "PE": 32,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_0": {
-    "impl_style": "hls"
-  },
-  "MatrixVectorActivation_1": {
+  "MVAU_rtl_1": {
     "PE": 16,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_1": {
-    "impl_style": "hls"
-  },
-  "FMPadding_Batch_1": {
+  "FMPadding_rtl_1": {
     "SIMD": 32
   },
-  "StreamingFIFO_9": {
-    "ram_style": "ultra",
-    "depth": 512,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_9": {
+    "depth": 512
   },
-  "ConvolutionInputGenerator_2": {
-    "SIMD": 32,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_2": {
+    "SIMD": 32
   },
-  "VectorVectorActivation_1": {
+  "VVAU_hls_1": {
     "PE": 32,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_2": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_12": {
+    "depth": 256
   },
-  "StreamingFIFO_12": {
-    "ram_style": "auto",
-    "depth": 256,
-    "impl_style": "rtl"
-  },
-  "MatrixVectorActivation_2": {
+  "MVAU_rtl_2": {
     "PE": 16,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_3": {
-    "impl_style": "hls"
-  },
-  "FMPadding_Batch_2": {
+  "FMPadding_rtl_2": {
     "SIMD": 64
   },
-  "StreamingFIFO_15": {
-    "ram_style": "auto",
-    "depth": 256,
-    "impl_style": "rtl"
+  "StreamingFIFO_rtl_15": {
+    "depth": 256
   },
-  "ConvolutionInputGenerator_3": {
-    "SIMD": 64,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_3": {
+    "SIMD": 64
   },
-  "VectorVectorActivation_2": {
+  "VVAU_hls_2": {
     "PE": 64,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_4": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_18": {
+    "depth": 1024
   },
-  "StreamingFIFO_18": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
-  },
-  "MatrixVectorActivation_3": {
+  "MVAU_rtl_3": {
     "PE": 32,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_5": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_20": {
+    "depth": 32
   },
-  "StreamingFIFO_20": {
-    "ram_style": "auto",
-    "depth": 32,
-    "impl_style": "rtl"
-  },
-  "FMPadding_Batch_3": {
+  "FMPadding_rtl_3": {
     "SIMD": 16
   },
-  "StreamingFIFO_21": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_21": {
+    "depth": 1024
   },
-  "ConvolutionInputGenerator_4": {
-    "SIMD": 16,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_4": {
+    "SIMD": 16
   },
-  "VectorVectorActivation_3": {
+  "VVAU_hls_3": {
     "PE": 16,
     "resType": "lut"
   },
-  "StreamingFIFO_23": {
-    "ram_style": "auto",
-    "depth": 256,
-    "impl_style": "rtl"
+  "StreamingFIFO_rtl_23": {
+    "depth": 256
   },
-  "MatrixVectorActivation_4": {
+  "MVAU_rtl_4": {
     "PE": 16,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_6": {
-    "impl_style": "hls"
-  },
-  "FMPadding_Batch_4": {
+  "FMPadding_rtl_4": {
     "SIMD": 32
   },
-  "StreamingFIFO_26": {
-    "ram_style": "ultra",
-    "depth": 512,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_26": {
+    "depth": 512
   },
-  "ConvolutionInputGenerator_5": {
-    "SIMD": 32,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_5": {
+    "SIMD": 32
   },
-  "VectorVectorActivation_4": {
+  "VVAU_hls_4": {
     "PE": 32,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_7": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_29": {
+    "depth": 1024
   },
-  "StreamingFIFO_29": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
-  },
-  "MatrixVectorActivation_5": {
+  "MVAU_rtl_5": {
     "PE": 32,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_8": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_31": {
+    "depth": 32
   },
-  "StreamingFIFO_31": {
-    "ram_style": "auto",
-    "depth": 32,
-    "impl_style": "rtl"
-  },
-  "FMPadding_Batch_5": {
+  "FMPadding_rtl_5": {
     "SIMD": 8
   },
-  "StreamingFIFO_32": {
-    "ram_style": "ultra",
-    "depth": 2048,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_32": {
+    "depth": 2048
   },
-  "ConvolutionInputGenerator_6": {
-    "SIMD": 8,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_6": {
+    "SIMD": 8
   },
-  "VectorVectorActivation_5": {
+  "VVAU_hls_5": {
     "PE": 8,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_9": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_35": {
+    "depth": 256
   },
-  "StreamingFIFO_35": {
-    "ram_style": "auto",
-    "depth": 256,
-    "impl_style": "rtl"
-  },
-  "MatrixVectorActivation_6": {
+  "MVAU_rtl_6": {
     "PE": 16,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "FMPadding_Batch_6": {
+  "FMPadding_rtl_6": {
     "SIMD": 16
   },
-  "StreamingFIFO_37": {
-    "ram_style": "ultra",
-    "depth": 2048,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_37": {
+    "depth": 2048
   },
-  "ConvolutionInputGenerator_7": {
-    "SIMD": 16,
-    "ram_style": "distributed"
-  },
-  "VectorVectorActivation_6": {
-    "PE": 16,
-    "resType": "lut"
-  },
-  "StreamingFIFO_39": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
-  },
-  "MatrixVectorActivation_7": {
-    "PE": 32,
-    "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
-  },
-  "StreamingDataWidthConverter_Batch_10": {
-    "impl_style": "hls"
-  },
-  "StreamingFIFO_41": {
-    "ram_style": "auto",
-    "depth": 32,
-    "impl_style": "rtl"
-  },
-  "FMPadding_Batch_7": {
+  "ConvolutionInputGenerator_rtl_7": {
     "SIMD": 16
   },
-  "StreamingFIFO_42": {
-    "ram_style": "ultra",
-    "depth": 2048,
-    "impl_style": "vivado"
-  },
-  "ConvolutionInputGenerator_8": {
-    "SIMD": 16,
-    "ram_style": "distributed"
-  },
-  "VectorVectorActivation_7": {
+  "VVAU_hls_6": {
     "PE": 16,
     "resType": "lut"
   },
-  "StreamingFIFO_44": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_39": {
+    "depth": 1024
   },
-  "MatrixVectorActivation_8": {
+  "MVAU_rtl_7": {
     "PE": 32,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_11": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_41": {
+    "depth": 32
   },
-  "StreamingFIFO_46": {
-    "ram_style": "auto",
-    "depth": 32,
-    "impl_style": "rtl"
-  },
-  "FMPadding_Batch_8": {
+  "FMPadding_rtl_7": {
     "SIMD": 16
   },
-  "StreamingFIFO_47": {
-    "ram_style": "ultra",
-    "depth": 2048,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_42": {
+    "depth": 2048
   },
-  "ConvolutionInputGenerator_9": {
-    "SIMD": 16,
-    "ram_style": "distributed"
-  },
-  "VectorVectorActivation_8": {
-    "PE": 16,
-    "resType": "lut"
-  },
-  "StreamingFIFO_49": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
-  },
-  "MatrixVectorActivation_9": {
-    "PE": 32,
-    "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
-  },
-  "StreamingDataWidthConverter_Batch_12": {
-    "impl_style": "hls"
-  },
-  "StreamingFIFO_51": {
-    "ram_style": "auto",
-    "depth": 32,
-    "impl_style": "rtl"
-  },
-  "FMPadding_Batch_9": {
+  "ConvolutionInputGenerator_rtl_8": {
     "SIMD": 16
   },
-  "StreamingFIFO_52": {
-    "ram_style": "ultra",
-    "depth": 2048,
-    "impl_style": "vivado"
-  },
-  "ConvolutionInputGenerator_10": {
-    "SIMD": 16,
-    "ram_style": "distributed"
-  },
-  "VectorVectorActivation_9": {
+  "VVAU_hls_7": {
     "PE": 16,
     "resType": "lut"
   },
-  "StreamingFIFO_54": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_44": {
+    "depth": 1024
   },
-  "MatrixVectorActivation_10": {
+  "MVAU_rtl_8": {
     "PE": 32,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_13": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_46": {
+    "depth": 32
   },
-  "StreamingFIFO_56": {
-    "ram_style": "auto",
-    "depth": 32,
-    "impl_style": "rtl"
-  },
-  "FMPadding_Batch_10": {
+  "FMPadding_rtl_8": {
     "SIMD": 16
   },
-  "StreamingFIFO_57": {
-    "ram_style": "ultra",
-    "depth": 2048,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_47": {
+    "depth": 2048
   },
-  "ConvolutionInputGenerator_11": {
-    "SIMD": 16,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_9": {
+    "SIMD": 16
   },
-  "VectorVectorActivation_10": {
+  "VVAU_hls_8": {
     "PE": 16,
     "resType": "lut"
   },
-  "StreamingFIFO_59": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_49": {
+    "depth": 1024
   },
-  "MatrixVectorActivation_11": {
+  "MVAU_rtl_9": {
     "PE": 32,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
+    "resType": "dsp"
+  },
+  "StreamingFIFO_rtl_51": {
+    "depth": 32
+  },
+  "FMPadding_rtl_9": {
+    "SIMD": 16
+  },
+  "StreamingFIFO_rtl_52": {
+    "depth": 2048
+  },
+  "ConvolutionInputGenerator_rtl_10": {
+    "SIMD": 16
+  },
+  "VVAU_hls_9": {
+    "PE": 16,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_14": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_54": {
+    "depth": 1024
   },
-  "StreamingFIFO_61": {
-    "ram_style": "auto",
-    "depth": 128,
-    "impl_style": "rtl"
+  "MVAU_rtl_10": {
+    "PE": 32,
+    "SIMD": 16,
+    "resType": "dsp"
   },
-  "FMPadding_Batch_11": {
+  "StreamingFIFO_rtl_56": {
+    "depth": 32
+  },
+  "FMPadding_rtl_10": {
+    "SIMD": 16
+  },
+  "StreamingFIFO_rtl_57": {
+    "depth": 2048
+  },
+  "ConvolutionInputGenerator_rtl_11": {
+    "SIMD": 16
+  },
+  "VVAU_hls_10": {
+    "PE": 16,
+    "resType": "lut"
+  },
+  "StreamingFIFO_rtl_59": {
+    "depth": 1024
+  },
+  "MVAU_rtl_11": {
+    "PE": 32,
+    "SIMD": 16,
+    "resType": "dsp"
+  },
+  "StreamingFIFO_rtl_61": {
+    "depth": 128
+  },
+  "FMPadding_rtl_11": {
     "SIMD": 4
   },
-  "StreamingFIFO_62": {
-    "ram_style": "ultra",
-    "depth": 4096,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_62": {
+    "depth": 4096
   },
-  "ConvolutionInputGenerator_12": {
-    "SIMD": 4,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_12": {
+    "SIMD": 4
   },
-  "VectorVectorActivation_11": {
+  "VVAU_hls_11": {
     "PE": 4,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_15": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_65": {
+    "depth": 256
   },
-  "StreamingFIFO_65": {
-    "ram_style": "auto",
-    "depth": 256,
-    "impl_style": "rtl"
-  },
-  "MatrixVectorActivation_12": {
+  "MVAU_rtl_12": {
     "PE": 16,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_16": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_67": {
+    "depth": 32
   },
-  "StreamingFIFO_67": {
-    "ram_style": "auto",
-    "depth": 32,
-    "impl_style": "rtl"
-  },
-  "FMPadding_Batch_12": {
+  "FMPadding_rtl_12": {
     "SIMD": 8
   },
-  "StreamingFIFO_68": {
-    "ram_style": "ultra",
-    "depth": 4096,
-    "impl_style": "vivado"
+  "StreamingFIFO_rtl_68": {
+    "depth": 4096
   },
-  "ConvolutionInputGenerator_13": {
-    "SIMD": 8,
-    "ram_style": "distributed"
+  "ConvolutionInputGenerator_rtl_13": {
+    "SIMD": 8
   },
-  "VectorVectorActivation_12": {
+  "VVAU_hls_12": {
     "PE": 8,
     "resType": "lut"
   },
-  "StreamingDataWidthConverter_Batch_17": {
-    "impl_style": "hls"
+  "StreamingFIFO_rtl_71": {
+    "depth": 1024
   },
-  "StreamingFIFO_71": {
-    "ram_style": "ultra",
-    "depth": 1024,
-    "impl_style": "vivado"
-  },
-  "MatrixVectorActivation_13": {
+  "MVAU_rtl_13": {
     "PE": 32,
     "SIMD": 16,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_18": {
-    "impl_style": "hls"
+  "ConvolutionInputGenerator_rtl_14": {
+    "SIMD": 4
   },
-  "ConvolutionInputGenerator_14": {
-    "SIMD": 4,
-    "ram_style": "distributed"
-  },
-  "Pool_Batch_0": {
+  "Pool_hls_0": {
     "PE": 4
   },
-  "MatrixVectorActivation_14": {
+  "MVAU_rtl_14": {
     "PE": 4,
     "SIMD": 4,
-    "ram_style": "block",
-    "mem_mode": "decoupled",
-    "resType": "lut"
+    "resType": "dsp"
   },
-  "StreamingDataWidthConverter_Batch_19": {
-    "impl_style": "hls"
+  "ChannelwiseOp_hls_0": {
+    "PE": 1
   },
-  "ChannelwiseOp_Batch_0": {
-    "PE": 1,
-    "ram_style": "distributed"
-  },
-  "LabelSelect_Batch_0": {
+  "LabelSelect_hls_0": {
     "PE": 1
   }
 }

@@ -31,7 +31,6 @@ import os
 import random
 import string
 import warnings
-
 from qonnx.core.datatype import DataType
 
 # TODO solve by moving onnx-dependent fxns to onnx.py
@@ -240,7 +239,9 @@ def gen_finn_dt_tensor(finn_dt, tensor_shape):
     elif finn_dt == DataType["FLOAT32"]:
         tensor_values = np.random.randn(*tensor_shape)
     else:
-        raise ValueError("Datatype {} is not supported, no tensor could be generated".format(finn_dt))
+        raise ValueError(
+            "Datatype {} is not supported, no tensor could be generated".format(finn_dt)
+        )
     # always use float type as container
     return tensor_values.astype(np.float32)
 
@@ -322,4 +323,4 @@ def sanitize_quant_values(model, node_tensors, execution_context, check_values=F
                     dtype, tensor_name
                 )
             )
-    return 
+    return
