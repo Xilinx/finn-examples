@@ -1,6 +1,5 @@
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
-from finn.util.basic import alveo_default_platform
 from finn.builder.build_dataflow_config import default_build_dataflow_steps
 from qonnx.core.datatype import DataType
 import os
@@ -15,6 +14,7 @@ models = [
 # which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1"]
 platforms_to_build = zynq_platforms
+
 
 def custom_step_add_preproc(model, cfg):
     # GTSRB data with raw uint8 pixels is divided by 255 prior to training
@@ -39,6 +39,7 @@ def custom_step_add_preproc(model, cfg):
 
 
 custom_build_steps = [custom_step_add_preproc] + default_build_dataflow_steps
+
 
 # determine which shell flow to use for a given platform
 def platform_to_shell(platform):
@@ -67,6 +68,7 @@ for platform_name in platforms_to_build:
             synth_clk_period_ns=10.0,
             board=platform_name,
             steps=custom_build_steps,
+            folding_config_file="folding_config/cnv_gtsrb_folding_config.json",
             shell_flow_type=shell_flow_type,
             vitis_platform=vitis_platform,
             generate_outputs=[
@@ -75,7 +77,6 @@ for platform_name in platforms_to_build:
                 build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
                 build_cfg.DataflowOutputType.BITFILE,
             ],
-            #stop_step="step_create_dataflow_partition",
             save_intermediate_models=True,
         )
         model_file = "models/%s.onnx" % model_name
