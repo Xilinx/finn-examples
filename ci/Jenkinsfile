@@ -23,7 +23,8 @@ pipeline {
                              "kws",
                              "mobilenet-v1",
                              "resnet50",
-                             "vgg10-radioml"]
+                             "vgg10-radioml",
+                             "gtsrb"]
             createParallelBuilds(buildList)
             createReleaseArea(buildList)
           }
