@@ -88,6 +88,7 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
         ],
         save_intermediate_models=True,
+        default_swg_exception=True,
     )
 
     # Export MLP model to FINN-ONNX
