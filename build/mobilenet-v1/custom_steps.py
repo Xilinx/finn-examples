@@ -103,7 +103,7 @@ def step_mobilenet_convert_to_hw_layers(model: ModelWrapper, cfg: DataflowBuildC
 def step_mobilenet_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
         try:
-            from finn.analysis.partitioning import partition
+            from finnexperimental.analysis.partitioning import partition
 
             # apply partitioning of the model, restricting the first and last layers
             # to SLR0

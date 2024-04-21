@@ -4,10 +4,7 @@
       "preferred_impl_style": "rtl"
     },
     "MVAU_0": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_0": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_0": {
       "preferred_impl_style": "rtl"
@@ -16,16 +13,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_0": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_1": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_1": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_2": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_1": {
       "preferred_impl_style": "rtl"
@@ -34,16 +25,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_1": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_3": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_2": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_4": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_2": {
       "preferred_impl_style": "rtl"
@@ -52,16 +37,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_2": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_5": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_3": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_6": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_3": {
       "preferred_impl_style": "rtl"
@@ -70,16 +49,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_3": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_7": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_4": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_8": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_4": {
       "preferred_impl_style": "rtl"
@@ -88,16 +61,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_4": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_9": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_5": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_10": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_5": {
       "preferred_impl_style": "rtl"
@@ -106,16 +73,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_5": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_11": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_6": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_12": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_6": {
       "preferred_impl_style": "rtl"
@@ -124,16 +85,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_6": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_13": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_7": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_14": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_7": {
       "preferred_impl_style": "rtl"
@@ -142,16 +97,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_7": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_15": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_8": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_16": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_8": {
       "preferred_impl_style": "rtl"
@@ -160,16 +109,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_8": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_17": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_9": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_18": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_9": {
       "preferred_impl_style": "rtl"
@@ -178,16 +121,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_9": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_19": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_10": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_20": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_10": {
       "preferred_impl_style": "rtl"
@@ -196,16 +133,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_10": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_21": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_11": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_22": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_11": {
       "preferred_impl_style": "rtl"
@@ -214,16 +145,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_11": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_23": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_12": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_24": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "FMPadding_12": {
       "preferred_impl_style": "rtl"
@@ -232,16 +157,10 @@
       "preferred_impl_style": "rtl"
     },
     "VVAU_12": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_25": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "MVAU_13": {
-      "preferred_impl_style": "rtl"
-    },
-    "Thresholding_26": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "ConvolutionInputGenerator_14": {
       "preferred_impl_style": "rtl"
@@ -250,7 +169,7 @@
       "preferred_impl_style": "hls"
     },
     "MVAU_14": {
-      "preferred_impl_style": "rtl"
+      "preferred_impl_style": "hls"
     },
     "ChannelwiseOp_0": {
       "preferred_impl_style": "hls"
