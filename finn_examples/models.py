@@ -67,6 +67,17 @@ _cifar10_cnv_io_shape_dict = {
     "num_outputs": 1,
 }
 
+_gtsrb_cnv_io_shape_dict = {
+    "idt": DataType["UINT8"],
+    "odt": DataType["INT16"],
+    "ishape_normal": (1, 32, 32, 3),
+    "oshape_normal": (1, 44),
+    "ishape_folded": (1, 1, 32, 32, 3, 1),
+    "oshape_folded": (1, 11, 4),
+    "ishape_packed": (1, 1, 32, 32, 3, 1),
+    "oshape_packed": (1, 11, 8),
+}
+
 _bincop_cnv_io_shape_dict = {
     "idt": [DataType["UINT8"]],
     "odt": [DataType["UINT8"]],
@@ -352,7 +363,6 @@ def resnet50_w1a2_imagenet(target_platform=None):
         runtime_weight_dir=runtime_weight_dir,
     )
 
-
 def vgg10_w4a4_radioml(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
@@ -366,7 +376,6 @@ def vgg10_w4a4_radioml(target_platform=None):
         fclk_mhz=fclk_mhz,
     )
 
-
 def mlp_w2a2_unsw_nb15(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
@@ -376,3 +385,10 @@ def mlp_w2a2_unsw_nb15(target_platform=None):
     return FINNExampleOverlay(
         filename, driver_mode, _unsw_nb15_mlp_io_shape_dict, fclk_mhz=fclk_mhz
     )
+
+def cnv_w1a1_gtsrb(target_platform=None):
+    target_platform = resolve_target_platform(target_platform)
+    driver_mode = get_driver_mode()
+    model_name = "cnv-gtsrb-w1a1"
+    filename = find_bitfile(model_name, target_platform)
+    return FINNExampleOverlay(filename, driver_mode, _gtsrb_cnv_io_shape_dict)
