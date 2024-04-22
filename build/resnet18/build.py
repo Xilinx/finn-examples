@@ -1,4 +1,30 @@
-# Imports.
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of FINN nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import os
 from datetime import datetime
@@ -6,7 +32,7 @@ from resnet18_custom_steps import (
     step_resnet18_attach_preproc,
     step_resnet18_streamline,
     step_resnet18_lower,
-    step_resnet18_to_hls,
+    step_resnet18_to_hw,
     step_resnet50_slr_floorplan,
 )
 from finn.util.basic import (
@@ -20,8 +46,6 @@ from finn.builder.build_dataflow_config import (
 )
 from finn.builder.build_dataflow import build_dataflow_cfg
 
-#-------------------------------------------#
-
 # The filename our build program will look for a resnet18 model under.
 MODEL_FILENAME = "models/resnet18_4w4a.onnx"
 
@@ -32,14 +56,11 @@ BOARDS = ["U250"]
 SYNTH_CLK_PERIOD_NS = 4.0
 
 # The folding config file we'll apply to the model.
-FOLDING_CONFIG_FILE = "folding_config/U250_folding_config_100k.json"
+# FOLDING_CONFIG_FILE = "folding_config/U250_folding_config_100k.json"
+FOLDING_CONFIG_FILE = "folding_config/auto_folding_config.json"
 
-# TODO: RELEVANT COMMENT
 VERIFICATION_IN_OUT_PAIR = ("verification/golden_input.npy",
                             "verification/golden_output.npy")
-
-# TODO: RELEVANT COMMENT
-USE_RTL_NODES = False
 
 resnet18_build_steps = [
     "step_qonnx_to_finn",
@@ -47,13 +68,15 @@ resnet18_build_steps = [
     "step_tidy_up",
     step_resnet18_streamline,
     step_resnet18_lower,
-    step_resnet18_to_hls,
+    step_resnet18_to_hw,
     "step_create_dataflow_partition",
+    "step_specialize_layers",
+    # "step_target_fps_parallelization",
     "step_apply_folding_config",
     "step_minimize_bit_width",
     "step_generate_estimate_reports",
-    "step_hls_codegen",
-    "step_hls_ipgen",
+    "step_hw_codegen",
+    "step_hw_ipgen",
     "step_set_fifo_depths",
     "step_create_stitched_ip",
     # Uncomment if you want RTL simulation reports! 
@@ -65,15 +88,14 @@ resnet18_build_steps = [
 ]
 
 for board in BOARDS:
-
     # If the board we're using is an alveo board, use the platform
     # name as the release name. Otherwise, use the board name. In
     # either case, set the relevant shell flow type and Vitis platform.
-    if (board in alveo_part_map):
+    if board in alveo_part_map:
         release_platform_name = alveo_default_platform[board]
         shell_flow_type = ShellFlowType.VITIS_ALVEO
         vitis_platform = release_platform_name
-    elif (board in pynq_part_map):
+    elif board in pynq_part_map:
         release_platform_name = board
         shell_flow_type = ShellFlowType.VIVADO_ZYNQ
         vitis_platform = None
@@ -99,14 +121,14 @@ for board in BOARDS:
         folding_config_file= FOLDING_CONFIG_FILE,
         verify_steps= [
             VerificationStepType.STREAMLINED_PYTHON,
-            VerificationStepType.FOLDED_HLS_CPPSIM,
+            # VerificationStepType.FOLDED_HLS_CPPSIM,
             VerificationStepType.STITCHED_IP_RTLSIM
         ],
         stitched_ip_gen_dcp = True,
-        force_rtl_conv_inp_gen = USE_RTL_NODES,
         verify_input_npy= VERIFICATION_IN_OUT_PAIR[0],
         verify_expected_output_npy= VERIFICATION_IN_OUT_PAIR[1],
         split_large_fifos= True,
+        save_intermediate_models=True,
         generate_outputs= [
             DataflowOutputType.STITCHED_IP,
             DataflowOutputType.ESTIMATE_REPORTS,
@@ -114,7 +136,7 @@ for board in BOARDS:
             DataflowOutputType.BITFILE,
             DataflowOutputType.PYNQ_DRIVER,
             DataflowOutputType.DEPLOYMENT_PACKAGE
-        ]
+        ],
     )
 
     # Run all of the build steps in our config file.
