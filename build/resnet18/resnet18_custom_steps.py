@@ -13,7 +13,7 @@ from qonnx.transformation.merge_onnx_models import MergeONNXModels
 from qonnx.transformation.infer_shapes import InferShapes
 from finn.transformation.qonnx.convert_qonnx_to_finn import ConvertQONNXtoFINN
 from finn.util.pytorch import ToTensor
-from brevitas.export import export_finn_onnx
+from brevitas.export import export_qonnx
 
 # Step: Streamlining
 from qonnx.transformation.general import (
@@ -51,9 +51,9 @@ from finn.transformation.streamline.reorder import (
 )
 
 # Step: Converting to HLS Layers
-from finn.transformation.fpgadataflow.convert_to_hls_layers import (
+from finn.transformation.fpgadataflow.convert_to_hw_layers import (
     InferAddStreamsLayer,
-    InferPool_Batch,
+    InferPool,
     InferQuantizedMatrixVectorActivation,
     InferThresholdingLayer,
     InferConvInpGen,
@@ -73,7 +73,6 @@ from qonnx.transformation.infer_data_layouts import InferDataLayouts
 from finn.transformation.streamline.absorb import AbsorbTransposeIntoFlatten
 from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
 
-# [CUSTOM STEP DEFINITIONS]
 
 def step_resnet18_attach_preproc(model: ModelWrapper, cfg: DataflowBuildConfig) -> ModelWrapper:
     # Make sure the input (and every other) node
@@ -89,7 +88,7 @@ def step_resnet18_attach_preproc(model: ModelWrapper, cfg: DataflowBuildConfig) 
     # Take the Torch representation of our pre-processing model
     # (used to normalise input from 0-255 to 0-1), and convert it
     # to finn-onnx.
-    pre_proc = export_finn_onnx(ToTensor(), input_shape=shape, opset_version=11)
+    pre_proc = export_qonnx(ToTensor(), input_shape=shape, opset_version=11)
 
     #  Wrap the pre-processing model in a QONNX ModelWrapper,
     # Then merge to the start of our model.
@@ -155,7 +154,7 @@ def step_resnet18_lower(model: ModelWrapper, cfg: DataflowBuildConfig) -> ModelW
     return cleanup_model(model)
 
 # The set of steps we use to convert the layers in our model to HLS layers.
-def step_resnet18_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig) -> ModelWrapper:
+def step_resnet18_to_hw(model: ModelWrapper, cfg: DataflowBuildConfig) -> ModelWrapper:
     # A set of pre-existing steps we run to convert
     # all relevant layers in our model to HLS.
     to_hls_transformations = [
@@ -164,7 +163,7 @@ def step_resnet18_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig) -> Model
         SortGraph(),
         InferShapes(),
         InferAddStreamsLayer(),
-        InferPool_Batch(),
+        InferPool(),
         RoundAndClipThresholds(),
         InferThresholdingLayer(),
         InferQuantizedMatrixVectorActivation(),
@@ -175,12 +174,6 @@ def step_resnet18_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig) -> Model
         AbsorbTransposeIntoFlatten(),
         RemoveCNVtoFCFlatten(),
     ]
-    
-    # Modify the list if we're using RTL convolution input generators.
-    if cfg.force_rtl_conv_inp_gen == True:
-        i = to_hls_transformations.index(InferConvInpGen())
-        to_hls_transformations[i] = InferConvInpGen(use_rtl_variant=True)
-        print("TO_HLS OUTPUT:",to_hls_transformations,"\n:END TO_HLS OUTPUT")
     
     # Workaround for an error. If it's not included, the first Im2Col nod
     # is not converted to an (FMPadding_Batch -> ConvolutionInputGenerator)
