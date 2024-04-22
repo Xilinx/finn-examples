@@ -56,8 +56,7 @@ BOARDS = ["U250"]
 SYNTH_CLK_PERIOD_NS = 4.0
 
 # The folding config file we'll apply to the model.
-# FOLDING_CONFIG_FILE = "folding_config/U250_folding_config_100k.json"
-FOLDING_CONFIG_FILE = "folding_config/auto_folding_config.json"
+FOLDING_CONFIG_FILE = "folding_config/U250_folding_config.json"
 
 VERIFICATION_IN_OUT_PAIR = ("verification/golden_input.npy",
                             "verification/golden_output.npy")
