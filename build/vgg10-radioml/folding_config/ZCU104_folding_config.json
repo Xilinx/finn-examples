@@ -3,74 +3,30 @@
   "StreamingFIFO_rtl_0": {
     "ram_style": "auto",
     "depth": 339,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "FMPadding_rtl_0": {
-    "SIMD": 2,
-    "inFIFODepths": [
-      339
-    ],
-    "outFIFODepths": [
-      1026
-    ]
+    "SIMD": 2
   },
   "StreamingFIFO_rtl_1": {
     "ram_style": "auto",
     "depth": 1026,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ConvolutionInputGenerator_rtl_0": {
     "SIMD": 2,
     "parallel_window": 0,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      1026
-    ],
-    "outFIFODepths": [
-      3071
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_2": {
     "ram_style": "auto",
     "depth": 3071,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_0": {
-    "inFIFODepths": [
-      3071
-    ],
-    "outFIFODepths": [
-      6144
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_3": {
     "ram_style": "auto",
     "depth": 6144,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_0": {
     "PE": 1,
@@ -78,147 +34,59 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      6144
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_4": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_0": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      32
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_5": {
     "ram_style": "auto",
     "depth": 32,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "StreamingMaxPool_hls_0": {
-    "PE": 1,
-    "inFIFODepths": [
-      32
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_6": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_1": {
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_7": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "FMPadding_rtl_1": {
-    "SIMD": 32,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "SIMD": 32
   },
   "StreamingFIFO_rtl_8": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ConvolutionInputGenerator_rtl_1": {
     "SIMD": 32,
     "parallel_window": 0,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      1151
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_9": {
     "ram_style": "auto",
     "depth": 1151,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_2": {
-    "inFIFODepths": [
-      1151
-    ],
-    "outFIFODepths": [
-      49152
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_10": {
     "ram_style": "auto",
     "depth": 49152,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_1": {
     "PE": 1,
@@ -226,147 +94,59 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      49152
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_11": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_1": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_12": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "StreamingMaxPool_hls_1": {
-    "PE": 1,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_13": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_3": {
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_14": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "FMPadding_rtl_2": {
-    "SIMD": 32,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "SIMD": 32
   },
   "StreamingFIFO_rtl_15": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ConvolutionInputGenerator_rtl_2": {
     "SIMD": 32,
     "parallel_window": 0,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      32
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_16": {
     "ram_style": "auto",
     "depth": 32,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_4": {
-    "inFIFODepths": [
-      32
-    ],
-    "outFIFODepths": [
-      96
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_17": {
     "ram_style": "auto",
     "depth": 96,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_2": {
     "PE": 1,
@@ -374,147 +154,59 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      96
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_18": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_2": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_19": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "StreamingMaxPool_hls_2": {
-    "PE": 1,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_20": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_5": {
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_21": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "FMPadding_rtl_3": {
-    "SIMD": 32,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "SIMD": 32
   },
   "StreamingFIFO_rtl_22": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ConvolutionInputGenerator_rtl_3": {
     "SIMD": 32,
     "parallel_window": 0,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      32
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_23": {
     "ram_style": "auto",
     "depth": 32,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_6": {
-    "inFIFODepths": [
-      32
-    ],
-    "outFIFODepths": [
-      96
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_24": {
     "ram_style": "auto",
     "depth": 96,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_3": {
     "PE": 1,
@@ -522,147 +214,59 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      96
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_25": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_3": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_26": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "StreamingMaxPool_hls_3": {
-    "PE": 1,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_27": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_7": {
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_28": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "FMPadding_rtl_4": {
-    "SIMD": 32,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "SIMD": 32
   },
   "StreamingFIFO_rtl_29": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ConvolutionInputGenerator_rtl_4": {
     "SIMD": 32,
     "parallel_window": 0,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      32
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_30": {
     "ram_style": "auto",
     "depth": 32,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_8": {
-    "inFIFODepths": [
-      32
-    ],
-    "outFIFODepths": [
-      96
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_31": {
     "ram_style": "auto",
     "depth": 96,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_4": {
     "PE": 1,
@@ -670,147 +274,59 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      96
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_32": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_4": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_33": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "StreamingMaxPool_hls_4": {
-    "PE": 1,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_34": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_9": {
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_35": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "FMPadding_rtl_5": {
-    "SIMD": 32,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "SIMD": 32
   },
   "StreamingFIFO_rtl_36": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ConvolutionInputGenerator_rtl_5": {
     "SIMD": 32,
     "parallel_window": 0,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      32
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_37": {
     "ram_style": "auto",
     "depth": 32,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_10": {
-    "inFIFODepths": [
-      32
-    ],
-    "outFIFODepths": [
-      96
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_38": {
     "ram_style": "auto",
     "depth": 96,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_5": {
     "PE": 1,
@@ -818,147 +334,59 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      96
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_39": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_5": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_40": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "StreamingMaxPool_hls_5": {
-    "PE": 1,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_41": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_11": {
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_42": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "FMPadding_rtl_6": {
-    "SIMD": 32,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "SIMD": 32
   },
   "StreamingFIFO_rtl_43": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ConvolutionInputGenerator_rtl_6": {
     "SIMD": 32,
     "parallel_window": 0,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      32
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_44": {
     "ram_style": "auto",
     "depth": 32,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
-  },
-  "StreamingDataWidthConverter_rtl_12": {
-    "inFIFODepths": [
-      32
-    ],
-    "outFIFODepths": [
-      96
-    ]
+    "impl_style": "rtl"
   },
   "StreamingFIFO_rtl_45": {
     "ram_style": "auto",
     "depth": 96,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_6": {
     "PE": 1,
@@ -966,67 +394,31 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      96
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_46": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_6": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_47": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "StreamingMaxPool_hls_6": {
-    "PE": 1,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_48": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_7": {
     "PE": 1,
@@ -1034,47 +426,23 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_49": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_7": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_50": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_8": {
     "PE": 1,
@@ -1082,47 +450,23 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_51": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "Thresholding_rtl_8": {
     "PE": 1,
     "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ],
     "depth_trigger_uram": 0,
     "depth_trigger_bram": 0
   },
   "StreamingFIFO_rtl_52": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "MVAU_rtl_9": {
     "PE": 1,
@@ -1130,64 +474,28 @@
     "ram_style": "auto",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "runtime_writeable_weights": 0
   },
   "StreamingFIFO_rtl_53": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "ChannelwiseOp_hls_0": {
     "PE": 1,
-    "ram_style": "distributed",
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "ram_style": "distributed"
   },
   "StreamingFIFO_rtl_54": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   },
   "LabelSelect_hls_0": {
-    "PE": 1,
-    "inFIFODepths": [
-      2
-    ],
-    "outFIFODepths": [
-      2
-    ]
+    "PE": 1
   },
   "StreamingFIFO_rtl_55": {
     "ram_style": "auto",
     "depth": 2,
-    "impl_style": "rtl",
-    "inFIFODepths": [
-      0
-    ],
-    "outFIFODepths": [
-      0
-    ]
+    "impl_style": "rtl"
   }
 }
