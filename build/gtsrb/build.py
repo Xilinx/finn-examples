@@ -106,7 +106,6 @@ for platform_name in platforms_to_build:
                 build_cfg.DataflowOutputType.BITFILE,
             ],
             save_intermediate_models=True,
-            default_swg_exception=True,
         )
         model_file = "models/%s.onnx" % model_name
         # launch FINN compiler to build
