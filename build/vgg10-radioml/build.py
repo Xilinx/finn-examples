@@ -111,8 +111,9 @@ for platform_name in platforms_to_build:
         vitis_platform=vitis_platform,
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
         specialize_layers_config_file="specialize_layers_config.json",
-        auto_fifo_depths=True,
-        standalone_thresholds=False,
+        auto_fifo_depths=False,
+        split_large_fifos = True,
+        standalone_thresholds=True,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[
