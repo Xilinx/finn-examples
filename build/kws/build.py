@@ -96,7 +96,6 @@ for platform_name in platforms_to_build:
         folding_config_file="folding_config/%s_kws_folding_config.json" % platform_name,
         synth_clk_period_ns=10.0,
         board=platform_name,
-        folding_config_file="folding_config/mlp_kws_folding_config.json",
         shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
         save_intermediate_models=True,
         stitched_ip_gen_dcp=True,
