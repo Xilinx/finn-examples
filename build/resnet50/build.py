@@ -116,6 +116,7 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=synth_clk_period_ns,
         board=board,
         shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
+        specialize_layers_config_file="specialize_layers_config.json",
         vitis_platform=vitis_platform,
         # throughput parameters (auto-folding)
         mvau_wwidth_max=24,
