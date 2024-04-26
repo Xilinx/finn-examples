@@ -33,7 +33,7 @@ from resnet18_custom_steps import (
     step_resnet18_streamline,
     step_resnet18_lower,
     step_resnet18_to_hw,
-    step_resnet50_slr_floorplan,
+    step_resnet18_slr_floorplan,
 )
 from finn.util.basic import (
     pynq_part_map, alveo_part_map, alveo_default_platform
@@ -80,7 +80,7 @@ resnet18_build_steps = [
     "step_create_stitched_ip",
     # Uncomment if you want RTL simulation reports! 
     # "step_measure_rtlsim_performance",
-    step_resnet50_slr_floorplan,
+    step_resnet18_slr_floorplan,
     "step_synthesize_bitfile",
     "step_make_pynq_driver",
     "step_deployment_package",
@@ -136,6 +136,9 @@ for board in BOARDS:
             DataflowOutputType.PYNQ_DRIVER,
             DataflowOutputType.DEPLOYMENT_PACKAGE
         ],
+        vitis_floorplan_file="folding_config/floorplan.json",
+        start_step="step_synthesize_bitfile",
+        stop_step="step_deployment_package"
     )
 
     # Run all of the build steps in our config file.
