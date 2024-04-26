@@ -38,8 +38,7 @@ import shutil
 from custom_steps import (
     step_resnet50_tidy,
     step_resnet50_streamline,
-    step_resnet50_convert_to_hls,
-    step_resnet50_set_fifo_depths,
+    step_resnet50_convert_to_hw,
     step_resnet50_slr_floorplan,
 )
 
@@ -52,7 +51,7 @@ target_fps = 300
 resnet50_build_steps = [
     step_resnet50_tidy,
     step_resnet50_streamline,
-    step_resnet50_convert_to_hls,
+    step_resnet50_convert_to_hw,
     "step_create_dataflow_partition",
     "step_specialize_layers",
     "step_apply_folding_config",
@@ -60,7 +59,7 @@ resnet50_build_steps = [
     "step_generate_estimate_reports",
     "step_hw_codegen",
     "step_hw_ipgen",
-    step_resnet50_set_fifo_depths,
+    "step_set_fifo_depths",
     step_resnet50_slr_floorplan,
     "step_synthesize_bitfile",
     "step_make_pynq_driver",
@@ -110,6 +109,7 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=synth_clk_period_ns,
         board=board,
         shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
+        split_large_fifos=True,
         specialize_layers_config_file="specialize_layers_config.json",
         vitis_platform=vitis_platform,
         # throughput parameters (auto-folding)
