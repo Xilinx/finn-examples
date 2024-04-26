@@ -102,12 +102,6 @@ for platform_name in platforms_to_build:
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
 
-    #    try:
-    #        from finnexperimental.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv # noqa: E501
-    #        folding_config_file="folding_config/U250_folding_config.json"
-    #        print("DoublePackedConv detected")
-    #    except:
-    #        warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ") # noqa: E501
     folding_config_file = "folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
 
     cfg = build_cfg.DataflowBuildConfig(
@@ -116,6 +110,7 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=synth_clk_period_ns,
         board=board,
         shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
+        specialize_layers_config_file="specialize_layers_config.json",
         vitis_platform=vitis_platform,
         # throughput parameters (auto-folding)
         mvau_wwidth_max=24,
