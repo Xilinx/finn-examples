@@ -1,6 +1,4 @@
-# [IMPORTS]
-
-# Used in all steps.
+import numpy as np
 from qonnx.core.modelwrapper import ModelWrapper
 from qonnx.util.cleanup import cleanup_model
 from finn.builder.build_dataflow_config import (
@@ -50,7 +48,7 @@ from finn.transformation.streamline.reorder import (
     MoveTransposePastJoinAdd,
 )
 
-# Step: Converting to HLS Layers
+# Step: Converting to HW Layers
 from finn.transformation.fpgadataflow.convert_to_hw_layers import (
     InferAddStreamsLayer,
     InferPool,
@@ -64,6 +62,7 @@ from finn.transformation.streamline.absorb import AbsorbConsecutiveTransposes
 from qonnx.core.datatype import DataType
 from qonnx.transformation.double_to_single_float import DoubleToSingleFloat
 from qonnx.transformation.general import (
+    ApplyConfig,
     GiveUniqueNodeNames,
     SortGraph,
 )
@@ -189,7 +188,7 @@ def step_resnet18_to_hw(model: ModelWrapper, cfg: DataflowBuildConfig) -> ModelW
     # Clean up the model before returning.
     return cleanup_model(model)
 
-def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
+def step_resnet18_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
         try:
             from finnexperimental.analysis.partitioning import partition
