@@ -14,7 +14,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_0": {
     "PE": 2,
@@ -246,7 +246,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_12": {
     "PE": 1,
@@ -319,7 +319,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_16": {
     "PE": 1,
@@ -353,7 +353,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_18": {
     "PE": 1,
@@ -375,7 +375,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_19": {
     "PE": 1,
@@ -420,7 +420,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_21": {
     "PE": 1,
@@ -448,7 +448,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_23": {
     "PE": 1,
@@ -482,7 +482,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_25": {
     "PE": 1,
@@ -504,7 +504,7 @@
     "ram_style": "ultra",
     "resType": "auto",
     "mem_mode": "internal_decoupled",
-    "runtime_writeable_weights": 0
+    "runtime_writeable_weights": 1
   },
   "Thresholding_rtl_26": {
     "PE": 1,
