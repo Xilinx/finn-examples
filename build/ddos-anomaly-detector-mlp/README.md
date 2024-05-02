@@ -28,7 +28,7 @@ per-packet operations at high line-rates. The figure below shows the high-level
 architectural motivations behind this work.
 
 <p align="center">
-    <img src="data/motivation_arch.png" alt="Motivation architecture" width="75%"/>
+    <img src="tutorials/motivation_arch.png" alt="Motivation architecture" width="75%"/>
 </p>
 
 Here, we only show the RX datapath of a hypothetical networking device that has
