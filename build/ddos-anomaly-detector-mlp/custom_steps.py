@@ -8,7 +8,7 @@ import torch.nn as nn
 from finn.transformation.qonnx.convert_qonnx_to_finn import ConvertQONNXtoFINN
 from qonnx.core.modelwrapper import ModelWrapper
 from qonnx.core.datatype import DataType
-from qonnx.util.cleanup import qonnx_cleanup
+from qonnx.util.cleanup import cleanup
 from brevitas.export import export_qonnx
 
 
@@ -80,7 +80,7 @@ def custom_step_mlp_export(model_name):
     export_qonnx(model_for_export, export_path=ready_model_filename, input_t=input_t)
 
     # Clean-up
-    qonnx_cleanup(ready_model_filename, out_file=ready_model_filename)
+    cleanup(ready_model_filename, out_file=ready_model_filename)
 
     # Setting the input datatype explicitly because it doesn't get derived from the export function
     model_for_export = ModelWrapper(ready_model_filename)
