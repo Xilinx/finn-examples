@@ -1,0 +1,21 @@
+{
+"Defaults": {},
+"MVAU_hls_0": {
+"PE": 32,
+"SIMD": 128,
+"resType": "lut",
+"mem_mode": "internal_embedded"
+},
+"MVAU_hls_1": {
+"PE": 32,
+"SIMD": 32,
+"resType": "lut",
+"mem_mode": "internal_embedded"
+},
+"MVAU_hls_2": {
+"PE": 1,
+"SIMD": 32,
+"resType": "lut",
+"mem_mode": "internal_embedded"
+}
+}

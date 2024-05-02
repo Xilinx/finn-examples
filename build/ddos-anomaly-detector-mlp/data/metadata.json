@@ -1,0 +1,22 @@
+{
+    "total_in_bitwidth": 128,
+    "ordering": [
+        [
+            "total_bytes",
+            32
+        ],
+        [
+            "duration_usec",
+            64
+        ],
+        [
+            "total_pkts",
+            16
+        ],
+        [
+            "total_urg",
+            16
+        ]
+    ],
+    "total_out_bitwidth": 1
+}
