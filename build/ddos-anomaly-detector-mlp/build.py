@@ -13,6 +13,9 @@ model_name = "ddos-anomaly-detector-mlp-w2a2"
 # Create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 
+# Path to custom_folding_config.json
+custom_folding_config_fpath = "./data/custom_folding_config.json"
+
 for platform_name in platforms_to_build:
     platform_dir = "release/%s" % platform_name
     os.makedirs(platform_dir, exist_ok=True)
@@ -24,6 +27,7 @@ for platform_name in platforms_to_build:
         target_fps=250000000,  # 250M inferences/sec
         synth_clk_period_ns=4.0,  # 250MHz (for OpenNIC 250MHz compute box)
         fpga_part=fpga_part,  # OpenNIC-compatible FPGA
+        folding_config_file=custom_folding_config_fpath,
         rtlsim_batch_size=4,
         generate_outputs=[
             build_cfg.DataflowOutputType.STITCHED_IP,

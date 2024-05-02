@@ -34,7 +34,7 @@ class ExportModel(nn.Module):
 def custom_step_mlp_export(model_name):
     # load trained model assets
     assets_dir = "./data"
-    trained_state_dict = torch.load(assets_dir + "/state_dict.pth")["models_state_dict"][0]
+    trained_state_dict = torch.load(assets_dir + "/state_dict.pth")
     with open(assets_dir + "/metadata.json", "r") as fp:
         metadata = json.load(fp)
 
