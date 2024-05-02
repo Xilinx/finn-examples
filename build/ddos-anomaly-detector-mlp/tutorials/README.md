@@ -14,7 +14,7 @@ This notebook series is composed of 4 parts. Below is a brief summary of what ea
 
 # Running the notebooks
 
-These tutorial notebooks are written in the same tutorial-style notebooks found on the [FINN GitHub repository](https://github.com/Xilinx/finn). In order to run these interactive Jupyter notebooks in your browser, here are the steps to follow:
+These tutorial notebooks are written in the same tutorial-style notebooks found on the [FINN GitHub repository](https://github.com/Xilinx/finn/tree/v0.10/notebooks). In order to run these interactive Jupyter notebooks in your browser, here are the steps to follow:
 
 1. Clone a copy of the [FINN framework](https://github.com/Xilinx/finn) and checkout the `v0.10` tagged release.
 2. Copy entire contents of this folder into `<FINN_ROOT>/notebooks/end2end_example/ddos-anomaly-detector`. You have to use the `ddos-anomaly-detector` folder name as the notebooks use hardcoded relative paths to build outputs in an organized manner. Choosing a different directory name may break the build process.

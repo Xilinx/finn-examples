@@ -88,6 +88,14 @@ Detection Dataset and Intrusion Traffic Characterization”, 4th International C
 Information Systems Security and Privacy (ICISSP), Portugal, January 2018
 ```
 
+# Tutorials
+
+A tutorial-styled notebook series has also been provided with this example
+inside the `tutorials/` directory. Please follow the steps detailed inside the
+`tutorials/README` to setup the environment for running these notebooks. More
+tutorial parts will be added in the future that cover the SmartNIC build and
+implementation steps.
+
 # Citation
 
 More details about the preprocessed dataset, modeling, and implementation can be found in [our demo paper](https://dl.acm.org/doi/abs/10.1145/3630047.3630191). You can cite our work using the following bibtex snippet:
