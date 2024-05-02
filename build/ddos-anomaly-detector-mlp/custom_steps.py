@@ -1,6 +1,5 @@
 import json
 import numpy as np
-import pkg_resources as pk
 import os
 
 from brevitas.nn import QuantLinear, QuantReLU, QuantIdentity
@@ -34,7 +33,7 @@ class ExportModel(nn.Module):
 
 def custom_step_mlp_export(model_name):
     # load trained model assets
-    assets_dir = pk.resource_filename("finn.qnn-data", "ddos-anomaly-detector-mlp/")
+    assets_dir = "./data"
     trained_state_dict = torch.load(assets_dir + "/state_dict.pth")["models_state_dict"][0]
     with open(assets_dir + "/metadata.json", "r") as fp:
         metadata = json.load(fp)
