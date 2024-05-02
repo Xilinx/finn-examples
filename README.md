@@ -51,7 +51,7 @@ on your PYNQ board:
 python3 -m pip install pip==23.0 setuptools==67.1.0
 ```
 
-Since we are going to install finn-examples without build-isolation, we need to ensure all dependencies are installed. For that, install `setuptools_csm` as well:
+Since we are going to install finn-examples without build-isolation, we need to ensure all dependencies are installed. For that, install `setuptools_scm` as well:
 
 ```shell
 python3 -m pip install setuptools_scm==7.1.0
