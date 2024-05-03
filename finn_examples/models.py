@@ -363,6 +363,7 @@ def resnet50_w1a2_imagenet(target_platform=None):
         runtime_weight_dir=runtime_weight_dir,
     )
 
+
 def vgg10_w4a4_radioml(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
@@ -376,6 +377,7 @@ def vgg10_w4a4_radioml(target_platform=None):
         fclk_mhz=fclk_mhz,
     )
 
+
 def mlp_w2a2_unsw_nb15(target_platform=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
@@ -385,6 +387,7 @@ def mlp_w2a2_unsw_nb15(target_platform=None):
     return FINNExampleOverlay(
         filename, driver_mode, _unsw_nb15_mlp_io_shape_dict, fclk_mhz=fclk_mhz
     )
+
 
 def cnv_w1a1_gtsrb(target_platform=None):
     target_platform = resolve_target_platform(target_platform)

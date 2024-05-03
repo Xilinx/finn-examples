@@ -110,7 +110,7 @@ for platform_name in platforms_to_build:
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
-        split_large_fifos = True,
+        split_large_fifos=True,
         standalone_thresholds=True,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,

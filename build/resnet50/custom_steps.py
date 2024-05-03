@@ -1,4 +1,5 @@
-# Copyright (c) 2020, Xilinx
+# Copyright (C) 2020-2022, Xilinx, Inc.
+# Copyright (C) 2022-2024, Advanced Micro Devices, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -95,22 +96,7 @@ from finn.builder.build_dataflow_config import (
     ShellFlowType,
 )
 
-from finn.transformation.fpgadataflow.prepare_ip import PrepareIP
-from finn.transformation.fpgadataflow.hlssynth_ip import HLSSynthIP
-from finn.transformation.fpgadataflow.replace_verilog_relpaths import (
-    ReplaceVerilogRelPaths,
-)
-
 from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
-
-from qonnx.util.config import extract_model_config_to_json
-from finn.transformation.fpgadataflow.set_fifo_depths import (
-    InsertAndSetFIFODepths,
-    RemoveShallowFIFOs,
-    SplitLargeFIFOs,
-)
-from finn.transformation.fpgadataflow.insert_dwc import InsertDWC
-from finn.transformation.fpgadataflow.insert_fifo import InsertFIFO
 
 
 def step_resnet50_tidy(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -221,6 +207,7 @@ def step_resnet50_convert_to_hw(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(SortGraph())
 
     return model
+
 
 def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
