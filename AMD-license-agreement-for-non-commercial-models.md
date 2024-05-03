@@ -3,7 +3,7 @@ LICENSE AGREEMENT FOR NON-COMMERCIAL MODELS
 
 Trained Models:
 
-bincop-cnv, cnv-w1a1, cnv-w1a2, cnv-w2a2, kwsmlp-w3a3, mobilenetv1-w4a4, resnet50-w1a2, tfc-w1a1, tfc-w1a2, tfc-w2a2, unsw_nb15-mlp-w2a2, vgg10-radioml-w4a4
+bincop-cnv, cnv-w1a1, cnv-w1a2, cnv-w2a2, kwsmlp-w3a3, mobilenetv1-w4a4, resnet50-w1a2, tfc-w1a1, tfc-w1a2, tfc-w2a2, unsw_nb15-mlp-w2a2, vgg10-radioml-w4a4, cnv_1w1a_gtsrb.onnx
 
 This License Agreement for Non-Commercial Models (“Agreement”) is a legal agreement between you (either an individual or an entity) and Advanced Micro Devices, Inc. on behalf of itself and its subsidiaries and affiliates (collectively “AMD”). DO NOT USE THE TRAINED MODELS IDENTIFIED ABOVE UNTIL YOU HAVE CAREFULLY READ THIS AGREEMENT. BY USING, INSTALLING, MODIFYING, COPYING, TRAINING, BENCHMARKING, OR DISTRIBUTING THE TRAINED MODELS, YOU AGREE TO AND ACCEPT ALL TERMS AND CONDITIONS OF THIS AGREEMENT. If you do not accept these terms, do not use the Trained Models.
 
