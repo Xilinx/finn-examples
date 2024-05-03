@@ -38,8 +38,7 @@ import shutil
 from custom_steps import (
     step_resnet50_tidy,
     step_resnet50_streamline,
-    step_resnet50_convert_to_hls,
-    step_resnet50_set_fifo_depths,
+    step_resnet50_convert_to_hw,
     step_resnet50_slr_floorplan,
 )
 
@@ -52,14 +51,15 @@ target_fps = 300
 resnet50_build_steps = [
     step_resnet50_tidy,
     step_resnet50_streamline,
-    step_resnet50_convert_to_hls,
+    step_resnet50_convert_to_hw,
     "step_create_dataflow_partition",
+    "step_specialize_layers",
     "step_apply_folding_config",
     "step_minimize_bit_width",
     "step_generate_estimate_reports",
-    "step_hls_codegen",
-    "step_hls_ipgen",
-    step_resnet50_set_fifo_depths,
+    "step_hw_codegen",
+    "step_hw_ipgen",
+    "step_set_fifo_depths",
     step_resnet50_slr_floorplan,
     "step_synthesize_bitfile",
     "step_make_pynq_driver",
@@ -101,13 +101,7 @@ for platform_name in platforms_to_build:
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
 
-    #    try:
-    #        from finnexperimental.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv # noqa: E501
-    #        folding_config_file="folding_config/U250_folding_config.json"
-    #        print("DoublePackedConv detected")
-    #    except:
-    #        warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ") # noqa: E501
-    folding_config_file = "folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
+    folding_config_file = "folding_config/U250_folding_config.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
@@ -115,6 +109,8 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=synth_clk_period_ns,
         board=board,
         shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
+        split_large_fifos=True,
+        specialize_layers_config_file="specialize_layers_config.json",
         vitis_platform=vitis_platform,
         # throughput parameters (auto-folding)
         mvau_wwidth_max=24,

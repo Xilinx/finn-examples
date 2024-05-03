@@ -1,4 +1,5 @@
-# Copyright (c) 2020, Xilinx
+# Copyright (C) 2020-2022, Xilinx, Inc.
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,8 +36,8 @@ import shutil
 # custom steps for mobilenetv1
 from custom_steps import (
     step_mobilenet_streamline,
-    step_mobilenet_convert_to_hls_layers,
-    step_mobilenet_convert_to_hls_layers_separate_th,
+    step_mobilenet_convert_to_hw_layers,
+    step_mobilenet_convert_to_hw_layers_separate_th,
     step_mobilenet_lower_convs,
     step_mobilenet_slr_floorplan,
 )
@@ -44,10 +45,8 @@ from custom_steps import (
 model_name = "mobilenetv1-w4a4"
 
 # which platforms to build the networks for
-# zynq_platforms = ["ZCU102", "ZCU104"]
-zynq_platforms = ["ZCU102"]
-# alveo_platforms = ["U50", "U200", "U250", "U280"]
-alveo_platforms = ["U250"]
+zynq_platforms = ["ZCU104", "ZCU102"]
+alveo_platforms = ["U250"]  # "U50", "U200", "U280"
 platforms_to_build = zynq_platforms + alveo_platforms
 
 
@@ -75,13 +74,14 @@ def select_build_steps(platform):
         return [
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
-            step_mobilenet_convert_to_hls_layers_separate_th,
+            step_mobilenet_convert_to_hw_layers_separate_th,
             "step_create_dataflow_partition",
+            "step_specialize_layers",
             "step_apply_folding_config",
             "step_minimize_bit_width",
             "step_generate_estimate_reports",
-            "step_hls_codegen",
-            "step_hls_ipgen",
+            "step_hw_codegen",
+            "step_hw_ipgen",
             "step_set_fifo_depths",
             "step_create_stitched_ip",
             "step_synthesize_bitfile",
@@ -92,13 +92,14 @@ def select_build_steps(platform):
         return [
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
-            step_mobilenet_convert_to_hls_layers,
+            step_mobilenet_convert_to_hw_layers,
             "step_create_dataflow_partition",
+            "step_specialize_layers",
             "step_apply_folding_config",
             "step_minimize_bit_width",
             "step_generate_estimate_reports",
-            "step_hls_codegen",
-            "step_hls_ipgen",
+            "step_hw_codegen",
+            "step_hw_ipgen",
             "step_set_fifo_depths",
             step_mobilenet_slr_floorplan,
             "step_synthesize_bitfile",
@@ -123,6 +124,12 @@ for platform_name in platforms_to_build:
         # for Zynq, use the board name as the release name
         # e.g. ZCU104
         release_platform_name = platform_name
+        # for ZCU104 we provide a specialize layer json
+        specialize_layer_file = (
+            "specialize_layers_config/ZCU104_specialize_layers_config.json"
+            if platform_name == "ZCU104"
+            else None
+        )
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
 
@@ -130,6 +137,7 @@ for platform_name in platforms_to_build:
         steps=select_build_steps(platform_name),
         output_dir="output_%s_%s" % (model_name, release_platform_name),
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
+        specialize_layers_config_file=specialize_layer_file,
         synth_clk_period_ns=select_clk_period(platform_name),
         board=platform_name,
         shell_flow_type=shell_flow_type,
