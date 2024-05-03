@@ -12,7 +12,7 @@ Due to the 1-dimensional topology in VGG10 we use a specialized build script tha
 
 0. Ensure you have performed the *Setup* steps in the top-level README for setting up the FINN requirements and environment variables.
 
-1. Run the `download_vgg10.sh` script under the `models` directory to download the pretrained VGG10 ONNX model. You should have e.g. `vgg10-radioml/models/radioml_w4a4_small_tidy.onnx` as a result.
+1. Run the `download_vgg10.sh` script under the `models` directory to download the pretrained VGG10 ONNX model. You should have `vgg10-radioml/models/radioml_w4a4_small_tidy.onnx` as a result.
 
 2. Launch the build as follows:
 ```SHELL
@@ -24,7 +24,7 @@ cd $FINN_EXAMPLES/build/finn
 ./run-docker.sh build_custom $FINN_EXAMPLES/build/vgg10
 ```
 
-5. The generated outputs will be under `vgg10-radioml/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
+3. The generated outputs will be under `vgg10-radioml/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
 
 ## Where did the ONNX model files come from?
 
