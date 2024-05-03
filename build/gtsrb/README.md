@@ -7,7 +7,7 @@ on the [German Traffic Sign Recognition Benchmark (GTSRB)](https://benchmark.ini
 
 0. Ensure you have performed the *Setup* steps in the top-level README for setting up the FINN requirements and environment variables.
 
-1. Run the `download-model.sh` script under the `models` directory to download the pretrained QONNX model. You should have e.g. `gtsrb/models/cnv_1w1a_gtsrb.onnx` as a result.
+1. Run the `download-model.sh` script under the `models` directory to download the pretrained QONNX model. You should have `gtsrb/models/cnv_1w1a_gtsrb.onnx` as a result.
 
 2. Launch the build as follows:
 ```SHELL
@@ -19,7 +19,7 @@ cd $FINN_EXAMPLES/build/finn
 ./run-docker.sh build_custom $FINN_EXAMPLES/build/gtsrb
 ```
 
-5. The generated outputs will be under `gtsrb/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
+3. The generated outputs will be under `gtsrb/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
 
 ## Where did the ONNX model files come from?
 
