@@ -42,7 +42,7 @@ cd $FINN_EXAMPLES/build/finn
 The BNN-PYNQ networks are part of the
 [Brevitas examples](https://github.com/Xilinx/brevitas/tree/master/src/brevitas_examples/bnn_pynq). You can find the details on quantization, accuracy, layers used in the Brevitas repo, as well as the training scripts if you'd like to retrain them yourself.
 
-Subsequently, those trained networks are [exported to ONNX](https://github.com/Xilinx/finn/blob/master/notebooks/basics/1_brevitas_network_import.ipynb). In addition, the particular versions
+Subsequently, those trained networks are [exported to ONNX](https://github.com/Xilinx/finn/blob/main/notebooks/basics/1_brevitas_network_import_via_QONNX.ipynb). In addition, the particular versions
 used here have two additions, as described in the "Adding Pre- and Postprocessing" section of [this notebook](https://github.com/Xilinx/finn/blob/master/notebooks/end2end_example/bnn-pynq/tfc_end2end_example.ipynb):
 
 * A divide-by-255 node is added at the input, and the input is marked as 8-bit (to directly accept 8-bit images as input)

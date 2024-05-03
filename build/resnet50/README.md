@@ -28,6 +28,6 @@ cd $FINN_EXAMPLES/build/finn
 ./run-docker.sh build_custom $FINN_EXAMPLES/build/resnet50
 ```
 
-5. The generated outputs will be under `resnet50/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
+3. The generated outputs will be under `resnet50/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
 
 <!-- ## Where did the ONNX model files come from? -->

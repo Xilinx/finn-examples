@@ -36,13 +36,13 @@ cd $FINN_EXAMPLES/build/finn
 ./run-docker.sh build_custom $FINN_EXAMPLES/build/mobilenet-v1
 ```
 
-5. The generated outputs will be under `mobilenet-v1/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
+3. The generated outputs will be under `mobilenet-v1/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
 
 ## Where did the ONNX model files come from?
 
 The 4-bit quantized MobileNet-v1 is part of the
 [Brevitas examples](https://github.com/Xilinx/brevitas/tree/master/src/brevitas_examples/imagenet_classification).
-Subsequently, the trained networks is [exported to ONNX](https://github.com/Xilinx/finn/blob/master/notebooks/basics/1_brevitas_network_import.ipynb). In addition, the particular version used here has two additions for pre- and postprocessing:
+Subsequently, the trained networks is [exported to ONNX](https://github.com/Xilinx/finn/blob/main/notebooks/basics/1_brevitas_network_import_via_QONNX.ipynb). In addition, the particular version used here has two additions for pre- and postprocessing:
 
 * A divide-by-255 node is added at the input, and the input is marked as 8-bit (to directly accept 8-bit images as input)
 * Normalization is added at the input with `mean = [0.485, 0.456, 0.406]` and `std = 0.226`. Note that the `std` is global and not per-channel to facilitate its removal via the [streamlining transform](https://arxiv.org/pdf/1709.04060).
