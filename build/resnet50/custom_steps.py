@@ -87,7 +87,7 @@ from qonnx.transformation.infer_shapes import InferShapes
 from qonnx.transformation.infer_datatypes import InferDataTypes
 from qonnx.transformation.infer_data_layouts import InferDataLayouts
 from qonnx.transformation.insert_topk import InsertTopK
-import finn.transformation.fpgadataflow.convert_to_hw_layers as to_hls
+import finn.transformation.fpgadataflow.convert_to_hw_layers as to_hw
 from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 
 from finn.builder.build_dataflow_config import (
@@ -188,28 +188,28 @@ def step_resnet50_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
     return model
 
 
-def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
+def step_resnet50_convert_to_hw(model: ModelWrapper, cfg: DataflowBuildConfig):
     model.set_tensor_datatype(model.graph.input[0].name, DataType["UINT8"])
     model = model.transform(InferDataLayouts())
     model = model.transform(DoubleToSingleFloat())
     model = model.transform(InferDataTypes())
     model = model.transform(SortGraph())
 
-    to_hls_transformations = [
-        to_hls.InferAddStreamsLayer,
+    to_hw_transformations = [
+        to_hw.InferAddStreamsLayer,
         LowerConvsToMatMul,
-        to_hls.InferChannelwiseLinearLayer,
-        to_hls.InferPool,
+        to_hw.InferChannelwiseLinearLayer,
+        to_hw.InferPool,
         AbsorbTransposeIntoMultiThreshold,
         RoundAndClipThresholds,
-        to_hls.InferQuantizedMatrixVectorActivation,
-        to_hls.InferThresholdingLayer,
+        to_hw.InferQuantizedMatrixVectorActivation,
+        to_hw.InferThresholdingLayer,
         AbsorbConsecutiveTransposes,
-        to_hls.InferConvInpGen,
-        to_hls.InferDuplicateStreamsLayer,
-        to_hls.InferLabelSelectLayer,
+        to_hw.InferConvInpGen,
+        to_hw.InferDuplicateStreamsLayer,
+        to_hw.InferLabelSelectLayer,
     ]
-    for trn in to_hls_transformations:
+    for trn in to_hw_transformations:
         model = model.transform(trn())
         model = model.transform(InferDataLayouts())
         model = model.transform(GiveUniqueNodeNames())
@@ -221,65 +221,6 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(SortGraph())
 
     return model
-
-
-def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig):
-    """
-    Depending on the auto_fifo_depths setting, do one of the following:
-    * if auto_fifo_depths=True:  Run the `InsertAndSetFIFODepths` transformation
-    to attempt to determine the FIFO sizes that provide full throughput. Involves
-    running stitched-IP rtlsim and may take a long time.
-    * if auto_fifo_depths=False:  Assume the folding config file contains FIFO
-    sizes as well. Runs the `InsertFIFO` transformation, then
-    `ApplyConfig(cfg.folding_config_file)`, and finally `RemoveShallowFIFOs`.
-    Coherency with config file node naming is ensured by calling
-    `GiveUniqueNodeNames`.
-    """
-
-    if cfg.auto_fifo_depths:
-        model = model.transform(
-            InsertAndSetFIFODepths(
-                cfg._resolve_fpga_part(),
-                cfg._resolve_hls_clk_period(),
-                vivado_ram_style=cfg.large_fifo_mem_style.value,
-            )
-        )
-    else:
-        # assume folding cfg json contains FIFO sizes too
-        # insert DWCs, FIFOs and run ApplyConfig once more
-        model = model.transform(InsertDWC())
-        # need to make sure all FIFOs are created so that their depth can be
-        # set by ApplyConfig, so create_shallow_fifos=True
-        model = model.transform(InsertFIFO(create_shallow_fifos=True))
-        model = model.transform(GiveUniqueNodeNames())
-        model = model.transform(GiveReadableTensorNames())
-        if cfg.folding_config_file is not None:
-            model = model.transform(ApplyConfig(cfg.folding_config_file))
-    # split large FIFOs into multiple FIFOs
-    model = model.transform(SplitLargeFIFOs())
-    # remove any shallow FIFOs
-    model = model.transform(RemoveShallowFIFOs())
-
-    # extract the final configuration and save it as json
-    hw_attrs = [
-        "PE",
-        "SIMD",
-        "ram_style",
-        "depth",
-        "impl_style",
-        "resType",
-        "mem_mode",
-        "runtime_writeable_weights",
-    ]
-    extract_model_config_to_json(model, cfg.output_dir + "/final_hw_config.json", hw_attrs)
-
-    # after FIFOs are ready to go, call PrepareIP and HLSSynthIP again
-    # this will only run for the new nodes (e.g. FIFOs and DWCs)
-    model = model.transform(PrepareIP(cfg._resolve_fpga_part(), cfg._resolve_hls_clk_period()))
-    model = model.transform(HLSSynthIP())
-    model = model.transform(ReplaceVerilogRelPaths())
-    return model
-
 
 def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
