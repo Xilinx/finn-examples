@@ -101,7 +101,7 @@ for platform_name in platforms_to_build:
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
 
-    folding_config_file = "folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
+    folding_config_file = "folding_config/U250_folding_config.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
