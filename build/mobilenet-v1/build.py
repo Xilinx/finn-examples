@@ -45,7 +45,7 @@ from custom_steps import (
 model_name = "mobilenetv1-w4a4"
 
 # which platforms to build the networks for
-zynq_platforms = ["ZCU104"]  # "ZCU104"
+zynq_platforms = ["ZCU104", "ZCU102"]
 alveo_platforms = ["U250"]  # "U50", "U200", "U280"
 platforms_to_build = zynq_platforms + alveo_platforms
 
