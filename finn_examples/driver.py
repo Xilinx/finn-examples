@@ -198,9 +198,11 @@ class FINNExampleOverlay(Overlay):
                         # from a tinynumpy.ndarray to numpy.ndarray. To work around this, we first
                         # convert the tinynumpy.ndarray to a list and then copy the list to a
                         # numpy.ndarray.
-                        new_w = np.copy(
-                            list(layer_mmio.array[: layer_w.shape[0]]), dtype=layer_w.dtype
-                        )
+                        # There is a known bug with larger sets of weights. Accesses to address
+                        # spaces over 16KB do NOT work as intended. Be aware of this if seeing
+                        # unexpected behaviour.
+                        new_array = layer_mmio.array[: layer_w.shape[0]]
+                        new_w = np.copy(np.array(([x for x in new_array]), dtype=layer_w.dtype))
                     else:
                         new_w = np.copy(layer_mmio.array[: layer_w.shape[0]])
                     assert (layer_w == new_w).all()
@@ -271,12 +273,12 @@ class FINNExampleOverlay(Overlay):
         self.obuf_packed = []
         for i in range(self.num_inputs):
             new_packed_ibuf = allocate(
-                shape=self.ishape_packed(i), dtype=np.uint8, cacheable=cacheable
+                shape=self.ishape_packed(i), dtype=np.uint8, cacheable=cacheable, target=self.device
             )
             self.ibuf_packed_device.append(new_packed_ibuf)
         for o in range(self.num_outputs):
             new_packed_obuf = allocate(
-                shape=self.oshape_packed(o), dtype=np.uint8, cacheable=cacheable
+                shape=self.oshape_packed(o), dtype=np.uint8, cacheable=cacheable, target=self.device
             )
             self.obuf_packed_device.append(new_packed_obuf)
             self.obuf_packed.append(np.empty_like(new_packed_obuf))

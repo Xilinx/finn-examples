@@ -31,6 +31,7 @@ import os
 import random
 import string
 import warnings
+
 from qonnx.core.datatype import DataType
 
 # TODO solve by moving onnx-dependent fxns to onnx.py
@@ -63,7 +64,7 @@ def qonnx_make_model(graph_proto, **kwargs):
 
 def is_finn_op(op_type):
     "Return whether given op_type string is a QONNX or FINN custom op"
-    return op_type.startswith("finn") or op_type.startswith("qonnx.custom_op")
+    return op_type.startswith("finn") or op_type.startswith("qonnx.custom_op") or op_type.startswith("onnx.brevitas")
 
 
 def get_num_default_workers():
@@ -208,16 +209,12 @@ def pad_tensor_to_multiple_of(ndarray, pad_to_dims, val=0, distr_pad=False):
 
 
 def calculate_matvec_accumulator_range(matrix: np.ndarray, vec_dt: DataType):
-    """Calculate the minimum and maximum possible result (accumulator) values
-    for a dot product x * A, given matrix A of dims (MW, MH), and vector (1, MW)
-    with datatype vec_dt. Returns (acc_min, acc_max).
-    """
-    max_weight = abs(matrix).sum(axis=0).max()
-    max_input = max(abs(vec_dt.min()), abs(vec_dt.max()))
-    max_value = max_input * max_weight
-    # If either the weight and input datatypes are signed, then the minimum
-    # value that their accumulated product can be is -max_value. Else, it's 0.
-    min_value = -max_value if (matrix.min() < 0) or vec_dt.signed() else 0
+    """Calculate the minimum and maximum possible result (accumulator) values for a dot product x * A,
+    given matrix A of dims (MW, MH), and vector (1, MW) with datatype vec_dt. Returns (acc_min, acc_max)."""
+    max_vectors = np.where(matrix > 0, vec_dt.max(), vec_dt.min())
+    min_vectors = np.where(matrix > 0, vec_dt.min(), vec_dt.max())
+    max_value = (matrix * max_vectors).sum(axis=0).max()
+    min_value = (matrix * min_vectors).sum(axis=0).min()
     return (min_value, max_value)
 
 
@@ -239,9 +236,7 @@ def gen_finn_dt_tensor(finn_dt, tensor_shape):
     elif finn_dt == DataType["FLOAT32"]:
         tensor_values = np.random.randn(*tensor_shape)
     else:
-        raise ValueError(
-            "Datatype {} is not supported, no tensor could be generated".format(finn_dt)
-        )
+        raise ValueError("Datatype {} is not supported, no tensor could be generated".format(finn_dt))
     # always use float type as container
     return tensor_values.astype(np.float32)
 
@@ -270,8 +265,10 @@ def sanitize_quant_values(model, node_tensors, execution_context, check_values=F
     that are supposed to be integers (as indicated by their quantization
     annotation). Will raise an assertion if the amount of rounding is too large.
     Returns the sanitized execution context.
+
     If check_values is specified, an extra DataType.allowed() check will be
     performed on any rounded tensors.
+
     Background:
     QONNX uses floating point tensors as a carrier data type to represent
     integers. Floating point arithmetic can introduce rounding errors, e.g.
@@ -282,9 +279,9 @@ def sanitize_quant_values(model, node_tensors, execution_context, check_values=F
 
     for tensor_name in node_tensors:
         dtype = model.get_tensor_datatype(tensor_name)
-        # floats don't need sanitization, skip to next
-        # introduces less quicker runtime
-        if dtype == DataType["FLOAT32"]:
+        # non-integers don't need sanitization, skip to next
+        # introduces less overhead and quicker runtime
+        if not dtype.is_integer():
             continue
         current_values = execution_context[tensor_name]
         updated_values = current_values
@@ -323,4 +320,21 @@ def sanitize_quant_values(model, node_tensors, execution_context, check_values=F
                     dtype, tensor_name
                 )
             )
-    return
+    return execution_context
+
+
+def auto_pad_to_explicit_padding(autopad_str, idim_h, idim_w, k_h, k_w, stride_h, stride_w, n_dims):
+    pad_total_h = (stride_h - 1) * idim_h - stride_h + k_h
+    pad_total_w = (stride_w - 1) * idim_w - stride_w + k_w
+    pad_half_small_h = int((pad_total_h / 2))
+    pad_half_small_w = int((pad_total_w / 2))
+    pad_half_large_h = pad_total_h - pad_half_small_h
+    pad_half_large_w = pad_total_w - pad_half_small_w
+    if autopad_str == "VALID":
+        return [0 for i in range(2 * n_dims)]
+    elif autopad_str == "SAME_UPPER":
+        return [pad_half_small_h, pad_half_small_w, pad_half_large_h, pad_half_large_w]
+    elif autopad_str == "SAME_LOWER":
+        return [pad_half_large_h, pad_half_large_w, pad_half_small_h, pad_half_small_w]
+    else:
+        raise Exception("Unsupported auto_pad: " + autopad_str)
