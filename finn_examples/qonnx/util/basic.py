@@ -31,7 +31,6 @@ import os
 import random
 import string
 import warnings
-
 from qonnx.core.datatype import DataType
 
 # TODO solve by moving onnx-dependent fxns to onnx.py
@@ -64,7 +63,11 @@ def qonnx_make_model(graph_proto, **kwargs):
 
 def is_finn_op(op_type):
     "Return whether given op_type string is a QONNX or FINN custom op"
-    return op_type.startswith("finn") or op_type.startswith("qonnx.custom_op") or op_type.startswith("onnx.brevitas")
+    return (
+        op_type.startswith("finn")
+        or op_type.startswith("qonnx.custom_op")
+        or op_type.startswith("onnx.brevitas")
+    )
 
 
 def get_num_default_workers():
@@ -209,8 +212,10 @@ def pad_tensor_to_multiple_of(ndarray, pad_to_dims, val=0, distr_pad=False):
 
 
 def calculate_matvec_accumulator_range(matrix: np.ndarray, vec_dt: DataType):
-    """Calculate the minimum and maximum possible result (accumulator) values for a dot product x * A,
-    given matrix A of dims (MW, MH), and vector (1, MW) with datatype vec_dt. Returns (acc_min, acc_max)."""
+    """Calculate the minimum and maximum possible result (accumulator) values for a
+    dot product x * A given matrix A of dims (MW, MH), and vector (1, MW) with datatype vec_dt.
+    Returns (acc_min, acc_max).
+    """
     max_vectors = np.where(matrix > 0, vec_dt.max(), vec_dt.min())
     min_vectors = np.where(matrix > 0, vec_dt.min(), vec_dt.max())
     max_value = (matrix * max_vectors).sum(axis=0).max()
@@ -236,7 +241,9 @@ def gen_finn_dt_tensor(finn_dt, tensor_shape):
     elif finn_dt == DataType["FLOAT32"]:
         tensor_values = np.random.randn(*tensor_shape)
     else:
-        raise ValueError("Datatype {} is not supported, no tensor could be generated".format(finn_dt))
+        raise ValueError(
+            "Datatype {} is not supported, no tensor could be generated".format(finn_dt)
+        )
     # always use float type as container
     return tensor_values.astype(np.float32)
 
