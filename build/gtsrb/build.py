@@ -104,6 +104,8 @@ for platform_name in platforms_to_build:
                 build_cfg.DataflowOutputType.STITCHED_IP,
                 build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
                 build_cfg.DataflowOutputType.BITFILE,
+                build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+                build_cfg.DataflowOutputType.PYNQ_DRIVER,
             ],
             save_intermediate_models=True,
         )
