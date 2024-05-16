@@ -220,24 +220,27 @@ def find_bitfile(model_name, target_platform, bitfile_path):
         )
 
 
-def find_runtime_weights(model_name, target_platform):
-    weight_dir = "%s_runtime_weights" % (model_name)
-    weight_dir_candidates = [
-        pk.resource_filename("finn_examples", "bitfiles/%s/%s" % (target_platform, weight_dir)),
-        pk.resource_filename(
-            "finn_examples",
-            "bitfiles/bitfiles.zip.d/%s/%s" % (target_platform, weight_dir),
-        ),
-    ]
-    for candidate in weight_dir_candidates:
-        if os.path.isdir(candidate):
-            weight_files = os.listdir(candidate)
-            if weight_files:
-                return candidate
-    raise Exception(
-        "Runtime weights for model = %s target platform = %s not found. Looked in: %s"
-        % (model_name, target_platform, str(weight_dir_candidates))
-    )
+def find_runtime_weights(model_name, target_platform, rt_weights_path):
+    if rt_weights_path is not None:
+        return rt_weights_path
+    else:
+        weight_dir = "%s_runtime_weights" % (model_name)
+        weight_dir_candidates = [
+            pk.resource_filename("finn_examples", "bitfiles/%s/%s" % (target_platform, weight_dir)),
+            pk.resource_filename(
+                "finn_examples",
+                "bitfiles/bitfiles.zip.d/%s/%s" % (target_platform, weight_dir),
+            ),
+        ]
+        for candidate in weight_dir_candidates:
+            if os.path.isdir(candidate):
+                weight_files = os.listdir(candidate)
+                if weight_files:
+                    return candidate
+        raise Exception(
+            "Runtime weights for model = %s target platform = %s not found. Looked in: %s"
+            % (model_name, target_platform, str(weight_dir_candidates))
+        )
 
 
 def get_driver_mode():
@@ -340,13 +343,13 @@ def bincop_cnv(target_platform=None, bitfile_path=None):
     return FINNExampleOverlay(filename, driver_mode, _bincop_cnv_io_shape_dict)
 
 
-def mobilenetv1_w4a4_imagenet(target_platform=None, bitfile_path=None):
+def mobilenetv1_w4a4_imagenet(target_platform=None, bitfile_path=None, rt_weights_path=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
     model_name = "mobilenetv1-w4a4"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
     if target_platform in ["ZCU104"]:
-        runtime_weight_dir = find_runtime_weights(model_name, target_platform)
+        runtime_weight_dir = find_runtime_weights(model_name, target_platform, rt_weights_path)
     else:
         runtime_weight_dir = ""
     # target 185 MHz for Zynq (this is ignored for Alveo)
@@ -360,12 +363,12 @@ def mobilenetv1_w4a4_imagenet(target_platform=None, bitfile_path=None):
     )
 
 
-def resnet50_w1a2_imagenet(target_platform=None, bitfile_path=None):
+def resnet50_w1a2_imagenet(target_platform=None, bitfile_path=None, rt_weights_path=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
     model_name = "resnet50-w1a2"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
-    runtime_weight_dir = find_runtime_weights(model_name, target_platform)
+    runtime_weight_dir = find_runtime_weights(model_name, target_platform, rt_weights_path)
     return FINNExampleOverlay(
         filename,
         driver_mode,
