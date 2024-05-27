@@ -125,14 +125,14 @@ dummy_out = accel.execute(dummy_in)
 ##  Example Neural Network Accelerators
 | Dataset                                                        | Topology                | Quantization                                               | Supported boards | Supported build flows
 |:----------------------------------------------------------------:|:-------------------------:|:------------------------------------------------------------:|:------------------:|:------------------:|
-| CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
-| MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
+| CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>Pynq-Z2<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
+| MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>Pynq-Z2<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
 | ImageNet | MobileNet-v1            | 4-bit weights & activations<br>8-bit first layer weights | Alveo U250       | Alveo U250 |
 | ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       | - |
 | RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights & activations | ZCU104  | ZCU104 |
-| MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights & activations | Pynq-Z1       | Pynq-Z1 |
-| Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights & activations | Pynq-Z1       | Pynq-Z1 |
-| UNSW-NB15 | 4-layer fully-connected  | 2-bit weights & activations | Pynq-Z1 <br> ZCU104 <br> Ultra96       | Pynq-Z1 <br> ZCU104 <br> Ultra96 |
+| MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights & activations | Pynq-Z1<br>Pynq-Z2       | Pynq-Z1 |
+| Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights & activations | Pynq-Z1<br>Pynq-Z2       | Pynq-Z1 |
+| UNSW-NB15 | 4-layer fully-connected  | 2-bit weights & activations | Pynq-Z1<br>Pynq-Z2<br>ZCU104<br>Ultra96       | Pynq-Z1<br>ZCU104<br>Ultra96 |
 
 *Please note that the build flow for ResNet-50 for the Alveo U250 has known issues and we're currently working on resolving them. However, you can still execute the associated notebook, as we provide a pre-built FPGA bitfile generated with an older Vivado (/FINN) version targeting the [xilinx_u250_xdma_201830_2](https://www.xilinx.com/products/boards-and-kits/alveo/package-files-archive/u250-2018-3-1.html) platform.* <br>
 *Furthermore, please note that you can target other boards (such as the Pynq-Z2 or ZCU102) by changing the build script manually, but these accelerators have not been tested.*
@@ -145,7 +145,7 @@ We welcome community contributions to add more examples to this repo!
 
 `finn-examples` provides pre-built FPGA bitfiles for the following boards:
 
-* **Edge:** Pynq-Z1, Ultra96 and ZCU104
+* **Edge:** Pynq-Z1, Pynq-Z2, Ultra96 and ZCU104
 * **Datacenter:** Alveo U250
 
 It's possible to generate Vivado IP for the provided examples to target *any*
