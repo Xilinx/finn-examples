@@ -8,27 +8,33 @@
             [32],
             "all"
         ],
+        "resType": [
+            "lut",
+            [
+                "MVAU_hls"
+            ]
+        ],
         "mem_mode": [
             "internal_decoupled",
             [
-                "MVAU"
+                "MVAU_hls"
             ]
         ]
     },
-    "FMPadding_hls_0": {
+    "FMPadding_rtl_0": {
         "SIMD": 3
     },
-    "ConvolutionInputGenerator_hls_0": {
+    "ConvolutionInputGenerator_rtl_0": {
         "SIMD": 3
     },
     "MVAU_hls_0": {
         "SIMD": 3,
         "PE": 64
     },
-    "FMPadding_hls_1": {
+    "FMPadding_rtl_1": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_1": {
+    "ConvolutionInputGenerator_rtl_1": {
         "SIMD": 4
     },
     "Pool_hls_0": {
@@ -46,10 +52,10 @@
         "PE": 1,
         "SIMD": 16
     },
-    "FMPadding_hls_2": {
+    "FMPadding_rtl_2": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_2": {
+    "ConvolutionInputGenerator_rtl_2": {
         "SIMD": 4
     },
     "MVAU_hls_3": {
@@ -64,27 +70,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_0": {
+    "Thresholding_rtl_0": {
         "PE": 2
     },
     "DuplicateStreams_hls_1": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_1": {
+    "Thresholding_rtl_1": {
         "PE": 2
     },
-    "Thresholding_hls_2": {
+    "Thresholding_rtl_2": {
         "PE": 2
     },
     "MVAU_hls_5": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_3": {
+    "FMPadding_rtl_3": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_3": {
+    "ConvolutionInputGenerator_rtl_3": {
         "SIMD": 4
     },
     "MVAU_hls_6": {
@@ -99,27 +105,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_3": {
+    "Thresholding_rtl_3": {
         "PE": 2
     },
     "DuplicateStreams_hls_2": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_4": {
+    "Thresholding_rtl_4": {
         "PE": 2
     },
-    "Thresholding_hls_5": {
+    "Thresholding_rtl_5": {
         "PE": 2
     },
     "MVAU_hls_8": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_4": {
+    "FMPadding_rtl_4": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_4": {
+    "ConvolutionInputGenerator_rtl_4": {
         "SIMD": 4
     },
     "MVAU_hls_9": {
@@ -134,10 +140,10 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_6": {
+    "Thresholding_rtl_6": {
         "PE": 2
     },
-    "Thresholding_hls_7": {
+    "Thresholding_rtl_7": {
         "PE": 2
     },
     "DuplicateStreams_hls_3": {
@@ -155,10 +161,10 @@
         "PE": 2,
         "SIMD": 64
     },
-    "FMPadding_hls_5": {
+    "FMPadding_rtl_5": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_5": {
+    "ConvolutionInputGenerator_rtl_5": {
         "SIMD": 4
     },
     "MVAU_hls_13": {
@@ -173,27 +179,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_8": {
+    "Thresholding_rtl_8": {
         "PE": 2
     },
     "DuplicateStreams_hls_4": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_9": {
+    "Thresholding_rtl_9": {
         "PE": 2
     },
-    "Thresholding_hls_10": {
+    "Thresholding_rtl_10": {
         "PE": 2
     },
     "MVAU_hls_15": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_6": {
+    "FMPadding_rtl_6": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_6": {
+    "ConvolutionInputGenerator_rtl_6": {
         "SIMD": 4
     },
     "MVAU_hls_16": {
@@ -208,27 +214,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_11": {
+    "Thresholding_rtl_11": {
         "PE": 2
     },
     "DuplicateStreams_hls_5": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_12": {
+    "Thresholding_rtl_12": {
         "PE": 2
     },
-    "Thresholding_hls_13": {
+    "Thresholding_rtl_13": {
         "PE": 2
     },
     "MVAU_hls_18": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_7": {
+    "FMPadding_rtl_7": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_7": {
+    "ConvolutionInputGenerator_rtl_7": {
         "SIMD": 4
     },
     "MVAU_hls_19": {
@@ -243,27 +249,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_14": {
+    "Thresholding_rtl_14": {
         "PE": 2
     },
     "DuplicateStreams_hls_6": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_15": {
+    "Thresholding_rtl_15": {
         "PE": 2
     },
-    "Thresholding_hls_16": {
+    "Thresholding_rtl_16": {
         "PE": 2
     },
     "MVAU_hls_21": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_8": {
+    "FMPadding_rtl_8": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_8": {
+    "ConvolutionInputGenerator_rtl_8": {
         "SIMD": 4
     },
     "MVAU_hls_22": {
@@ -278,10 +284,10 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_17": {
+    "Thresholding_rtl_17": {
         "PE": 2
     },
-    "Thresholding_hls_18": {
+    "Thresholding_rtl_18": {
         "PE": 2
     },
     "DuplicateStreams_hls_7": {
@@ -299,10 +305,10 @@
         "PE": 2,
         "SIMD": 64
     },
-    "FMPadding_hls_9": {
+    "FMPadding_rtl_9": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_9": {
+    "ConvolutionInputGenerator_rtl_9": {
         "SIMD": 4
     },
     "MVAU_hls_26": {
@@ -317,27 +323,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_19": {
+    "Thresholding_rtl_19": {
         "PE": 2
     },
     "DuplicateStreams_hls_8": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_20": {
+    "Thresholding_rtl_20": {
         "PE": 2
     },
-    "Thresholding_hls_21": {
+    "Thresholding_rtl_21": {
         "PE": 2
     },
     "MVAU_hls_28": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_10": {
+    "FMPadding_rtl_10": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_10": {
+    "ConvolutionInputGenerator_rtl_10": {
         "SIMD": 4
     },
     "MVAU_hls_29": {
@@ -352,27 +358,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_22": {
+    "Thresholding_rtl_22": {
         "PE": 2
     },
     "DuplicateStreams_hls_9": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_23": {
+    "Thresholding_rtl_23": {
         "PE": 2
     },
-    "Thresholding_hls_24": {
+    "Thresholding_rtl_24": {
         "PE": 2
     },
     "MVAU_hls_31": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_11": {
+    "FMPadding_rtl_11": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_11": {
+    "ConvolutionInputGenerator_rtl_11": {
         "SIMD": 4
     },
     "MVAU_hls_32": {
@@ -387,27 +393,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_25": {
+    "Thresholding_rtl_25": {
         "PE": 2
     },
     "DuplicateStreams_hls_10": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_26": {
+    "Thresholding_rtl_26": {
         "PE": 2
     },
-    "Thresholding_hls_27": {
+    "Thresholding_rtl_27": {
         "PE": 2
     },
     "MVAU_hls_34": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_12": {
+    "FMPadding_rtl_12": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_12": {
+    "ConvolutionInputGenerator_rtl_12": {
         "SIMD": 4
     },
     "MVAU_hls_35": {
@@ -422,27 +428,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_28": {
+    "Thresholding_rtl_28": {
         "PE": 2
     },
     "DuplicateStreams_hls_11": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_29": {
+    "Thresholding_rtl_29": {
         "PE": 2
     },
-    "Thresholding_hls_30": {
+    "Thresholding_rtl_30": {
         "PE": 2
     },
     "MVAU_hls_37": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_13": {
+    "FMPadding_rtl_13": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_13": {
+    "ConvolutionInputGenerator_rtl_13": {
         "SIMD": 4
     },
     "MVAU_hls_38": {
@@ -457,27 +463,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_31": {
+    "Thresholding_rtl_31": {
         "PE": 2
     },
     "DuplicateStreams_hls_12": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_32": {
+    "Thresholding_rtl_32": {
         "PE": 2
     },
-    "Thresholding_hls_33": {
+    "Thresholding_rtl_33": {
         "PE": 2
     },
     "MVAU_hls_40": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_14": {
+    "FMPadding_rtl_14": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_14": {
+    "ConvolutionInputGenerator_rtl_14": {
         "SIMD": 4
     },
     "MVAU_hls_41": {
@@ -492,10 +498,10 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_34": {
+    "Thresholding_rtl_34": {
         "PE": 2
     },
-    "Thresholding_hls_35": {
+    "Thresholding_rtl_35": {
         "PE": 2
     },
     "DuplicateStreams_hls_13": {
@@ -513,10 +519,10 @@
         "PE": 2,
         "SIMD": 64
     },
-    "FMPadding_hls_15": {
+    "FMPadding_rtl_15": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_15": {
+    "ConvolutionInputGenerator_rtl_15": {
         "SIMD": 4
     },
     "MVAU_hls_45": {
@@ -531,27 +537,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_36": {
+    "Thresholding_rtl_36": {
         "PE": 2
     },
     "DuplicateStreams_hls_14": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_37": {
+    "Thresholding_rtl_37": {
         "PE": 2
     },
-    "Thresholding_hls_38": {
+    "Thresholding_rtl_38": {
         "PE": 2
     },
     "MVAU_hls_47": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_16": {
+    "FMPadding_rtl_16": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_16": {
+    "ConvolutionInputGenerator_rtl_16": {
         "SIMD": 4
     },
     "MVAU_hls_48": {
@@ -566,27 +572,27 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_39": {
+    "Thresholding_rtl_39": {
         "PE": 2
     },
     "DuplicateStreams_hls_15": {
         "PE": 2,
         "outFIFODepths": [32, 32]
     },
-    "Thresholding_hls_40": {
+    "Thresholding_rtl_40": {
         "PE": 2
     },
-    "Thresholding_hls_41": {
+    "Thresholding_rtl_41": {
         "PE": 2
     },
     "MVAU_hls_50": {
         "PE": 2,
         "SIMD": 32
     },
-    "FMPadding_hls_17": {
+    "FMPadding_rtl_17": {
         "SIMD": 4
     },
-    "ConvolutionInputGenerator_hls_17": {
+    "ConvolutionInputGenerator_rtl_17": {
         "SIMD": 4
     },
     "MVAU_hls_51": {
@@ -601,10 +607,10 @@
         "PE": 2,
         "inFIFODepths": [32, 32]
     },
-    "Thresholding_hls_42": {
+    "Thresholding_rtl_42": {
         "PE": 2
     },
-    "ConvolutionInputGenerator_hls_18": {
+    "ConvolutionInputGenerator_rtl_18": {
         "SIMD": 4
     },
     "Pool_hls_1": {
