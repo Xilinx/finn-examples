@@ -96,7 +96,7 @@ for platform_name in platforms_to_build:
             synth_clk_period_ns=10.0,
             board=platform_name,
             steps=custom_build_steps,
-            folding_config_file="folding_config/cnv_gtsrb_folding_config.json",
+            folding_config_file="folding_config/gtsrb_folding_config.json",
             shell_flow_type=shell_flow_type,
             vitis_platform=vitis_platform,
             generate_outputs=[
@@ -107,7 +107,7 @@ for platform_name in platforms_to_build:
                 build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
                 build_cfg.DataflowOutputType.PYNQ_DRIVER,
             ],
-            save_intermediate_models=True,
+            specialize_layers_config_file="specialize_layers_config/gtsrb_specialize_layers.json",
         )
         model_file = "models/%s.onnx" % model_name
         # launch FINN compiler to build
