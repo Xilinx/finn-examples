@@ -41,6 +41,9 @@ from glob import glob
 import os
 import shutil
 
+import logging
+import sys
+from verification_funcs import create_logger, set_verif_steps, verify_build_output
 
 # Inject the preprocessing step into FINN to enable json serialization later on
 def step_preprocess(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -60,12 +63,11 @@ build_outputs = [
     build_cfg.DataflowOutputType.BITFILE,
     build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
 ]
-verification_steps = [
-    build_cfg.VerificationStepType.QONNX_TO_FINN_PYTHON,
-    build_cfg.VerificationStepType.TIDY_UP_PYTHON,
-    build_cfg.VerificationStepType.STREAMLINED_PYTHON,
-    build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,
-]
+
+# Create logger for capturing output on both console and log
+create_logger()
+# Set verification steps depending on environment veriable VERIFICATION_EN
+verification_steps = set_verif_steps()
 
 model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX"
 model_file = "models/" + model_name + ".onnx"
@@ -103,6 +105,9 @@ for platform_name in platforms_to_build:
     )
     # Build the model
     build.build_dataflow_cfg(model_file, cfg)
+
+    # Verify build using verification output
+    verify_build_output(cfg, model_name)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"

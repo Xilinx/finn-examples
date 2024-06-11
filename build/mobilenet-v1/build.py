@@ -42,7 +42,25 @@ from custom_steps import (
     step_mobilenet_slr_floorplan,
 )
 
+import logging
+import sys
+from verification_funcs import create_logger, set_verif_steps, verify_build_output
+
+import onnx
+from qonnx.core.modelwrapper import ModelWrapper
+
 model_name = "mobilenetv1-w4a4"
+model_file = "models/%s_pre_post_tidy.onnx" % model_name
+
+def custom_step_update_model(model, cfg):
+    op = onnx.OperatorSetIdProto()
+    op.version = 11
+    load_model = onnx.load(model_file)
+    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
+    model_ref = ModelWrapper(update_model)
+
+    return model_ref
+
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104", "ZCU102"]
@@ -72,6 +90,7 @@ def select_clk_period(platform):
 def select_build_steps(platform):
     if platform in zynq_platforms:
         return [
+            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers_separate_th,
@@ -90,6 +109,7 @@ def select_build_steps(platform):
         ]
     elif platform in alveo_platforms:
         return [
+            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers,
@@ -111,6 +131,10 @@ def select_build_steps(platform):
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 
+# Create logger for capturing output on both console and log
+create_logger()
+# Set verification steps depending on environment variable VERIFICATION_EN
+verification_steps = set_verif_steps()
 
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
@@ -135,6 +159,11 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
+        verify_steps=verification_steps,
+        verify_input_npy="mobilenet_input.npy",
+        verify_expected_output_npy="mobilenet_expected_output.npy",
+        verify_save_full_context=True,
+        save_intermediate_models=True,
         # folding config comes with FIFO depths already
         auto_fifo_depths=False,
         # enable extra performance optimizations (physopt)
@@ -144,10 +173,14 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+            build_cfg.DataflowOutputType.STITCHED_IP,
         ],
     )
-    model_file = "models/%s_pre_post_tidy.onnx" % model_name
+
     build.build_dataflow_cfg(model_file, cfg)
+
+    # Verify build using verification output
+    verify_build_output(cfg, model_name)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"

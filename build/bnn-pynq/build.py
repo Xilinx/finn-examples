@@ -32,6 +32,10 @@ from finn.util.basic import alveo_default_platform
 import os
 import shutil
 
+import logging
+import sys
+from verification_funcs import create_logger, set_verif_steps, verify_build_output
+
 
 # the BNN-PYNQ models -- these all come as exported .onnx models
 # see models/download_bnn_pynq_models.sh
@@ -63,6 +67,12 @@ def platform_to_shell(platform):
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 
+# Create logger for capturing output on both console and log file
+create_logger()
+# Set verification steps depending on environment variable VERIFICATION_EN
+verification_steps = set_verif_steps()
+
+
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
     if shell_flow_type == build_cfg.ShellFlowType.VITIS_ALVEO:
@@ -78,6 +88,12 @@ for platform_name in platforms_to_build:
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
     for model_name in models:
+        if "tfc" in model_name:
+            input_npy = "mnist_input.npy"
+            output_npy = "mnist_expected_output.npy"
+        elif "cnv" in model_name:
+            input_npy = "cifar10_input.npy"
+            output_npy = "cifar10_expected_output.npy"
         # set up the build configuration for this model
         cfg = build_cfg.DataflowBuildConfig(
             output_dir="output_%s_%s" % (model_name, release_platform_name),
@@ -86,6 +102,10 @@ for platform_name in platforms_to_build:
             board=platform_name,
             shell_flow_type=shell_flow_type,
             vitis_platform=vitis_platform,
+            verify_steps=verification_steps,
+            verify_input_npy=input_npy,
+            verify_expected_output_npy=output_npy,
+            verify_save_full_context=True,
             generate_outputs=[build_cfg.DataflowOutputType.BITFILE],
             save_intermediate_models=True,
             default_swg_exception=True,
@@ -93,6 +113,10 @@ for platform_name in platforms_to_build:
         model_file = "models/%s.onnx" % model_name
         # launch FINN compiler to build
         build.build_dataflow_cfg(model_file, cfg)
+
+        # Verify build using verification output
+        verify_build_output(cfg, model_name)
+
         # copy bitfiles into release dir if found
         bitfile_gen_dir = cfg.output_dir + "/bitfile"
         files_to_check_and_copy = [

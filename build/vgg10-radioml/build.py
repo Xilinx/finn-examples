@@ -35,12 +35,29 @@ import shutil
 # custom steps
 from custom_steps import step_pre_streamline, step_convert_final_layers
 
+import sys
+import logging
+from verification_funcs import create_logger, set_verif_steps, verify_build_output
+
+import onnx
+from qonnx.core.modelwrapper import ModelWrapper
+
 model_name = "radioml_w4a4_small_tidy"
+model_file = "models/%s.onnx" % model_name
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104"]
 alveo_platforms = []
 platforms_to_build = zynq_platforms + alveo_platforms
+
+def custom_step_update_model(model, cfg):
+    op = onnx.OperatorSetIdProto()
+    op.version = 11
+    load_model = onnx.load(model_file)
+    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
+    model_ref = ModelWrapper(update_model)
+
+    return model_ref
 
 
 # determine which shell flow to use for a given platform
@@ -61,6 +78,7 @@ def select_clk_period(platform):
 # assemble build flow from custom and pre-existing steps
 def select_build_steps(platform):
     return [
+        custom_step_update_model,
         "step_tidy_up",
         step_pre_streamline,
         "step_streamline",
@@ -87,6 +105,11 @@ def select_build_steps(platform):
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 
+# Create logger for capturing output on both console and log
+create_logger()
+# Set verification steps depending on environment variable VERIFICATION_EN
+verification_steps = set_verif_steps()
+
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
     if shell_flow_type == build_cfg.ShellFlowType.VITIS_ALVEO:
@@ -112,19 +135,26 @@ for platform_name in platforms_to_build:
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
         split_large_fifos=True,
         standalone_thresholds=True,
+        verify_steps=verification_steps,
+        verify_input_npy="radioml_input.npy",
+        verify_expected_output_npy="radioml_expected_output.npy",
+        verify_save_full_context=True,
+        save_intermediate_models=True,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.STITCHED_IP,
-            # build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
+            build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
         ],
     )
-    model_file = "models/%s.onnx" % model_name
     build.build_dataflow_cfg(model_file, cfg)
+
+    # Verify build using verification output
+    verify_build_output(cfg, model_name)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"

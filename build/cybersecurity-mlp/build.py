@@ -33,6 +33,8 @@ import os
 import shutil
 from custom_steps import custom_step_mlp_export
 
+from verification_funcs import create_logger, set_verif_steps, verify_build_output
+
 # Which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
 alveo_platforms = []
@@ -57,6 +59,12 @@ model_name = "unsw_nb15-mlp-w2a2"
 # Create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 
+# Create logger for capturing output on both console and log
+create_logger()
+# Set verification steps depending on environment variable VERIFICATION_EN
+verification_steps = set_verif_steps()
+
+
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
     if shell_flow_type == build_cfg.ShellFlowType.VITIS_ALVEO:
@@ -80,12 +88,17 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
+        verify_steps=verification_steps,
+        verify_input_npy="cybersecurity_input.npy",
+        verify_expected_output_npy="cybersecurity_expected_output.npy",
+        verify_save_full_context=True,
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+            build_cfg.DataflowOutputType.STITCHED_IP,
         ],
         save_intermediate_models=True,
     )
@@ -94,6 +107,10 @@ for platform_name in platforms_to_build:
     model = custom_step_mlp_export(model_name)
     # Launch FINN compiler to generate bitfile
     build.build_dataflow_cfg(model, cfg)
+
+    # Verify build using verification output
+    verify_build_output(cfg, model_name)
+
     # Copy bitfiles into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
     filtes_to_check_and_copy = ["finn-accel.bit", "finn-accel.hwh", "finn-accel.xclbin"]
