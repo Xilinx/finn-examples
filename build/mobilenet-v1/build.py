@@ -46,7 +46,7 @@ model_name = "mobilenetv1-w4a4"
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104", "ZCU102"]
-alveo_platforms = ["U250"]  # "U50", "U200", "U280"
+alveo_platforms = ["U250"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
 
@@ -145,6 +145,8 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
         ],
+        specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
+        % platform_name,
     )
     model_file = "models/%s_pre_post_tidy.onnx" % model_name
     build.build_dataflow_cfg(model_file, cfg)
