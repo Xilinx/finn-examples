@@ -102,6 +102,7 @@ for platform_name in platforms_to_build:
     os.makedirs(platform_dir, exist_ok=True)
 
     folding_config_file = "folding_config/U250_folding_config.json"
+    specialize_layers_config_file = "specialize_layers_config/U250_specialize_layers.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
@@ -115,6 +116,7 @@ for platform_name in platforms_to_build:
         mvau_wwidth_max=24,
         target_fps=target_fps,
         folding_config_file=folding_config_file,
+        specialize_layers_config_file=specialize_layers_config_file,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[

@@ -19,6 +19,18 @@
             [
                 "MVAU_hls"
             ]
+        ],
+        "depth_trigger_bram": [
+            38000,
+            [
+                "Thresholding_rtl"
+            ]
+        ],
+        "depth_trigger_uram": [
+            38000,
+            [
+                "Thresholding_rtl"
+            ]
         ]
     },
     "FMPadding_rtl_0": {
