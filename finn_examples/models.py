@@ -68,19 +68,19 @@ _cifar10_cnv_io_shape_dict = {
 }
 
 _gtsrb_cnv_io_shape_dict = {
-    "idt" : [DataType['UINT8']],
-    "odt" : [DataType['INT16']],
-    "ishape_normal" : [(1, 32, 32, 3)],
-    "oshape_normal" : [(1, 44)],
-    "ishape_folded" : [(1, 32, 32, 3, 1)],
-    "oshape_folded" : [(1, 11, 4)],
-    "ishape_packed" : [(1, 32, 32, 3, 1)],
-    "oshape_packed" : [(1, 11, 8)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0'],
+    "idt": [DataType["UINT8"]],
+    "odt": [DataType["INT16"]],
+    "ishape_normal": [(1, 32, 32, 3)],
+    "oshape_normal": [(1, 44)],
+    "ishape_folded": [(1, 32, 32, 3, 1)],
+    "oshape_folded": [(1, 11, 4)],
+    "ishape_packed": [(1, 32, 32, 3, 1)],
+    "oshape_packed": [(1, 11, 8)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 1,
+    "num_inputs": 1,
+    "num_outputs": 1,
 }
 
 _bincop_cnv_io_shape_dict = {
