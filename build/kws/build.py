@@ -41,9 +41,25 @@ from glob import glob
 import os
 import shutil
 
-import logging
-import sys
-from verification_funcs import create_logger, set_verif_steps, verify_build_output
+model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX"
+model_file = "models/" + model_name + ".onnx"
+
+# Set up variables needed for verifying build
+ci_folder = "../../ci"
+io_folder = ci_folder + "/verification_io"
+if os.getenv("VERIFICATION_EN", "0") in {"0", "1"}:
+    shutil.copy(ci_folder + "/verification_funcs.py", ".")
+    from verification_funcs import (
+        create_logger,
+        set_verif_steps,
+        set_verif_io,
+        verify_build_output,
+    )
+
+    create_logger()
+    verif_steps = set_verif_steps()
+    verif_input, verif_output = set_verif_io(io_folder, model_name)
+
 
 # Inject the preprocessing step into FINN to enable json serialization later on
 def step_preprocess(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -64,14 +80,6 @@ build_outputs = [
     build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
 ]
 
-# Create logger for capturing output on both console and log
-create_logger()
-# Set verification steps depending on environment veriable VERIFICATION_EN
-verification_steps = set_verif_steps()
-
-model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX"
-model_file = "models/" + model_name + ".onnx"
-
 # Change the ONNX opset from version 9 to 11, which adds support for the TopK node
 model = ModelWrapper(model_file)
 model.model.opset_import[0].version = 11
@@ -91,7 +99,10 @@ for platform_name in platforms_to_build:
     # Configure build
     cfg = build_cfg.DataflowBuildConfig(
         # steps=estimate_steps, generate_outputs=estimate_outputs,
-        verify_steps=verification_steps,
+        verify_steps=verif_steps,
+        verify_input_npy=verif_input,
+        verify_expected_output_npy=verif_output,
+        verify_save_full_context=True,
         steps=build_steps,
         generate_outputs=build_outputs,
         output_dir=last_output_dir,
@@ -106,8 +117,9 @@ for platform_name in platforms_to_build:
     # Build the model
     build.build_dataflow_cfg(model_file, cfg)
 
-    # Verify build using verification output
-    verify_build_output(cfg, model_name)
+    if os.getenv("VERIFICATION_EN") == "1":
+        # Verify build using verification output
+        verify_build_output(cfg, model_name)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
@@ -122,6 +134,7 @@ for platform_name in platforms_to_build:
         if os.path.isfile(src_file):
             shutil.copy(src_file, dst_file)
 
+os.remove("verification_funcs.py")
 
 # Export quantized inputs
 print("Quantizing validation dataset.")
