@@ -93,13 +93,13 @@ for platform_name in platforms_to_build:
         steps=build_steps,
         generate_outputs=build_outputs,
         output_dir=last_output_dir,
-        folding_config_file="folding_config/%s_kws_folding_config.json" % platform_name,
+        folding_config_file="folding_config/kws_folding_config.json",
         synth_clk_period_ns=10.0,
         board=platform_name,
         shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
-        save_intermediate_models=True,
         stitched_ip_gen_dcp=True,
         verify_save_full_context=True,
+        specialize_layers_config_file="specialize_layers_config/kws_specialize_layers.json",
     )
     # Build the model
     build.build_dataflow_cfg(model_file, cfg)

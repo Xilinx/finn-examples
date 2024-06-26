@@ -23,7 +23,9 @@
     "impl_style": "rtl"
   },
   "Thresholding_rtl_0": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 512,
+    "depth_trigger_uram": 1024
   },
   "StreamingFIFO_rtl_6": {
     "ram_style": "auto",
@@ -52,7 +54,9 @@
     "impl_style": "rtl"
   },
   "Thresholding_rtl_1": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 512,
+    "depth_trigger_uram": 1024
   },
   "MVAU_rtl_1": {
     "PE": 8,
@@ -63,7 +67,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_2": {
-    "PE": 2
+    "PE": 2,
+    "depth_trigger_bram": 1024,
+    "depth_trigger_uram": 2048
   },
   "StreamingFIFO_rtl_17": {
     "ram_style": "auto",
@@ -87,7 +93,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_3": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 1024,
+    "depth_trigger_uram": 2048
   },
   "StreamingFIFO_rtl_24": {
     "ram_style": "auto",
@@ -103,7 +111,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_4": {
-    "PE": 2
+    "PE": 2,
+    "depth_trigger_bram": 2048,
+    "depth_trigger_uram": 4096
   },
   "StreamingFIFO_rtl_27": {
     "ram_style": "auto",
@@ -127,7 +137,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_5": {
-    "PE": 2
+    "PE": 2,
+    "depth_trigger_bram": 2048,
+    "depth_trigger_uram": 4096
   },
   "StreamingFIFO_rtl_34": {
     "ram_style": "auto",
@@ -143,7 +155,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_6": {
-    "PE": 2
+    "PE": 2,
+    "depth_trigger_bram": 2048,
+    "depth_trigger_uram": 4096
   },
   "StreamingFIFO_rtl_37": {
     "ram_style": "auto",
@@ -167,7 +181,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_7": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 2048,
+    "depth_trigger_uram": 4096
   },
   "StreamingFIFO_rtl_44": {
     "ram_style": "auto",
@@ -183,7 +199,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_8": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 4096,
+    "depth_trigger_uram": 8192
   },
   "StreamingFIFO_rtl_47": {
     "ram_style": "block",
@@ -207,7 +225,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_9": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 4096,
+    "depth_trigger_uram": 8192
   },
   "StreamingFIFO_rtl_54": {
     "ram_style": "auto",
@@ -223,7 +243,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_10": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 4096,
+    "depth_trigger_uram": 8192
   },
   "StreamingFIFO_rtl_57": {
     "ram_style": "block",
@@ -247,7 +269,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_11": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 4096,
+    "depth_trigger_uram": 8192
   },
   "StreamingFIFO_rtl_64": {
     "ram_style": "auto",
@@ -263,7 +287,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_12": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_67": {
     "ram_style": "block",
@@ -287,7 +313,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_13": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_74": {
     "ram_style": "auto",
@@ -303,7 +331,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_14": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_77": {
     "ram_style": "block",
@@ -327,7 +357,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_15": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_84": {
     "ram_style": "auto",
@@ -343,7 +375,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_16": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_87": {
     "ram_style": "block",
@@ -367,7 +401,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_17": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_94": {
     "ram_style": "auto",
@@ -383,7 +419,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_18": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_97": {
     "ram_style": "block",
@@ -407,7 +445,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_19": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_104": {
     "ram_style": "auto",
@@ -423,7 +463,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_20": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_107": {
     "ram_style": "block",
@@ -447,7 +489,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_21": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_114": {
     "ram_style": "auto",
@@ -463,7 +507,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_22": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_117": {
     "ram_style": "block",
@@ -487,7 +533,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_23": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 8192,
+    "depth_trigger_uram": 16384
   },
   "StreamingFIFO_rtl_122": {
     "ram_style": "auto",
@@ -503,7 +551,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_24": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 16384,
+    "depth_trigger_uram": 32768
   },
   "StreamingFIFO_rtl_125": {
     "ram_style": "block",
@@ -527,7 +577,9 @@
     "resType": "lut"
   },
   "Thresholding_rtl_25": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 16384,
+    "depth_trigger_uram": 32768
   },
   "StreamingFIFO_rtl_132": {
     "ram_style": "auto",
@@ -543,7 +595,9 @@
     "runtime_writeable_weights": 0
   },
   "Thresholding_rtl_26": {
-    "PE": 1
+    "PE": 1,
+    "depth_trigger_bram": 16384,
+    "depth_trigger_uram": 32768
   },
   "ConvolutionInputGenerator_rtl_14": {
     "SIMD": 1,
