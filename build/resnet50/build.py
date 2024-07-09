@@ -30,7 +30,6 @@ import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
 
-# from warnings import warn # Uncomment when reintroducing ConvDoublePacked
 import os
 import shutil
 
@@ -102,6 +101,7 @@ for platform_name in platforms_to_build:
     os.makedirs(platform_dir, exist_ok=True)
 
     folding_config_file = "folding_config/U250_folding_config.json"
+    specialize_layers_config_file = "specialize_layers_config/U250_specialize_layers.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
@@ -109,13 +109,11 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=synth_clk_period_ns,
         board=board,
         shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
+        auto_fifo_depths=False,
         split_large_fifos=True,
-        specialize_layers_config_file="specialize_layers_config.json",
         vitis_platform=vitis_platform,
-        # throughput parameters (auto-folding)
-        mvau_wwidth_max=24,
-        target_fps=target_fps,
         folding_config_file=folding_config_file,
+        specialize_layers_config_file=specialize_layers_config_file,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[

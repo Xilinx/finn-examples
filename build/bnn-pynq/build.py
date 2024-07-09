@@ -112,6 +112,8 @@ for platform_name in platforms_to_build:
             generate_outputs=[build_cfg.DataflowOutputType.BITFILE],
             save_intermediate_models=True,
             default_swg_exception=True,
+            specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
+            % model_name,
         )
         model_file = "models/%s.onnx" % model_name
         # launch FINN compiler to build

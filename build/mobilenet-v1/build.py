@@ -79,7 +79,7 @@ def custom_step_update_model(model, cfg):
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104", "ZCU102"]
-alveo_platforms = ["U250"]  # "U50", "U200", "U280"
+alveo_platforms = ["U250"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
 
@@ -185,6 +185,8 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
             build_cfg.DataflowOutputType.STITCHED_IP,
         ],
+        specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
+        % platform_name,
     )
 
     build.build_dataflow_cfg(model_file, cfg)

@@ -142,6 +142,8 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
+        specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
+        % platform_name,
         folding_config_file="folding_config/%s_folding_config.json" % platform_name,
         split_large_fifos=True,
         standalone_thresholds=True,

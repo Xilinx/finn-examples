@@ -1,0 +1,3892 @@
+{
+    "Defaults": {
+        "slr": [
+            -1,
+            [
+                "all"
+            ]
+        ],
+        "partition_id": [
+            0,
+            [
+                "all"
+            ]
+        ],
+        "device_id": [
+            0,
+            [
+                "all"
+            ]
+        ],
+        "mem_port": [
+            "",
+            [
+                "all"
+            ]
+        ]
+    },
+    "IODMA_hls_0": {
+        "slr": -1,
+        "partition_id": 0,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "IODMA_hls_1": {
+        "slr": -1,
+        "partition_id": 1,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_8": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_9": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_10": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_11": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_12": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_13": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_14": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_15": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_16": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_17": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Pool_hls_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_18": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_19": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_20": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_21": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_22": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_23": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_24": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_25": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_26": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_27": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_28": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_29": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_30": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_31": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_32": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_33": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_34": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_35": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_36": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_37": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_38": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_39": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_40": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_41": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_42": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_43": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_44": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_45": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_46": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_47": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_48": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_49": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_50": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_51": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_52": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_53": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_54": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_55": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_56": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_57": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_58": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_59": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_60": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_61": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_62": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_63": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_8": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_64": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_65": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_66": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_67": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_68": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_9": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_69": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_70": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_71": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_10": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_72": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_73": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_74": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_75": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_76": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_77": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_78": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_79": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_80": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_11": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_81": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_82": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_83": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_8": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_84": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_85": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_12": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_86": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_87": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_88": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_89": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_90": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_13": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_91": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_92": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_9": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_93": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_14": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_94": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_10": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_95": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_2": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_96": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_97": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_98": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_99": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_100": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_15": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_16": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_101": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_102": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_11": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DownSampler_hls_0": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_103": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_104": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_17": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_18": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_105": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_106": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_107": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_12": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_108": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_109": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_110": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_111": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_112": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_19": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_113": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_114": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_13": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_115": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_20": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_116": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_14": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_117": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_3": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_118": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_8": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_119": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_120": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_121": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_9": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_10": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_122": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_123": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_124": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_21": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_125": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_126": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_127": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_15": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_128": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_129": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_130": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_22": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_131": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_132": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_133": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_134": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_135": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_23": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_136": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_137": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_16": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_138": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_24": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_139": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_17": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_140": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_4": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_141": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_11": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_142": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_143": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_144": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_12": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_13": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_145": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_146": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_147": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_25": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_148": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_149": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_150": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_18": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_151": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_152": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_153": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_26": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_154": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_155": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_156": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_157": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_158": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_27": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_159": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_160": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_19": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_161": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_28": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_162": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_20": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_163": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_5": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_164": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_14": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_165": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_166": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_167": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_15": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_16": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_168": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_169": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_170": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_29": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_171": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_172": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_173": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_21": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_174": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_175": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_176": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_30": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_177": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_8": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_178": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_179": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_180": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_8": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_181": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_31": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_182": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_183": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_22": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_184": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_32": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_185": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_23": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_186": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_6": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_187": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_17": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_188": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_18": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_189": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_190": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_191": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_33": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_34": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_192": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_193": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_24": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DownSampler_hls_1": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_194": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_195": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_35": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_36": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_196": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_197": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_25": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_9": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_198": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_199": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_200": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_9": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_201": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_202": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_203": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_37": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_204": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_205": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_26": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_206": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_38": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_207": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_27": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_208": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_7": {
+        "slr": 0,
+        "partition_id": 3,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_209": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_19": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_210": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_8": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_211": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_212": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_20": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_21": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_213": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_214": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_215": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_39": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_216": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_217": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_218": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_28": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_219": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_40": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_220": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_10": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_221": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_222": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_223": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_10": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_224": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_41": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_225": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_226": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_29": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_227": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_42": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_228": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_30": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_229": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_8": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_230": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_22": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_231": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_9": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_232": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_233": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_23": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_24": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_234": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_235": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_236": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_43": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_237": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_238": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_239": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_31": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_240": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_44": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_241": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_11": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_242": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_243": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_244": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_11": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_245": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_45": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_246": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_247": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_32": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_248": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_46": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_249": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_33": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_250": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_9": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_251": {
+        "slr": 1,
+        "partition_id": 4,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_25": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_252": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_10": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_253": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_254": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_26": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_27": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_255": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_256": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_257": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_47": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_258": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_259": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_260": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_34": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_261": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_48": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_262": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_12": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_263": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_264": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_265": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_12": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_266": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_49": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_267": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_268": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_35": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_269": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_50": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_270": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_36": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_271": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_10": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_272": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_28": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_273": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_11": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_274": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_275": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_29": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_30": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_276": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_277": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_278": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_51": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_279": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_280": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_281": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_37": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_282": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_52": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_283": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_13": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_284": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_285": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_286": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_13": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_287": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_53": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_288": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_289": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_38": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_290": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_54": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_291": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_39": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_292": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_11": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_293": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_31": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_294": {
+        "slr": 2,
+        "partition_id": 5,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_12": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_295": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_296": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_32": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_33": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_297": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_298": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_299": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_55": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_300": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_301": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_302": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_40": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_303": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_56": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_304": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_14": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_305": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_306": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_307": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_14": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_308": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_57": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_309": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_310": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_41": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_311": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_58": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_312": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_42": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_313": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_12": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_314": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_34": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_315": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ChannelwiseOp_hls_0": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_316": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_35": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_317": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_13": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_318": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_319": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_59": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_60": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_320": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_321": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_43": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DownSampler_hls_2": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_322": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_323": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_61": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_62": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_324": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_325": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_44": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_15": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_326": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_327": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_328": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_15": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_329": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_330": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_331": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_63": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_332": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_333": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_45": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_334": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_64": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_335": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_46": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_336": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_13": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_337": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_36": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_338": {
+        "slr": 3,
+        "partition_id": 6,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_14": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_339": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_340": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_37": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_38": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_341": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_342": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_343": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_65": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_344": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_345": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_346": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_47": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_347": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_348": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_66": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_349": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_16": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_350": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_351": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_352": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_353": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_16": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_354": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_67": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_355": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_356": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_48": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_357": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_68": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_358": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_49": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_359": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_14": {
+        "slr": 2,
+        "partition_id": 7,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_360": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_39": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_361": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "DuplicateStreams_hls_15": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_362": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_363": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_40": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_41": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_364": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_365": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_366": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_69": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_367": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_368": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_369": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_50": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_370": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_371": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_70": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_372": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "FMPadding_rtl_17": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_373": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_374": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_375": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_376": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_17": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_377": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_71": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_378": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_379": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_51": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_380": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_72": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_381": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_52": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_382": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "AddStreams_hls_15": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_383": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Thresholding_rtl_42": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_384": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ChannelwiseOp_hls_1": {
+        "slr": 1,
+        "partition_id": 8,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_385": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingDataWidthConverter_rtl_73": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_386": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ConvolutionInputGenerator_rtl_18": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_387": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "Pool_hls_1": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_388": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "MVAU_hls_53": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_389": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "ChannelwiseOp_hls_2": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_390": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "LabelSelect_hls_0": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "StreamingFIFO_rtl_391": {
+        "slr": 0,
+        "partition_id": 9,
+        "device_id": 0,
+        "mem_port": ""
+    },
+    "IODMA_hls_2": {
+        "slr": -1,
+        "partition_id": 2,
+        "device_id": 0,
+        "mem_port": ""
+    }
+}
