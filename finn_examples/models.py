@@ -28,6 +28,7 @@
 
 import pkg_resources as pk
 
+import logging
 import os
 import platform
 import pynq
@@ -199,6 +200,10 @@ def find_bitfile(model_name, target_platform, bitfile_path):
     if bitfile_path is not None:
         return bitfile_path
     else:
+        if target_platform == "Pynq-Z2":
+            # Pynq Z2 board can use Pynq Z1 bitfiles
+            logging.info(f"Requested platform Pynq-Z2 not built, using Pynq-Z1")
+            target_platform = "Pynq-Z1"
         bitfile_exts = {"edge": "bit", "pcie": "xclbin"}
         bitfile_ext = bitfile_exts[get_edge_or_pcie()]
         bitfile_name = "%s.%s" % (model_name, bitfile_ext)
@@ -254,7 +259,7 @@ def get_driver_mode():
 # translate the name to 'deployment' if found. Otherwise, it is an unsupported (in
 # FINN-Examples) platform.
 def check_platform_is_valid(platform):
-    pynq_platforms = ["Pynq-Z1", "ZCU104", "Ultra96"]
+    pynq_platforms = ["Pynq-Z1", "Pynq-Z2", "ZCU104", "Ultra96"]
 
     alveo_platforms = {
         "xilinx_u250_gen3x16_xdma_shell_2_1": "xilinx_u250_gen3x16_xdma_2_1_202010_1",
