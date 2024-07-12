@@ -33,6 +33,25 @@ import os
 import shutil
 from custom_steps import custom_step_mlp_export
 
+# Define model name
+model_name = "unsw_nb15-mlp-w2a2"
+
+# Set up variables needed for verifying build
+ci_folder = "../../ci"
+io_folder = ci_folder + "/verification_io"
+if os.getenv("VERIFICATION_EN", "0") in {"0", "1"}:
+    shutil.copy(ci_folder + "/verification_funcs.py", ".")
+    from verification_funcs import (
+        create_logger,
+        set_verif_steps,
+        set_verif_io,
+        verify_build_output,
+    )
+
+    create_logger()
+    verif_steps = set_verif_steps()
+    verif_input, verif_output = set_verif_io(io_folder, model_name)
+
 # Which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
 alveo_platforms = []
@@ -50,9 +69,6 @@ def platform_to_shell(platform):
     else:
         raise Exception("Unknown platform, can't determine ShellFlowType")
 
-
-# Define model name
-model_name = "unsw_nb15-mlp-w2a2"
 
 # Create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
@@ -80,12 +96,17 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
+        verify_steps=verif_steps,
+        verify_input_npy=verif_input,
+        verify_expected_output_npy=verif_output,
+        verify_save_full_context=True,
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+            build_cfg.DataflowOutputType.STITCHED_IP,
         ],
         save_intermediate_models=True,
     )
@@ -94,6 +115,11 @@ for platform_name in platforms_to_build:
     model = custom_step_mlp_export(model_name)
     # Launch FINN compiler to generate bitfile
     build.build_dataflow_cfg(model, cfg)
+
+    if os.getenv("VERIFICATION_EN") == "1":
+        # Verify build using verification output
+        verify_build_output(cfg, model_name)
+
     # Copy bitfiles into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
     filtes_to_check_and_copy = ["finn-accel.bit", "finn-accel.hwh", "finn-accel.xclbin"]
@@ -102,3 +128,5 @@ for platform_name in platforms_to_build:
         dst_file = platform_dir + "/" + f.replace("finn-accel", model_name)
         if os.path.isfile(src_file):
             shutil.copy(src_file, dst_file)
+
+os.remove("verification_funcs.py")

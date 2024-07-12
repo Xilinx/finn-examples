@@ -33,6 +33,9 @@ from finn.util.basic import alveo_default_platform
 import os
 import shutil
 
+import onnx
+from qonnx.core.modelwrapper import ModelWrapper
+
 # custom steps for mobilenetv1
 from custom_steps import (
     step_mobilenet_streamline,
@@ -43,6 +46,36 @@ from custom_steps import (
 )
 
 model_name = "mobilenetv1-w4a4"
+model_file = "models/%s_pre_post_tidy.onnx" % model_name
+
+# Set up variables needed for verifying build
+ci_folder = "../../ci"
+io_folder = ci_folder + "/verification_io"
+if os.getenv("VERIFICATION_EN", "0") in {"0", "1"}:
+    shutil.copy(ci_folder + "/verification_funcs.py", ".")
+    from verification_funcs import (
+        create_logger,
+        set_verif_steps,
+        set_verif_io,
+        verify_build_output,
+    )
+
+    create_logger()
+    verif_steps = set_verif_steps()
+    verif_input, verif_output = set_verif_io(io_folder, model_name)
+    if "stitched_ip_rtlsim" in verif_steps:
+        verif_steps.remove("stitched_ip_rtlsim")
+
+
+def custom_step_update_model(model, cfg):
+    op = onnx.OperatorSetIdProto()
+    op.version = 11
+    load_model = onnx.load(model_file)
+    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
+    model_ref = ModelWrapper(update_model)
+
+    return model_ref
+
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104", "ZCU102"]
@@ -72,6 +105,7 @@ def select_clk_period(platform):
 def select_build_steps(platform):
     if platform in zynq_platforms:
         return [
+            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers_separate_th,
@@ -90,6 +124,7 @@ def select_build_steps(platform):
         ]
     elif platform in alveo_platforms:
         return [
+            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers,
@@ -110,7 +145,6 @@ def select_build_steps(platform):
 
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
-
 
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
@@ -135,6 +169,11 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
+        verify_steps=verif_steps,
+        verify_input_npy=verif_input,
+        verify_expected_output_npy=verif_output,
+        verify_save_full_context=True,
+        save_intermediate_models=True,
         # folding config comes with FIFO depths already
         auto_fifo_depths=False,
         # enable extra performance optimizations (physopt)
@@ -144,12 +183,17 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+            build_cfg.DataflowOutputType.STITCHED_IP,
         ],
         specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
         % platform_name,
     )
-    model_file = "models/%s_pre_post_tidy.onnx" % model_name
+
     build.build_dataflow_cfg(model_file, cfg)
+
+    if os.getenv("VERIFICATION_EN") == "1":
+        # Verify build using verification output
+        verify_build_output(cfg, model_name)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
@@ -170,3 +214,5 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
+
+os.remove("verification_funcs.py")

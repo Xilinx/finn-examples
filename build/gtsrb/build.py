@@ -28,20 +28,52 @@
 
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
+from finn.util.basic import alveo_default_platform
 from finn.builder.build_dataflow_config import default_build_dataflow_steps
+from qonnx.transformation.insert_topk import InsertTopK
+from finn.builder.build_dataflow_steps import build_dataflow_step_lookup
 from qonnx.core.datatype import DataType
+from qonnx.core.modelwrapper import ModelWrapper
 import os
 import shutil
 import numpy as np
+import onnx
 from onnx import helper as oh
 
-models = [
-    "cnv_1w1a_gtsrb",
-]
+model_name = "cnv_1w1a_gtsrb"
+model_file = "models/%s.onnx" % model_name
+
+# Set up variables needed for verifying build
+ci_folder = "../../ci"
+io_folder = ci_folder + "/verification_io"
+if os.getenv("VERIFICATION_EN", "0") in {"0", "1"}:
+    shutil.copy(ci_folder + "/verification_funcs.py", ".")
+    from verification_funcs import (
+        create_logger,
+        set_verif_steps,
+        set_verif_io,
+        verify_build_output,
+    )
+
+    create_logger()
+    verif_steps = set_verif_steps()
+    verif_input, verif_output = set_verif_io(io_folder, model_name)
 
 # which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1"]
-platforms_to_build = zynq_platforms
+alveo_platforms = []
+platforms_to_build = zynq_platforms + alveo_platforms
+
+
+def custom_step_update_model(model, cfg):
+    op = onnx.OperatorSetIdProto()
+    op.version = 11
+    load_model = onnx.load(model_file)
+    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
+    model_ref = ModelWrapper(update_model)
+    # onnx.save(update_model, "models/%s_updated.onnx" % model_name)
+
+    return model_ref
 
 
 def custom_step_add_preproc(model, cfg):
@@ -63,16 +95,32 @@ def custom_step_add_preproc(model, cfg):
     model.graph.node[1].input[0] = new_in_name
     # set input dtype to uint8
     model.set_tensor_datatype(in_name, DataType["UINT8"])
+
     return model
 
 
-custom_build_steps = [custom_step_add_preproc] + default_build_dataflow_steps
+# Insert TopK node to get predicted Top-1 class
+def step_preprocess(model, cfg):
+    model = model.transform(InsertTopK(k=1))
+    return model
+
+
+build_dataflow_step_lookup["step_preprocess_InsertTopK"] = step_preprocess
+
+custom_build_steps = (
+    [custom_step_update_model]
+    + [custom_step_add_preproc]
+    + ["step_preprocess_InsertTopK"]
+    + default_build_dataflow_steps
+)
 
 
 # determine which shell flow to use for a given platform
 def platform_to_shell(platform):
     if platform in zynq_platforms:
         return build_cfg.ShellFlowType.VIVADO_ZYNQ
+    elif platform in alveo_platforms:
+        return build_cfg.ShellFlowType.VITIS_ALVEO
     else:
         raise Exception("Unknown platform, can't determine ShellFlowType")
 
@@ -82,45 +130,63 @@ os.makedirs("release", exist_ok=True)
 
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
-    vitis_platform = None
+    if shell_flow_type == build_cfg.ShellFlowType.VITIS_ALVEO:
+        vitis_platform = alveo_default_platform[platform_name]
+        # for Alveo, use the Vitis platform name as the release name
+        # e.g. xilinx_u250_xdma_201830_2
+        release_platform_name = vitis_platform
+    else:
+        vitis_platform = None
+        # for Zynq, use the board name as the release name
+        # e.g. ZCU104
+        release_platform_name = platform_name
     # for Zynq, use the board name as the release name
     # e.g. ZCU104
-    release_platform_name = platform_name
+    # release_platform_name = platform_name
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
-    for model_name in models:
-        # set up the build configuration for this model
-        cfg = build_cfg.DataflowBuildConfig(
-            output_dir="output_%s_%s" % (model_name, release_platform_name),
-            target_fps=3000,
-            synth_clk_period_ns=10.0,
-            board=platform_name,
-            steps=custom_build_steps,
-            folding_config_file="folding_config/gtsrb_folding_config.json",
-            shell_flow_type=shell_flow_type,
-            vitis_platform=vitis_platform,
-            generate_outputs=[
-                build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
-                build_cfg.DataflowOutputType.STITCHED_IP,
-                build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
-                build_cfg.DataflowOutputType.BITFILE,
-                build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
-                build_cfg.DataflowOutputType.PYNQ_DRIVER,
-            ],
-            specialize_layers_config_file="specialize_layers_config/gtsrb_specialize_layers.json",
-        )
-        model_file = "models/%s.onnx" % model_name
-        # launch FINN compiler to build
-        build.build_dataflow_cfg(model_file, cfg)
-        # copy bitfiles into release dir if found
-        bitfile_gen_dir = cfg.output_dir + "/bitfile"
-        files_to_check_and_copy = [
-            "finn-accel.bit",
-            "finn-accel.hwh",
-            "finn-accel.xclbin",
-        ]
-        for f in files_to_check_and_copy:
-            src_file = bitfile_gen_dir + "/" + f
-            dst_file = platform_dir + "/" + f.replace("finn-accel", model_name)
-            if os.path.isfile(src_file):
-                shutil.copy(src_file, dst_file)
+    # set up the build configuration for this model
+    cfg = build_cfg.DataflowBuildConfig(
+        output_dir="output_%s_%s" % (model_name, release_platform_name),
+        target_fps=3000,
+        synth_clk_period_ns=10.0,
+        board=platform_name,
+        steps=custom_build_steps,
+        folding_config_file="folding_config/cnv_gtsrb_folding_config.json",
+        shell_flow_type=shell_flow_type,
+        vitis_platform=vitis_platform,
+        verify_steps=verif_steps,
+        verify_input_npy=verif_input,
+        verify_expected_output_npy=verif_output,
+        verify_save_full_context=True,
+        generate_outputs=[
+            build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
+            build_cfg.DataflowOutputType.STITCHED_IP,
+            build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
+            build_cfg.DataflowOutputType.BITFILE,
+            build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+            build_cfg.DataflowOutputType.PYNQ_DRIVER,
+        ],
+        save_intermediate_models=True,
+    )
+    # launch FINN compiler to build
+    build.build_dataflow_cfg(model_file, cfg)
+
+    if os.getenv("VERIFICATION_EN") == "1":
+        # Verify build using verification output
+        verify_build_output(cfg, model_name)
+
+    # copy bitfiles into release dir if found
+    bitfile_gen_dir = cfg.output_dir + "/bitfile"
+    files_to_check_and_copy = [
+        "finn-accel.bit",
+        "finn-accel.hwh",
+        "finn-accel.xclbin",
+    ]
+    for f in files_to_check_and_copy:
+        src_file = bitfile_gen_dir + "/" + f
+        dst_file = platform_dir + "/" + f.replace("finn-accel", model_name)
+        if os.path.isfile(src_file):
+            shutil.copy(src_file, dst_file)
+
+os.remove("verification_funcs.py")
