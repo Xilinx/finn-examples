@@ -94,14 +94,6 @@ def verify_build_output(cfg, model_name):
     logger.info("\n*****************************************************")
     logger.info("Verification Results for %s on %s" % (model_name, cfg.board))
     logger.info("*****************************************************")
-    # Verification step QONNX_TO_FINN_PYTHON uses step name different to build_cfg list,
-    # so it produces an output .npy/.npz file with different name
-    # Change the step name to what is used by the verify_step function,
-    # so the produced output file matches the build_cfg list
-    if "finn_onnx_python" in cfg.verify_steps:
-        cfg.verify_steps = [
-            step.replace("finn_onnx_python", "qonnx_to_finn_python") for step in cfg.verify_steps
-        ]
 
     # Using output verification files, print whether verification was
     # success or failure, by iterating through the step names and
@@ -124,8 +116,3 @@ def verify_build_output(cfg, model_name):
             logger.info("Verification for step %-22s: SKIPPED" % step_name)
     logger.info(" ")
 
-    # Change step name back for next build
-    if "qonnx_to_finn_python" in cfg.verify_steps:
-        cfg.verify_steps = [
-            step.replace("qonnx_to_finn_python", "finn_onnx_python") for step in cfg.verify_steps
-        ]
