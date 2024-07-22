@@ -48,23 +48,7 @@ from custom_steps import (
 model_name = "mobilenetv1-w4a4"
 model_file = "models/%s_pre_post_tidy.onnx" % model_name
 
-# Set up variables needed for verifying build
-ci_folder = "../../ci"
-io_folder = ci_folder + "/verification_io"
-if os.getenv("VERIFICATION_EN", "0") in {"0", "1"}:
-    shutil.copy(ci_folder + "/verification_funcs.py", ".")
-    from verification_funcs import (
-        create_logger,
-        set_verif_steps,
-        set_verif_io,
-        verify_build_output,
-    )
-
-    create_logger()
-    verif_steps = set_verif_steps()
-    verif_input, verif_output = set_verif_io(io_folder, model_name)
-    if "stitched_ip_rtlsim" in verif_steps:
-        verif_steps.remove("stitched_ip_rtlsim")
+verif_en = os.getenv("VERIFICATION_EN", "0")
 
 
 def custom_step_update_model(model, cfg):
@@ -169,11 +153,6 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
-        verify_steps=verif_steps,
-        verify_input_npy=verif_input,
-        verify_expected_output_npy=verif_output,
-        verify_save_full_context=True,
-        save_intermediate_models=True,
         # folding config comes with FIFO depths already
         auto_fifo_depths=False,
         # enable extra performance optimizations (physopt)
@@ -188,12 +167,23 @@ for platform_name in platforms_to_build:
         specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
         % platform_name,
     )
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
 
-    build.build_dataflow_cfg(model_file, cfg)
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
 
-    if os.getenv("VERIFICATION_EN") == "1":
-        # Verify build using verification output
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        if "stitched_ip_rtlsim" in cfg.verify_steps:
+            cfg.verify_steps.remove("stitched_ip_rtlsim")
+        build.build_dataflow_cfg(model_file, cfg)
         verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
@@ -214,5 +204,3 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
-
-os.remove("verification_funcs.py")

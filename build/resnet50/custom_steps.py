@@ -90,9 +90,11 @@ from qonnx.transformation.insert_topk import InsertTopK
 import finn.transformation.fpgadataflow.convert_to_hw_layers as to_hw
 from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 
+from finn.builder.build_dataflow_steps import verify_step
 from finn.builder.build_dataflow_config import (
     DataflowBuildConfig,
     ShellFlowType,
+    VerificationStepType,
 )
 
 from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
@@ -111,6 +113,9 @@ def step_resnet50_tidy(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(GiveUniqueNodeNames())
     model = model.transform(GiveReadableTensorNames())
     model = model.transform(InferDataTypes())
+
+    if VerificationStepType.TIDY_UP_PYTHON in cfg._resolve_verification_steps():
+        verify_step(model, cfg, "initial_python", need_parent=False)
     return model
 
 
@@ -169,6 +174,8 @@ def step_resnet50_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
         model = model.transform(SortGraph())
 
     model = model.transform(DoubleToSingleFloat())
+    if VerificationStepType.STREAMLINED_PYTHON in cfg._resolve_verification_steps():
+        verify_step(model, cfg, "streamlined_python", need_parent=False)
 
     return model
 

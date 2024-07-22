@@ -44,21 +44,7 @@ import shutil
 model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX"
 model_file = "models/" + model_name + ".onnx"
 
-# Set up variables needed for verifying build
-ci_folder = "../../ci"
-io_folder = ci_folder + "/verification_io"
-if os.getenv("VERIFICATION_EN", "0") in {"0", "1"}:
-    shutil.copy(ci_folder + "/verification_funcs.py", ".")
-    from verification_funcs import (
-        create_logger,
-        set_verif_steps,
-        set_verif_io,
-        verify_build_output,
-    )
-
-    create_logger()
-    verif_steps = set_verif_steps()
-    verif_input, verif_output = set_verif_io(io_folder, model_name)
+verif_en = os.getenv("VERIFICATION_EN", "0")
 
 
 # Inject the preprocessing step into FINN to enable json serialization later on
@@ -99,10 +85,6 @@ for platform_name in platforms_to_build:
     # Configure build
     cfg = build_cfg.DataflowBuildConfig(
         # steps=estimate_steps, generate_outputs=estimate_outputs,
-        verify_steps=verif_steps,
-        verify_input_npy=verif_input,
-        verify_expected_output_npy=verif_output,
-        verify_save_full_context=True,
         steps=build_steps,
         generate_outputs=build_outputs,
         output_dir=last_output_dir,
@@ -111,15 +93,24 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
         stitched_ip_gen_dcp=True,
-        verify_save_full_context=True,
         specialize_layers_config_file="specialize_layers_config/kws_specialize_layers.json",
     )
-    # Build the model
-    build.build_dataflow_cfg(model_file, cfg)
 
-    if os.getenv("VERIFICATION_EN") == "1":
-        # Verify build using verification output
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
+
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        build.build_dataflow_cfg(model_file, cfg)
         verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
@@ -133,8 +124,6 @@ for platform_name in platforms_to_build:
         dst_file = platform_dir + "/" + f.replace("finn-accel", "kwsmlp-w3a3")
         if os.path.isfile(src_file):
             shutil.copy(src_file, dst_file)
-
-os.remove("verification_funcs.py")
 
 # Export quantized inputs
 print("Quantizing validation dataset.")
