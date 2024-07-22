@@ -517,7 +517,7 @@
     "preferred_impl_style": "hls"
   },
   "MVAU_53": {
-    "preferred_impl_style": "hls"
+    "preferred_impl_style": "rtl"
   },
   "ChannelwiseOp_2": {
     "preferred_impl_style": "hls"
