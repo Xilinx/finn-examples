@@ -19,36 +19,41 @@ def create_logger():
 
 
 def set_verif_steps():
-    # Check if verification is enabled or not (using environment variable)
-    if os.getenv("VERIFICATION_EN") == "1":
-        print("Verification is enabled")
-        # Set verification steps
-        verif_steps = [
-            "finn_onnx_python",
-            "initial_python",
-            "streamlined_python",
-            "folded_hls_cppsim",
-            # "node_by_node_rtlsim",
-            "stitched_ip_rtlsim",
-        ]
-    elif os.getenv("VERIFICATION_EN", "0") == "0":
-        print("Verification is disabled")
-        # Don't use any verification steps
-        verif_steps = []
+    # Set verification steps
+    verif_steps = [
+        "finn_onnx_python",
+        "initial_python",
+        "streamlined_python",
+        "folded_hls_cppsim",
+        "node_by_node_rtlsim",
+        "stitched_ip_rtlsim",
+    ]
     return verif_steps
 
 
-def set_verif_io(io_folder, model_name):
-    if os.getenv("VERIFICATION_EN") == "1":
-        # Set the paths of input/expected output files for verification,
-        # using the model name
+def set_verif_io(model_name):
+    io_folder = os.getenv("VERIFICATION_IO")
+    # Set the paths of input/expected output files for verification,
+    # using the model name
+    if "tfc" in model_name:
+        # All mnist and cifar10 models use the same i/o
+        verif_input = "%s/tfc_mnist_input.npy" % io_folder
+        verif_output = "%s/tfc_mnist_output.npy" % io_folder
+    elif "cnv" in model_name:
+        verif_input = "%s/cnv_cifar10_input.npy" % io_folder
+        verif_output = "%s/cnv_cifar10_output.npy" % io_folder
+    else:
         verif_input = "%s/%s_input.npy" % (io_folder, model_name)
         verif_output = "%s/%s_output.npy" % (io_folder, model_name)
-    elif os.getenv("VERIFICATION_EN", "0") == "0":
-        # Don't use any input/expected output files for verification
-        verif_input = ""
-        verif_output = ""
     return verif_input, verif_output
+
+
+def init_verif(model_name):
+    if not logging.getLogger("verif_logger").hasHandlers():
+        create_logger()
+    verif_steps = set_verif_steps()
+    verif_input, verif_output = set_verif_io(model_name)
+    return verif_steps, verif_input, verif_output
 
 
 def verify_build_output(cfg, model_name):
@@ -64,14 +69,6 @@ def verify_build_output(cfg, model_name):
     logger.info("\n*****************************************************")
     logger.info("Verification Results for %s on %s" % (model_name, cfg.board))
     logger.info("*****************************************************")
-    # Verification step QONNX_TO_FINN_PYTHON uses step name different to build_cfg list,
-    # so it produces an output .npy/.npz file with different name
-    # Change the step name to what is used by the verify_step function,
-    # so the produced output file matches the build_cfg list
-    if "finn_onnx_python" in cfg.verify_steps:
-        cfg.verify_steps = [
-            step.replace("finn_onnx_python", "qonnx_to_finn_python") for step in cfg.verify_steps
-        ]
 
     # Using output verification files, print whether verification was
     # success or failure, by iterating through the step names and
@@ -93,9 +90,3 @@ def verify_build_output(cfg, model_name):
             # File for the step was not found, so assume the step was skipped
             logger.info("Verification for step %-22s: SKIPPED" % step_name)
     logger.info(" ")
-
-    # Change step name back for next build
-    if "qonnx_to_finn_python" in cfg.verify_steps:
-        cfg.verify_steps = [
-            step.replace("qonnx_to_finn_python", "finn_onnx_python") for step in cfg.verify_steps
-        ]

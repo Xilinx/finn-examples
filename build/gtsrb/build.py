@@ -40,24 +40,11 @@ import numpy as np
 import onnx
 from onnx import helper as oh
 
+
 model_name = "cnv_1w1a_gtsrb"
 model_file = "models/%s.onnx" % model_name
 
-# Set up variables needed for verifying build
-ci_folder = "../../ci"
-io_folder = ci_folder + "/verification_io"
-if os.getenv("VERIFICATION_EN", "0") in {"0", "1"}:
-    shutil.copy(ci_folder + "/verification_funcs.py", ".")
-    from verification_funcs import (
-        create_logger,
-        set_verif_steps,
-        set_verif_io,
-        verify_build_output,
-    )
-
-    create_logger()
-    verif_steps = set_verif_steps()
-    verif_input, verif_output = set_verif_io(io_folder, model_name)
+verif_en = os.getenv("VERIFICATION_EN", "0")
 
 # which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1"]
@@ -152,13 +139,10 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=10.0,
         board=platform_name,
         steps=custom_build_steps,
-        folding_config_file="folding_config/cnv_gtsrb_folding_config.json",
+        # folding_config_file="folding_config/cnv_gtsrb_folding_config.json",
+        specialize_layers_config_file="specialize_layers_config/gtsrb_specialize_layers.json",
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
-        verify_steps=verif_steps,
-        verify_input_npy=verif_input,
-        verify_expected_output_npy=verif_output,
-        verify_save_full_context=True,
         generate_outputs=[
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.STITCHED_IP,
@@ -167,14 +151,23 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
         ],
-        save_intermediate_models=True,
     )
     # launch FINN compiler to build
-    build.build_dataflow_cfg(model_file, cfg)
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
 
-    if os.getenv("VERIFICATION_EN") == "1":
-        # Verify build using verification output
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        build.build_dataflow_cfg(model_file, cfg)
         verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
@@ -188,5 +181,3 @@ for platform_name in platforms_to_build:
         dst_file = platform_dir + "/" + f.replace("finn-accel", model_name)
         if os.path.isfile(src_file):
             shutil.copy(src_file, dst_file)
-
-os.remove("verification_funcs.py")
