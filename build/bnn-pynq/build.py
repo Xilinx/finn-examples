@@ -88,7 +88,10 @@ for platform_name in platforms_to_build:
             board=platform_name,
             shell_flow_type=shell_flow_type,
             vitis_platform=vitis_platform,
-            generate_outputs=[build_cfg.DataflowOutputType.BITFILE],
+            generate_outputs=[
+                build_cfg.DataflowOutputType.BITFILE,
+                build_cfg.DataflowOutputType.STITCHED_IP,
+            ],
             save_intermediate_models=True,
             default_swg_exception=True,
             specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"

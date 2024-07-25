@@ -84,7 +84,6 @@ for platform_name in platforms_to_build:
     last_output_dir = "output_%s_%s" % (model_name, release_platform_name)
     # Configure build
     cfg = build_cfg.DataflowBuildConfig(
-        # steps=estimate_steps, generate_outputs=estimate_outputs,
         steps=build_steps,
         generate_outputs=build_outputs,
         output_dir=last_output_dir,

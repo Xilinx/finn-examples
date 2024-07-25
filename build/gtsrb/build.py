@@ -58,7 +58,6 @@ def custom_step_update_model(model, cfg):
     load_model = onnx.load(model_file)
     update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
     model_ref = ModelWrapper(update_model)
-    # onnx.save(update_model, "models/%s_updated.onnx" % model_name)
 
     return model_ref
 
@@ -127,9 +126,6 @@ for platform_name in platforms_to_build:
         # for Zynq, use the board name as the release name
         # e.g. ZCU104
         release_platform_name = platform_name
-    # for Zynq, use the board name as the release name
-    # e.g. ZCU104
-    # release_platform_name = platform_name
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
     # set up the build configuration for this model
@@ -139,7 +135,7 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=10.0,
         board=platform_name,
         steps=custom_build_steps,
-        # folding_config_file="folding_config/cnv_gtsrb_folding_config.json",
+        folding_config_file="folding_config/gtsrb_folding_config.json",
         specialize_layers_config_file="specialize_layers_config/gtsrb_specialize_layers.json",
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,

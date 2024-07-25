@@ -141,7 +141,6 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
         ],
-        stop_step="step_apply_folding_config",
     )
     if verif_en == "1":
         # Build the model with verification

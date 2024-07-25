@@ -40,8 +40,8 @@ from qonnx.core.modelwrapper import ModelWrapper
 from custom_steps import (
     step_resnet50_tidy,
     step_resnet50_streamline,
-    # step_resnet50_convert_to_hw,
-    # step_resnet50_slr_floorplan,
+    step_resnet50_convert_to_hw,
+    step_resnet50_slr_floorplan,
 )
 
 model_name = "resnet50_w1a2"
@@ -68,7 +68,6 @@ def custom_step_update_model(model, cfg):
     load_model = onnx.load(model_file)
     update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
     model_ref = ModelWrapper(update_model)
-    # onnx.save(update_model, "models/%s_updated.onnx" % model_name)
 
     return model_ref
 
@@ -77,19 +76,19 @@ resnet50_build_steps = [
     custom_step_update_model,
     step_resnet50_tidy,
     step_resnet50_streamline,
-    # step_resnet50_convert_to_hw,
-    # "step_create_dataflow_partition",
-    # "step_specialize_layers",
-    # "step_apply_folding_config",
-    # "step_minimize_bit_width",
-    # "step_generate_estimate_reports",
-    # "step_hw_codegen",
-    # "step_hw_ipgen",
-    # "step_set_fifo_depths",
-    # step_resnet50_slr_floorplan,
-    # "step_synthesize_bitfile",
-    # "step_make_pynq_driver",
-    # "step_deployment_package",
+    step_resnet50_convert_to_hw,
+    "step_create_dataflow_partition",
+    "step_specialize_layers",
+    "step_apply_folding_config",
+    "step_minimize_bit_width",
+    "step_generate_estimate_reports",
+    "step_hw_codegen",
+    "step_hw_ipgen",
+    "step_set_fifo_depths",
+    step_resnet50_slr_floorplan,
+    "step_synthesize_bitfile",
+    "step_make_pynq_driver",
+    "step_deployment_package",
 ]
 
 
