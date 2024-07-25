@@ -35,11 +35,11 @@ def set_verif_io(model_name):
     io_folder = os.getenv("VERIFICATION_IO")
     # Set the paths of input/expected output files for verification,
     # using the model name
-    if "tfc" in model_name:
+    if "tfc-w" in model_name:
         # All mnist and cifar10 models use the same i/o
         verif_input = "%s/tfc_mnist_input.npy" % io_folder
         verif_output = "%s/tfc_mnist_output.npy" % io_folder
-    elif "cnv" in model_name:
+    elif "cnv-w" in model_name:
         verif_input = "%s/cnv_cifar10_input.npy" % io_folder
         verif_output = "%s/cnv_cifar10_output.npy" % io_folder
     else:
