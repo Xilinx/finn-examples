@@ -126,9 +126,9 @@ _imagenet_resnet50_top5inds_io_shape_dict = {
     "oshape_folded": [(1, 5, 1)],
     "ishape_packed": [(1, 224, 224, 1, 3)],
     "oshape_packed": [(1, 5, 2)],
-    "input_dma_name": ["idma1"],
+    "input_dma_name": ["idma0"],
     "output_dma_name": ["odma0"],
-    "number_of_external_weights": 1,
+    "number_of_external_weights": 0,
     "num_inputs": 1,
     "num_outputs": 1,
 }
@@ -368,12 +368,10 @@ def resnet50_w1a2_imagenet(target_platform=None, bitfile_path=None, rt_weights_p
     driver_mode = get_driver_mode()
     model_name = "resnet50-w1a2"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
-    runtime_weight_dir = find_runtime_weights(model_name, target_platform, rt_weights_path)
     return FINNExampleOverlay(
         filename,
         driver_mode,
         _imagenet_resnet50_top5inds_io_shape_dict,
-        runtime_weight_dir=runtime_weight_dir,
     )
 
 
