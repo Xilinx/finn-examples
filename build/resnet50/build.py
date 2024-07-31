@@ -29,15 +29,16 @@
 import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
-from warnings import warn
+
 import os
+import shutil
+
 # custom steps for resnet50v1.5
 from custom_steps import (
     step_resnet50_tidy,
     step_resnet50_streamline,
-    step_resnet50_convert_to_hls,
-    step_resnet50_set_fifo_depths,
-    step_resnet50_slr_floorplan
+    step_resnet50_convert_to_hw,
+    step_resnet50_slr_floorplan,
 )
 
 model_name = "resnet50_w1a2"
@@ -49,13 +50,15 @@ target_fps = 300
 resnet50_build_steps = [
     step_resnet50_tidy,
     step_resnet50_streamline,
-    step_resnet50_convert_to_hls,
+    step_resnet50_convert_to_hw,
     "step_create_dataflow_partition",
+    "step_specialize_layers",
     "step_apply_folding_config",
+    "step_minimize_bit_width",
     "step_generate_estimate_reports",
-    "step_hls_codegen",
-    "step_hls_ipgen",
-    step_resnet50_set_fifo_depths,
+    "step_hw_codegen",
+    "step_hw_ipgen",
+    "step_set_fifo_depths",
     step_resnet50_slr_floorplan,
     "step_synthesize_bitfile",
     "step_make_pynq_driver",
@@ -71,6 +74,7 @@ model_file = "models/%s_exported.onnx" % model_name
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 
+
 # determine which shell flow to use for a given platform
 def platform_to_shell(platform):
     if platform in zynq_platforms:
@@ -79,6 +83,7 @@ def platform_to_shell(platform):
         return build_cfg.ShellFlowType.VITIS_ALVEO
     else:
         raise Exception("Unknown platform, can't determine ShellFlowType")
+
 
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
@@ -95,13 +100,8 @@ for platform_name in platforms_to_build:
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
 
-    try:
-        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import InferDoublePackedConv
-        folding_config_file="folding_config/U250_folding_config.json"
-        print("DoublePackedConv detected")
-    except:
-        warn(" FINN Experimental not available. Using non-packed folded down convolution. This is 16 times slower per MHz ")
-        folding_config_file="folding_config/U250_folding_config_no_doublepack_pe_folded_16.json"
+    folding_config_file = "folding_config/U250_folding_config.json"
+    specialize_layers_config_file = "specialize_layers_config/U250_specialize_layers.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
@@ -109,11 +109,11 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=synth_clk_period_ns,
         board=board,
         shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
+        auto_fifo_depths=False,
+        split_large_fifos=True,
         vitis_platform=vitis_platform,
-        # throughput parameters (auto-folding)
-        mvau_wwidth_max = 24,
-        target_fps = target_fps,
-        folding_config_file = folding_config_file,
+        folding_config_file=folding_config_file,
+        specialize_layers_config_file=specialize_layers_config_file,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[
@@ -144,5 +144,3 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
-
-

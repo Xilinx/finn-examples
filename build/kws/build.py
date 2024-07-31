@@ -67,13 +67,10 @@ verification_steps = [
     build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,
 ]
 
-model_name = (
-    "MLP_W3A3_python_speech_features_pre-processing_QONNX"
-)
+model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX"
 model_file = "models/" + model_name + ".onnx"
 
 # Change the ONNX opset from version 9 to 11, which adds support for the TopK node
-from qonnx.core.modelwrapper import ModelWrapper
 model = ModelWrapper(model_file)
 model.model.opset_import[0].version = 11
 model_file = model_file.replace(".onnx", "_opset-11.onnx")
@@ -83,12 +80,12 @@ model.save(model_file)
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
 platforms_to_build = ["Pynq-Z1"]
-last_output_dir=""
+last_output_dir = ""
 for platform_name in platforms_to_build:
     release_platform_name = platform_name
     platform_dir = "release/%s" % release_platform_name
     os.makedirs(platform_dir, exist_ok=True)
-    last_output_dir="output_%s_%s" % (model_name, release_platform_name)
+    last_output_dir = "output_%s_%s" % (model_name, release_platform_name)
     # Configure build
     cfg = build_cfg.DataflowBuildConfig(
         # steps=estimate_steps, generate_outputs=estimate_outputs,
@@ -96,13 +93,13 @@ for platform_name in platforms_to_build:
         steps=build_steps,
         generate_outputs=build_outputs,
         output_dir=last_output_dir,
-        target_fps=200000,
+        folding_config_file="folding_config/kws_folding_config.json",
         synth_clk_period_ns=10.0,
         board=platform_name,
         shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
-        save_intermediate_models=True,
         stitched_ip_gen_dcp=True,
         verify_save_full_context=True,
+        specialize_layers_config_file="specialize_layers_config/kws_specialize_layers.json",
     )
     # Build the model
     build.build_dataflow_cfg(model_file, cfg)
@@ -119,7 +116,6 @@ for platform_name in platforms_to_build:
         dst_file = platform_dir + "/" + f.replace("finn-accel", "kwsmlp-w3a3")
         if os.path.isfile(src_file):
             shutil.copy(src_file, dst_file)
-
 
 
 # Export quantized inputs
@@ -157,8 +153,7 @@ for f_name in glob("models/*.npz"):
         time_left = (len(data_arr) - (i + 1)) * time_per_sample
         time_left = datetime.timedelta(seconds=time_left)
         print(
-            f"Processed: {100*(i+1)/len(data_arr):.1f} [%], "
-            f"time left: {str(time_left)}",
+            f"Processed: {100*(i+1)/len(data_arr):.1f} [%], " f"time left: {str(time_left)}",
             end="\r",
         )
     print()
@@ -171,7 +166,5 @@ for f_name in glob("models/*.npz"):
     # Save data
     export_path = f_name.replace(".npz", "_{}_len_{}.npy")
     print(f"Saving data to: {export_path}")
-    np.save(
-        export_path.format("inputs", len(pre_processed_inputs)), pre_processed_inputs
-    )
+    np.save(export_path.format("inputs", len(pre_processed_inputs)), pre_processed_inputs)
     np.save(export_path.format("outputs", len(label_arr)), label_arr)

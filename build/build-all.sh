@@ -32,41 +32,53 @@
 SCRIPT=$(readlink -f "$0")
 # absolute path this script is in, thus /home/user/bin
 SCRIPTPATH=$(dirname "$SCRIPT")
-# subdirs for all finn-examples build folders
-BUILD_FOLDERS="bnn-pynq kws mobilenet-v1 resnet50 vgg10-radioml cybersecurity-mlp"
-# all HW platforms we build for
-PLATFORMS="Pynq-Z1 Ultra96 ZCU104 U250"
 
-# fetch correct compiler version
-cd $SCRIPTPATH
-bash get-finn.sh
+# clean old build files if present
+RELEASE_TARGET=$SCRIPTPATH/release
+rm -rf $RELEASE_TARGET || true
 
+# collect all local folders, each are considered build folders
+LOCAL_BUILD_FOLDERS=$(find . -maxdepth 1 -type d -printf "%P ")
 
-# fetch all models, continue on error
-for BUILD_FOLDER in $BUILD_FOLDERS; do
-    cd $SCRIPTPATH/$BUILD_FOLDER/models
-    rm -rf *.zip *.onnx *.npz
-    ./download-model.sh || true
+# remove trailing spaces and store the directory names in an array
+IFS=' ' read -r -a BUILD_FOLDERS <<< "$LOCAL_BUILD_FOLDERS"
+
+# fetch all models (if there are models to fetch), continue on error
+for BUILD_FOLDER in ${BUILD_FOLDERS[@]}; do
+    if [ -d "$SCRIPTPATH/$BUILD_FOLDER/models" ]; then
+        cd $SCRIPTPATH/$BUILD_FOLDER/models
+        rm -rf *.zip *.onnx *.npz
+        ./download-model.sh || true
+    fi
 done
 
 # run all build scripts, continue on error
 cd $SCRIPTPATH/finn
-for BUILD_FOLDER in $BUILD_FOLDERS; do
+for BUILD_FOLDER in ${BUILD_FOLDERS[@]}; do
     ./run-docker.sh build_custom $SCRIPTPATH/$BUILD_FOLDER || true
 done
 
 # gather all release folders, continue on error
-RELEASE_TARGET=$SCRIPTPATH/release
 mkdir -p $RELEASE_TARGET
-for BUILD_FOLDER in $BUILD_FOLDERS; do
+for BUILD_FOLDER in ${BUILD_FOLDERS[@]}; do
     cp -r $SCRIPTPATH/$BUILD_FOLDER/release/* $RELEASE_TARGET || true
 done
 
-# create zipfiles for finn-examples upload
-cd $SCRIPTPATH/$BUILD_FOLDER/release
-rm -rf *.zip
-for PLATFORM in $PLATFORMS; do
-    zip -r $PLATFORM.zip $PLATFORM/ || true
-    MD5SUM=$(md5sum $PLATFORM.zip)
-    echo "$PLATFORM.zip : $MD5SUM" >> md5sum.log
+# create zip files for finn-examples upload
+cd $RELEASE_TARGET
+for dir in */; do
+    # remove trailing slash to get the directory name
+    dir_name="${dir%/}"
+
+    # check if it is a directory we are zipping
+    if [ -d "$dir_name" ]; then
+        zip -r "${dir_name}.zip" "$dir_name" || true
+    fi
+done
+
+# calculate the MD5sum for each of the zip files
+zip_files=(*.zip)
+for zip_file in "${zip_files[@]}"; do
+    md5sum_value=$(md5sum "$zip_file" | awk '{print $1}')
+    echo "$zip_file : $md5sum_value" >> md5sum.log
 done

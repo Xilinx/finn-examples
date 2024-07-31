@@ -5,13 +5,13 @@
         <img src="https://img.shields.io/github/v/release/Xilinx/finn-examples?color=%09%23228B22&display_name=tag&label=Release" />
     </a>
     <a href="https://github.com/Xilinx/finn/tree/v0.9">
-        <img src="https://img.shields.io/badge/FINN-v0.9.0-blue" />
+        <img src="https://img.shields.io/badge/FINN-v0.10-blue" />
     </a>
     <a href="https://github.com/Xilinx/PYNQ/tree/v3.0.1">
         <img src="https://img.shields.io/badge/PYNQ-v3.0.1-blue" />
     </a>
     <a href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2022-1.html">
-        <img src="https://img.shields.io/badge/Vivado%2FVitis-v2022.1-blue" />
+        <img src="https://img.shields.io/badge/Vivado%2FVitis-v2022.2-blue" />
     </a>
 </p>
 
@@ -51,7 +51,7 @@ on your PYNQ board:
 python3 -m pip install pip==23.0 setuptools==67.1.0
 ```
 
-Since we are going to install finn-examples without build-isolation, we need to ensure all dependencies are installed. For that, install `setuptools_csm` as well:
+Since we are going to install finn-examples without build-isolation, we need to ensure all dependencies are installed. For that, install `setuptools_scm` as well:
 
 ```shell
 python3 -m pip install setuptools_scm==7.1.0
@@ -124,18 +124,18 @@ dummy_out = accel.execute(dummy_in)
 
 ##  Example Neural Network Accelerators
 | Dataset                                                        | Topology                | Quantization                                               | Supported boards | Supported build flows
-|----------------------------------------------------------------|-------------------------|------------------------------------------------------------|------------------|------------------|
-| <img src="docs/img/cifar-10.png" width="150"/><br/>CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
-| <img src="docs/img/mnist.jpg" width="150"/><br/><br>MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
-| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | MobileNet-v1            | 4-bit weights & activations<br>8-bit first layer weights | Alveo U250       | Alveo U250 |
-| <img src="docs/img/imagenet.jpg" width="150"/><br/><br>ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       | - |
-| <img src="docs/img/radioml.png" width="150"/><br/><br>RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights & activations | ZCU104  | ZCU104 |
-| <img src="docs/img/maskedfacenet.jpg" width="150"/><br/><br>MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights & activations | Pynq-Z1       | Pynq-Z1 |
-| <img src="docs/img/keyword-spotting.png" width="150"/><br/><br>Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights & activations | Pynq-Z1       | Pynq-Z1 |
-| <img src="docs/img/unsw-nb15.jpg" width="150"/><br/><br>UNSW-NB15 | 4-layer fully-connected  | 2-bit weights & activations | Pynq-Z1 <br> ZCU104 <br> Ultra96       | Pynq-Z1 <br> ZCU104 <br> Ultra96 |
+|:----------------------------------------------------------------:|:-------------------------:|:------------------------------------------------------------:|:------------------:|:------------------:|
+| CIFAR-10     | CNV (VGG-11-like)       | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
+| MNIST       | 3-layer fully-connected | several variants:<br>1/2-bit weights/activations           | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250              | Pynq-Z1<br>ZCU104<br>Ultra96<br>U250 |
+| ImageNet | MobileNet-v1            | 4-bit weights & activations<br>8-bit first layer weights | Alveo U250       | Alveo U250 |
+| ImageNet | ResNet-50            | 1-bit weights 2-bit activations<br>4-bit residuals<br>8-bit first/last layer weights | Alveo U250       | Alveo U250 |
+| RadioML 2018 | 1D CNN (VGG10)     |  4-bit weights & activations | ZCU104  | ZCU104 |
+| MaskedFace-Net | [BinaryCoP](https://arxiv.org/pdf/2102.03456)<br/>*Contributed by TU Munich+BMW*  | 1-bit weights & activations | Pynq-Z1       | Pynq-Z1 |
+| Google Speech Commands v2 | 3-layer fully-connected  | 3-bit weights & activations | Pynq-Z1       | Pynq-Z1 |
+| UNSW-NB15 | 4-layer fully-connected  | 2-bit weights & activations | Pynq-Z1 <br> ZCU104 <br> Ultra96       | Pynq-Z1 <br> ZCU104 <br> Ultra96 |
+| GTSRB | CNV (VGG-11-like) | 1-bit weights & activations | Pynq-Z1 | Pynq-Z1 |
 
-*Please note that the build flow for ResNet-50 for the Alveo U250 has known issues and we're currently working on resolving them. However, you can still execute the associated notebook, as we provide a pre-built FPGA bitfile generated with an older Vivado (/FINN) version targeting the [xilinx_u250_xdma_201830_2](https://www.xilinx.com/products/boards-and-kits/alveo/package-files-archive/u250-2018-3-1.html) platform.* <br>
-*Furthermore, please note that you can target other boards (such as the Pynq-Z2 or ZCU102) by changing the build script manually, but these accelerators have not been tested.*
+*Please note that you can target other boards (such as the Pynq-Z2 or ZCU102) by changing the build script manually, but these accelerators have not been tested.*
 
 We welcome community contributions to add more examples to this repo!
 

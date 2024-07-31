@@ -1,4 +1,5 @@
-# Copyright (c) 2020, Xilinx
+# Copyright (C) 2020-2022, Xilinx, Inc.
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,8 +36,8 @@ import shutil
 # custom steps for mobilenetv1
 from custom_steps import (
     step_mobilenet_streamline,
-    step_mobilenet_convert_to_hls_layers,
-    step_mobilenet_convert_to_hls_layers_separate_th,
+    step_mobilenet_convert_to_hw_layers,
+    step_mobilenet_convert_to_hw_layers_separate_th,
     step_mobilenet_lower_convs,
     step_mobilenet_slr_floorplan,
 )
@@ -44,9 +45,7 @@ from custom_steps import (
 model_name = "mobilenetv1-w4a4"
 
 # which platforms to build the networks for
-#zynq_platforms = ["ZCU102", "ZCU104"]
-zynq_platforms = ["ZCU102"]
-#alveo_platforms = ["U50", "U200", "U250", "U280"]
+zynq_platforms = ["ZCU104", "ZCU102"]
 alveo_platforms = ["U250"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
@@ -75,12 +74,14 @@ def select_build_steps(platform):
         return [
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
-            step_mobilenet_convert_to_hls_layers_separate_th,
+            step_mobilenet_convert_to_hw_layers_separate_th,
             "step_create_dataflow_partition",
+            "step_specialize_layers",
             "step_apply_folding_config",
+            "step_minimize_bit_width",
             "step_generate_estimate_reports",
-            "step_hls_codegen",
-            "step_hls_ipgen",
+            "step_hw_codegen",
+            "step_hw_ipgen",
             "step_set_fifo_depths",
             "step_create_stitched_ip",
             "step_synthesize_bitfile",
@@ -91,12 +92,14 @@ def select_build_steps(platform):
         return [
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
-            step_mobilenet_convert_to_hls_layers,
+            step_mobilenet_convert_to_hw_layers,
             "step_create_dataflow_partition",
+            "step_specialize_layers",
             "step_apply_folding_config",
+            "step_minimize_bit_width",
             "step_generate_estimate_reports",
-            "step_hls_codegen",
-            "step_hls_ipgen",
+            "step_hw_codegen",
+            "step_hw_ipgen",
             "step_set_fifo_depths",
             step_mobilenet_slr_floorplan,
             "step_synthesize_bitfile",
@@ -142,6 +145,8 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
         ],
+        specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
+        % platform_name,
     )
     model_file = "models/%s_pre_post_tidy.onnx" % model_name
     build.build_dataflow_cfg(model_file, cfg)
@@ -165,4 +170,3 @@ for platform_name in platforms_to_build:
         weight_files = os.listdir(weight_gen_dir)
         if weight_files:
             shutil.copytree(weight_gen_dir, weight_dst_dir)
-

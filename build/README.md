@@ -16,7 +16,7 @@ to do this again in the future when the `finn-examples` repo gets updated and re
 Docker community edition `docker-ce`.
 
 3. Set up the environment variables to point to your Vivado/Vitis installation, depending on your target platform(s):
-    *  For Zynq platforms you'll need to set `VIVADO_PATH`, e.g. `VIVADO_PATH=/opt/xilinx/Vivado/2019.1/`
+    * For Zynq platforms you'll need to set `VIVADO_PATH`, e.g. `VIVADO_PATH=/opt/xilinx/Vivado/2022.2/`
     * For Alveo platforms you'll need to set `VITIS_PATH`, `PLATFORM_REPO_PATHS` and `XILINX_XRT`
 
 ## Build bitfiles

@@ -1,4 +1,5 @@
-# Copyright (c) 2020, Xilinx
+# Copyright (C) 2020-2022, Xilinx, Inc.
+# Copyright (C) 2022-2024, Advanced Micro Devices, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,7 +28,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from qonnx.core.modelwrapper import ModelWrapper
-import numpy as np
 
 from qonnx.transformation.fold_constants import FoldConstants
 
@@ -87,7 +87,7 @@ from qonnx.transformation.infer_shapes import InferShapes
 from qonnx.transformation.infer_datatypes import InferDataTypes
 from qonnx.transformation.infer_data_layouts import InferDataLayouts
 from qonnx.transformation.insert_topk import InsertTopK
-import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
+import finn.transformation.fpgadataflow.convert_to_hw_layers as to_hw
 from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 
 from finn.builder.build_dataflow_config import (
@@ -95,22 +95,7 @@ from finn.builder.build_dataflow_config import (
     ShellFlowType,
 )
 
-from finn.transformation.fpgadataflow.prepare_ip import PrepareIP
-from finn.transformation.fpgadataflow.hlssynth_ip import HLSSynthIP
-from finn.transformation.fpgadataflow.replace_verilog_relpaths import (
-    ReplaceVerilogRelPaths,
-)
-
 from finn.transformation.move_reshape import RemoveCNVtoFCFlatten
-
-from qonnx.util.config import extract_model_config_to_json
-from finn.transformation.fpgadataflow.set_fifo_depths import (
-    InsertAndSetFIFODepths,
-    RemoveShallowFIFOs,
-    SplitLargeFIFOs,
-)
-from finn.transformation.fpgadataflow.insert_dwc import InsertDWC
-from finn.transformation.fpgadataflow.insert_fifo import InsertFIFO
 
 
 def step_resnet50_tidy(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -173,7 +158,6 @@ def step_resnet50_streamline_nonlinear(model: ModelWrapper, cfg: DataflowBuildCo
 
 
 def step_resnet50_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
-
     for iter_id in range(4):
         model = step_resnet50_streamline_linear(model, cfg)
         model = step_resnet50_streamline_nonlinear(model, cfg)
@@ -189,38 +173,28 @@ def step_resnet50_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
     return model
 
 
-def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
+def step_resnet50_convert_to_hw(model: ModelWrapper, cfg: DataflowBuildConfig):
     model.set_tensor_datatype(model.graph.input[0].name, DataType["UINT8"])
     model = model.transform(InferDataLayouts())
-
-    try:
-        from finn.transformation.fpgadataflow.infer_doublepacked_dsp import (
-            InferDoublePackedConv,
-        )
-
-        model = model.transform(InferDoublePackedConv([1]))
-    except Exception:
-        print(" FINN Experimental not available. Using non-packed convolution ")
-
     model = model.transform(DoubleToSingleFloat())
     model = model.transform(InferDataTypes())
     model = model.transform(SortGraph())
 
-    to_hls_transformations = [
-        to_hls.InferAddStreamsLayer,
+    to_hw_transformations = [
+        to_hw.InferAddStreamsLayer,
         LowerConvsToMatMul,
-        to_hls.InferChannelwiseLinearLayer,
-        to_hls.InferPool_Batch,
+        to_hw.InferChannelwiseLinearLayer,
+        to_hw.InferPool,
         AbsorbTransposeIntoMultiThreshold,
         RoundAndClipThresholds,
-        to_hls.InferQuantizedMatrixVectorActivation,
-        to_hls.InferThresholdingLayer,
+        to_hw.InferQuantizedMatrixVectorActivation,
+        to_hw.InferThresholdingLayer,
         AbsorbConsecutiveTransposes,
-        to_hls.InferConvInpGen,
-        to_hls.InferDuplicateStreamsLayer,
-        to_hls.InferLabelSelectLayer,
+        to_hw.InferConvInpGen,
+        to_hw.InferDuplicateStreamsLayer,
+        to_hw.InferLabelSelectLayer,
     ]
-    for trn in to_hls_transformations:
+    for trn in to_hw_transformations:
         model = model.transform(trn())
         model = model.transform(InferDataLayouts())
         model = model.transform(GiveUniqueNodeNames())
@@ -234,99 +208,45 @@ def step_resnet50_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
     return model
 
 
-def step_resnet50_set_fifo_depths(model: ModelWrapper, cfg: DataflowBuildConfig):
-    """
-    Depending on the auto_fifo_depths setting, do one of the following:
-    * if auto_fifo_depths=True:  Run the `InsertAndSetFIFODepths` transformation
-    to attempt to determine the FIFO sizes that provide full throughput. Involves
-    running stitched-IP rtlsim and may take a long time.
-    * if auto_fifo_depths=False:  Assume the folding config file contains FIFO
-    sizes as well. Runs the `InsertFIFO` transformation, then
-    `ApplyConfig(cfg.folding_config_file)`, and finally `RemoveShallowFIFOs`.
-    Coherency with config file node naming is ensured by calling
-    `GiveUniqueNodeNames`.
-    """
-
-    if cfg.auto_fifo_depths:
-        model = model.transform(
-            InsertAndSetFIFODepths(
-                cfg._resolve_fpga_part(),
-                cfg._resolve_hls_clk_period(),
-                vivado_ram_style=cfg.large_fifo_mem_style.value,
-            )
-        )
-    else:
-        # assume folding cfg json contains FIFO sizes too
-        # insert DWCs, FIFOs and run ApplyConfig once more
-        model = model.transform(InsertDWC())
-        # need to make sure all FIFOs are created so that their depth can be
-        # set by ApplyConfig, so create_shallow_fifos=True
-        model = model.transform(InsertFIFO(create_shallow_fifos=True))
-        model = model.transform(GiveUniqueNodeNames())
-        model = model.transform(GiveReadableTensorNames())
-        if cfg.folding_config_file is not None:
-            model = model.transform(ApplyConfig(cfg.folding_config_file))
-    # split large FIFOs into multiple FIFOs
-    model = model.transform(SplitLargeFIFOs())
-    # remove any shallow FIFOs
-    model = model.transform(RemoveShallowFIFOs())
-
-    # extract the final configuration and save it as json
-    hw_attrs = [
-        "PE",
-        "SIMD",
-        "ram_style",
-        "depth",
-        "impl_style",
-        "resType",
-        "mem_mode",
-        "runtime_writeable_weights",
-    ]
-    extract_model_config_to_json(
-        model, cfg.output_dir + "/final_hw_config.json", hw_attrs
-    )
-
-    # after FIFOs are ready to go, call PrepareIP and HLSSynthIP again
-    # this will only run for the new nodes (e.g. FIFOs and DWCs)
-    model = model.transform(
-        PrepareIP(cfg._resolve_fpga_part(), cfg._resolve_hls_clk_period())
-    )
-    model = model.transform(HLSSynthIP())
-    model = model.transform(ReplaceVerilogRelPaths())
-    return model
-
-
 def step_resnet50_slr_floorplan(model: ModelWrapper, cfg: DataflowBuildConfig):
     if cfg.shell_flow_type == ShellFlowType.VITIS_ALVEO:
-        try:
-            from finn.analysis.partitioning import partition
+        # previously, we would always ran the finn experimental partitioner on ResNet-50
+        # this is now changed and a fixed floorplan is applied
+        model = model.transform(GiveUniqueNodeNames())
+        model = model.transform(ApplyConfig("floorplan_resnet50.json"))
+        print("Fixed SLR floorplanning applied")
 
-            # apply partitioning of the model, restricting the first and last layers
-            # to SLR0
-            default_slr = 0
-            abs_anchors = [(0, [default_slr]), (-1, [default_slr])]
-            # increase resource limits to make partitioning feasible, except for SLR0
-            # which also has DDR subsystem
-            limits = np.array(
-                [
-                    [0.75, 0.5, 0.7, 0.6, 0.6],
-                    [1, 0.7, 0.9, 0.8, 0.8],
-                    [1, 0.7, 0.9, 0.8, 0.8],
-                    [1, 0.7, 0.9, 0.8, 0.8],
-                ]
-            )
-            floorplan = partition(
-                model,
-                cfg.synth_clk_period_ns,
-                cfg.board,
-                abs_anchors=abs_anchors,
-                multivariant=False,
-                linear_cuts=True,
-                limits=limits,
-            )[0]
-            # apply floorplan to model
-            model = model.transform(ApplyConfig(floorplan))
-            print("SLR floorplanning applied")
-        except Exception:
-            print("No SLR floorplanning applied")
+        # if you would like to try out the experimental partitioner
+        # please uncomment the lines (that are not marked as comment) below.
+
+        # import numpy as np
+        # from finnexperimental.analysis.partitioning import partition
+
+        # comment: apply partitioning of the model, restricting the first and last layer to SLR0
+        # default_slr = 0
+        # abs_anchors = [(0, [default_slr]), (-1, [default_slr])]
+
+        # comment: increase resource limits to make partitioning feasible, except for SLR0
+        # comment: which also has DDR subsystem
+        # limits = np.array(
+        #    [
+        #        [0.75, 0.5, 0.7, 0.6, 0.6],
+        #        [1, 0.7, 0.9, 0.8, 0.8],
+        #        [1, 0.7, 0.9, 0.8, 0.8],
+        #        [1, 0.7, 0.9, 0.8, 0.8],
+        #    ]
+        # )
+        # floorplan = partition(
+        #    model,
+        #    cfg.synth_clk_period_ns,
+        #    cfg.board,
+        #    abs_anchors=abs_anchors,
+        #    multivariant=False,
+        #    linear_cuts=True,
+        #    limits=limits,
+        # )[0]
+
+        # comment: apply floorplan to model
+        # model = model.transform(ApplyConfig(floorplan))
+        # print("SLR floorplanning applied from partitioner")
     return model
