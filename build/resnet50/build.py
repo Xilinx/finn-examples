@@ -33,6 +33,9 @@ from finn.util.basic import alveo_default_platform
 import os
 import shutil
 
+import onnx
+from qonnx.core.modelwrapper import ModelWrapper
+
 # custom steps for resnet50v1.5
 from custom_steps import (
     step_resnet50_tidy,
@@ -47,7 +50,30 @@ vitis_platform = alveo_default_platform[board]
 synth_clk_period_ns = 4.0
 target_fps = 300
 
+verif_en = os.getenv("VERIFICATION_EN", "0")
+
+# which platforms to build the networks for
+zynq_platforms = []
+alveo_platforms = ["U250"]
+platforms_to_build = zynq_platforms + alveo_platforms
+
+model_file = "models/%s_exported.onnx" % model_name
+# create a release dir, used for finn-examples release packaging
+os.makedirs("release", exist_ok=True)
+
+
+def custom_step_update_model(model, cfg):
+    op = onnx.OperatorSetIdProto()
+    op.version = 11
+    load_model = onnx.load(model_file)
+    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
+    model_ref = ModelWrapper(update_model)
+
+    return model_ref
+
+
 resnet50_build_steps = [
+    custom_step_update_model,
     step_resnet50_tidy,
     step_resnet50_streamline,
     step_resnet50_convert_to_hw,
@@ -64,15 +90,6 @@ resnet50_build_steps = [
     "step_make_pynq_driver",
     "step_deployment_package",
 ]
-
-# which platforms to build the networks for
-zynq_platforms = []
-alveo_platforms = ["U250"]
-platforms_to_build = zynq_platforms + alveo_platforms
-
-model_file = "models/%s_exported.onnx" % model_name
-# create a release dir, used for finn-examples release packaging
-os.makedirs("release", exist_ok=True)
 
 
 # determine which shell flow to use for a given platform
@@ -123,7 +140,21 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
         ],
     )
-    build.build_dataflow_cfg(model_file, cfg)
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
+
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        build.build_dataflow_cfg(model_file, cfg)
+        verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
