@@ -31,7 +31,6 @@ import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
 import os
 import shutil
-from custom_steps import custom_step_mlp_export
 
 # Define model name
 model_name = "unsw_nb15-mlp-w2a2"
@@ -92,8 +91,7 @@ for platform_name in platforms_to_build:
         ],
     )
 
-    # Export MLP model to FINN-ONNX
-    model = custom_step_mlp_export(model_name)
+    model = "models/%s.onnx" % model_name
     # Launch FINN compiler to generate bitfile
     if verif_en == "1":
         # Build the model with verification

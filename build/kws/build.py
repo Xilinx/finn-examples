@@ -41,7 +41,7 @@ from glob import glob
 import os
 import shutil
 
-model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX"
+model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX_opset-11"
 model_file = "models/" + model_name + ".onnx"
 
 verif_en = os.getenv("VERIFICATION_EN", "0")
