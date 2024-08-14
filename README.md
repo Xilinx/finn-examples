@@ -79,7 +79,7 @@ jupyter-notebook --no-browser --allow-root --port=8888
 
 First, create & source a virtual environment:
 ```shell
-conda create -n <virtual-env> python=3.10
+conda create -n <virtual-env> python=3.8
 conda activate <virtual-env>
 ```
 

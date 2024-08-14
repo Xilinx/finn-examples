@@ -120,7 +120,7 @@ setup(
     install_requires=[
         "pynq>=2.5.1",
         "bitstring>=3.1.7",
-        "numpy",
+        "numpy==1.24.1",
         "finn-dataset_loading==0.0.5",  # noqa
     ],
     extras_require={

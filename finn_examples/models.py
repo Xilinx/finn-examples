@@ -356,7 +356,7 @@ def mobilenetv1_w4a4_imagenet(target_platform=None, bitfile_path=None, rt_weight
 def resnet50_w1a2_imagenet(target_platform=None, bitfile_path=None, rt_weights_path=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
-    model_name = "resnet50-w1a2"
+    model_name = "resnet50_w1a2"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
     return FINNExampleOverlay(
         filename,
@@ -393,6 +393,6 @@ def mlp_w2a2_unsw_nb15(target_platform=None, bitfile_path=None):
 def cnv_w1a1_gtsrb(target_platform=None, bitfile_path=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
-    model_name = "cnv-gtsrb-w1a1"
+    model_name = "cnv_1w1a_gtsrb"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
     return FINNExampleOverlay(filename, driver_mode, _gtsrb_cnv_io_shape_dict)
