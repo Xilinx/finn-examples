@@ -4,8 +4,8 @@
     <a>
         <img src="https://img.shields.io/github/v/release/Xilinx/finn-examples?color=%09%23228B22&display_name=tag&label=Release" />
     </a>
-    <a href="https://github.com/Xilinx/finn/tree/v0.9">
-        <img src="https://img.shields.io/badge/FINN-v0.10-blue" />
+    <a href="https://github.com/Xilinx/finn/tree/v0.10.1">
+        <img src="https://img.shields.io/badge/FINN-v0.10.1-blue" />
     </a>
     <a href="https://github.com/Xilinx/PYNQ/tree/v3.0.1">
         <img src="https://img.shields.io/badge/PYNQ-v3.0.1-blue" />
