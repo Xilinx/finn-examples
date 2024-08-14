@@ -148,7 +148,7 @@ for platform_name in platforms_to_build:
         specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
         % platform_name,
     )
-    model_file = "models/%s_pre_post_tidy.onnx" % model_name
+    model_file = "models/%s_pre_post_tidy_opset-11.onnx" % model_name
     build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found

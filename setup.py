@@ -116,16 +116,16 @@ setup(
     python_requires=">=3.5.2",
     # keeping 'setup_requires' only for readability - relying on
     # pyproject.toml and PEP 517/518
-    setup_requires=["pynq>=2.5.1", "setuptools_scm"],
+    setup_requires=["pynq==3.0.1", "setuptools_scm"],
     install_requires=[
-        "pynq>=2.5.1",
+        "pynq==3.0.1",
         "bitstring>=3.1.7",
-        "numpy",
+        "numpy==1.21.5",
         "finn-dataset_loading==0.0.5",  # noqa
     ],
     extras_require={
         ':python_version<"3.6"': ["matplotlib<3.1", "ipython==7.9"],
-        ':python_version>="3.6"': ["matplotlib"],
+        ':python_version>="3.6"': ["matplotlib", "ipython==8.9.0"],
     },
     entry_points={"pynq.notebooks": ["finn_examples = {}.notebooks".format(module_name)]},
     cmdclass={"build_py": build_py, "unzip_overlays": _unzip_overlays},
