@@ -34,7 +34,7 @@ from distutils.command.build import build as dist_build
 from pynqutils.setup_utils import build_py as _build_py
 
 __author__ = "Yaman Umuroglu"
-__copyright__ = "Copyright 2020-2021, Xilinx"
+__copyright__ = "Copyright 2020-2022, Xilinx, 2022-2024, Advanced Micro Devices"
 __email__ = "yamanu@xilinx.com"
 
 
