@@ -67,7 +67,7 @@ verification_steps = [
     build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,
 ]
 
-model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX"
+model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX_opset-11"
 model_file = "models/" + model_name + ".onnx"
 
 # Change the ONNX opset from version 9 to 11, which adds support for the TopK node

@@ -31,7 +31,6 @@ import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
 import os
 import shutil
-from custom_steps import custom_step_mlp_export
 
 # Which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
@@ -90,8 +89,7 @@ for platform_name in platforms_to_build:
         save_intermediate_models=True,
     )
 
-    # Export MLP model to FINN-ONNX
-    model = custom_step_mlp_export(model_name)
+    model = "models/%s.onnx" % model_name
     # Launch FINN compiler to generate bitfile
     build.build_dataflow_cfg(model, cfg)
     # Copy bitfiles into release dir if found
