@@ -29,5 +29,4 @@
 
 # Download validation data and model
 wget https://github.com/Xilinx/finn-examples/releases/download/kws/python_speech_preprocessing_all_validation_KWS_data.npz
-wget https://github.com/Xilinx/finn-examples/releases/download/v0.0.7a/onnx-models-kws.zip
-unzip -j onnx-models-kws.zip
+wget https://github.com/Xilinx/finn-examples/releases/download/kws/MLP_W3A3_python_speech_features_pre-processing_QONNX.onnx

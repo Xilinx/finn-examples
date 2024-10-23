@@ -44,6 +44,8 @@ models = [
     "cnv-w2a2",
 ]
 
+verif_en = os.getenv("VERIFICATION_EN", "0")
+
 # which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
 alveo_platforms = ["U250"]
@@ -86,15 +88,33 @@ for platform_name in platforms_to_build:
             board=platform_name,
             shell_flow_type=shell_flow_type,
             vitis_platform=vitis_platform,
-            generate_outputs=[build_cfg.DataflowOutputType.BITFILE],
+            generate_outputs=[
+                build_cfg.DataflowOutputType.BITFILE,
+                build_cfg.DataflowOutputType.STITCHED_IP,
+            ],
             save_intermediate_models=True,
             default_swg_exception=True,
             specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
             % model_name,
         )
         model_file = "models/%s.onnx" % model_name
-        # launch FINN compiler to build
-        build.build_dataflow_cfg(model_file, cfg)
+
+        if verif_en == "1":
+            # Build the model with verification
+            import sys
+
+            sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+            from verification_funcs import init_verif, verify_build_output
+
+            cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+                model_name
+            )
+            build.build_dataflow_cfg(model_file, cfg)
+            verify_build_output(cfg, model_name)
+        else:
+            # Build the model without verification
+            build.build_dataflow_cfg(model_file, cfg)
+
         # copy bitfiles into release dir if found
         bitfile_gen_dir = cfg.output_dir + "/bitfile"
         files_to_check_and_copy = [

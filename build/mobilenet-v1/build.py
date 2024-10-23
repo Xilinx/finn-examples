@@ -33,6 +33,9 @@ from finn.util.basic import alveo_default_platform
 import os
 import shutil
 
+import onnx
+from qonnx.core.modelwrapper import ModelWrapper
+
 # custom steps for mobilenetv1
 from custom_steps import (
     step_mobilenet_streamline,
@@ -43,6 +46,20 @@ from custom_steps import (
 )
 
 model_name = "mobilenetv1-w4a4"
+model_file = "models/%s_pre_post_tidy.onnx" % model_name
+
+verif_en = os.getenv("VERIFICATION_EN", "0")
+
+
+def custom_step_update_model(model, cfg):
+    op = onnx.OperatorSetIdProto()
+    op.version = 11
+    load_model = onnx.load(model_file)
+    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
+    model_ref = ModelWrapper(update_model)
+
+    return model_ref
+
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104", "ZCU102"]
@@ -72,6 +89,7 @@ def select_clk_period(platform):
 def select_build_steps(platform):
     if platform in zynq_platforms:
         return [
+            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers_separate_th,
@@ -90,6 +108,7 @@ def select_build_steps(platform):
         ]
     elif platform in alveo_platforms:
         return [
+            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers,
@@ -110,7 +129,6 @@ def select_build_steps(platform):
 
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
-
 
 for platform_name in platforms_to_build:
     shell_flow_type = platform_to_shell(platform_name)
@@ -144,12 +162,28 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+            build_cfg.DataflowOutputType.STITCHED_IP,
         ],
         specialize_layers_config_file="specialize_layers_config/%s_specialize_layers.json"
         % platform_name,
     )
-    model_file = "models/%s_pre_post_tidy_opset-11.onnx" % model_name
-    build.build_dataflow_cfg(model_file, cfg)
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
+
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        if "stitched_ip_rtlsim" in cfg.verify_steps:
+            cfg.verify_steps.remove("stitched_ip_rtlsim")
+        build.build_dataflow_cfg(model_file, cfg)
+        verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"

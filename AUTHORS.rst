@@ -2,7 +2,7 @@
 Contributors
 ============
 
-* Mirza Mrahorovic (@mmrahorovic)
+* Mirza Mrahorovic (@mmrahorovic) (maintainer)
 * Jakoba Petri-Koenig (@auphelia)
 * Yaman Umuroglu (@maltanar)
 * Lucian Petrica (@quetric)
@@ -16,4 +16,3 @@ Contributors
 * Matthias Gehre (@mgehre-amd)
 * NaelF (@NaelF)
 * Tim Paine (@timkpaine)
-* Hannah Yan (@hannahxy13)
