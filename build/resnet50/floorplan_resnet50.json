@@ -31,12 +31,6 @@
         "device_id": 0,
         "mem_port": ""
     },
-    "IODMA_hls_1": {
-        "slr": -1,
-        "partition_id": 1,
-        "device_id": 0,
-        "mem_port": ""
-    },
     "StreamingFIFO_rtl_0": {
         "slr": 0,
         "partition_id": 3,

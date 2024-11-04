@@ -126,9 +126,9 @@ _imagenet_resnet50_top5inds_io_shape_dict = {
     "oshape_folded": [(1, 5, 1)],
     "ishape_packed": [(1, 224, 224, 1, 3)],
     "oshape_packed": [(1, 5, 2)],
-    "input_dma_name": ["idma1"],
+    "input_dma_name": ["idma0"],
     "output_dma_name": ["odma0"],
-    "number_of_external_weights": 1,
+    "number_of_external_weights": 0,
     "num_inputs": 1,
     "num_outputs": 1,
 }
@@ -248,35 +248,25 @@ def get_driver_mode():
     return driver_modes[get_edge_or_pcie()]
 
 
-# The Alveo 'deployment' platform name doesn't match the device name reported by Pynq
-# To workaround, check against a list of supported pynq platforms. If the reported
-# device name is not in this list, check against a map of alveo platforms and
-# translate the name to 'deployment' if found. Otherwise, it is an unsupported (in
-# FINN-Examples) platform.
-def check_platform_is_valid(platform):
-    pynq_platforms = ["Pynq-Z1", "ZCU104", "Ultra96"]
-
-    alveo_platforms = {
-        "xilinx_u250_gen3x16_xdma_shell_2_1": "xilinx_u250_gen3x16_xdma_2_1_202010_1",
-        "xilinx_u250_gen3x16_xdma_shell_4_1": "xilinx_u250_gen3x16_xdma_4_1_202210_1",
-        "xilinx_u55c_gen3x16_xdma_base_3": "xilinx_u55c_gen3x16_xdma_3_202210_1",
-    }
-
-    if platform in pynq_platforms:
-        return platform
-    elif platform in alveo_platforms:
-        return alveo_platforms[platform]
-    else:
-        raise Exception("Platform not currently supported by FINN-Examples")
-
-
 def resolve_target_platform(target_platform):
     if target_platform is None:
         platform = pynq.Device.active_device.name
     else:
         assert target_platform in [x.name for x in pynq.Device.devices]
         platform = target_platform
-    return check_platform_is_valid(platform)
+
+    # The Alveo 'deployment' platform name doesn't match the device name reported by Pynq
+    # Check against a map of alveo platforms and translate the name to 'deployment' if found.
+    alveo_platforms = {
+        "xilinx_u250_gen3x16_xdma_shell_2_1": "xilinx_u250_gen3x16_xdma_2_1_202010_1",
+        "xilinx_u250_gen3x16_xdma_shell_4_1": "xilinx_u250_gen3x16_xdma_4_1_202210_1",
+        "xilinx_u55c_gen3x16_xdma_base_3": "xilinx_u55c_gen3x16_xdma_3_202210_1",
+    }
+
+    if platform in alveo_platforms:
+        platform = alveo_platforms[platform]
+
+    return platform
 
 
 def kws_mlp(target_platform=None, bitfile_path=None):
@@ -366,14 +356,12 @@ def mobilenetv1_w4a4_imagenet(target_platform=None, bitfile_path=None, rt_weight
 def resnet50_w1a2_imagenet(target_platform=None, bitfile_path=None, rt_weights_path=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
-    model_name = "resnet50-w1a2"
+    model_name = "resnet50_w1a2"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
-    runtime_weight_dir = find_runtime_weights(model_name, target_platform, rt_weights_path)
     return FINNExampleOverlay(
         filename,
         driver_mode,
         _imagenet_resnet50_top5inds_io_shape_dict,
-        runtime_weight_dir=runtime_weight_dir,
     )
 
 
@@ -405,6 +393,6 @@ def mlp_w2a2_unsw_nb15(target_platform=None, bitfile_path=None):
 def cnv_w1a1_gtsrb(target_platform=None, bitfile_path=None):
     target_platform = resolve_target_platform(target_platform)
     driver_mode = get_driver_mode()
-    model_name = "cnv-gtsrb-w1a1"
+    model_name = "cnv_1w1a_gtsrb"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
     return FINNExampleOverlay(filename, driver_mode, _gtsrb_cnv_io_shape_dict)
