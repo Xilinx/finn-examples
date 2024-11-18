@@ -88,5 +88,5 @@ def verify_build_output(cfg, model_name):
                 break
         else:
             # File for the step was not found, so assume the step was skipped
-            logger.info("Verification for step %-22s: SKIPPED" % step_name)
+            logger.info("Verification for step %-22s: IO FILE NOT FOUND - SKIPPED" % step_name)
     logger.info(" ")
