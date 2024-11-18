@@ -49,16 +49,6 @@ alveo_platforms = []
 platforms_to_build = zynq_platforms + alveo_platforms
 
 
-def custom_step_update_model(model, cfg):
-    op = onnx.OperatorSetIdProto()
-    op.version = 11
-    load_model = onnx.load(model_file)
-    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
-    model_ref = ModelWrapper(update_model)
-
-    return model_ref
-
-
 # determine which shell flow to use for a given platform
 def platform_to_shell(platform):
     if platform in zynq_platforms:
@@ -77,7 +67,6 @@ def select_clk_period(platform):
 # assemble build flow from custom and pre-existing steps
 def select_build_steps(platform):
     return [
-        custom_step_update_model,
         "step_tidy_up",
         step_pre_streamline,
         "step_streamline",

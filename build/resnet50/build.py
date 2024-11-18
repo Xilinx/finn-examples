@@ -62,18 +62,7 @@ model_file = "models/%s_exported.onnx" % model_name
 os.makedirs("release", exist_ok=True)
 
 
-def custom_step_update_model(model, cfg):
-    op = onnx.OperatorSetIdProto()
-    op.version = 11
-    load_model = onnx.load(model_file)
-    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
-    model_ref = ModelWrapper(update_model)
-
-    return model_ref
-
-
 resnet50_build_steps = [
-    custom_step_update_model,
     step_resnet50_tidy,
     step_resnet50_streamline,
     step_resnet50_convert_to_hw,

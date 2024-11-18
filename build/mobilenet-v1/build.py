@@ -51,16 +51,6 @@ model_file = "models/%s_pre_post_tidy.onnx" % model_name
 verif_en = os.getenv("VERIFICATION_EN", "0")
 
 
-def custom_step_update_model(model, cfg):
-    op = onnx.OperatorSetIdProto()
-    op.version = 11
-    load_model = onnx.load(model_file)
-    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
-    model_ref = ModelWrapper(update_model)
-
-    return model_ref
-
-
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104", "ZCU102"]
 alveo_platforms = ["U250"]
@@ -89,7 +79,6 @@ def select_clk_period(platform):
 def select_build_steps(platform):
     if platform in zynq_platforms:
         return [
-            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers_separate_th,
@@ -108,7 +97,6 @@ def select_build_steps(platform):
         ]
     elif platform in alveo_platforms:
         return [
-            custom_step_update_model,
             step_mobilenet_streamline,
             step_mobilenet_lower_convs,
             step_mobilenet_convert_to_hw_layers,
@@ -120,6 +108,7 @@ def select_build_steps(platform):
             "step_hw_codegen",
             "step_hw_ipgen",
             "step_set_fifo_depths",
+            "step_create_stitched_ip",
             step_mobilenet_slr_floorplan,
             "step_synthesize_bitfile",
             "step_make_pynq_driver",

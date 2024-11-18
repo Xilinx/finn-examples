@@ -66,12 +66,6 @@ build_outputs = [
     build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
 ]
 
-# Change the ONNX opset from version 9 to 11, which adds support for the TopK node
-model = ModelWrapper(model_file)
-model.model.opset_import[0].version = 11
-model_file = model_file.replace(".onnx", "_opset-11.onnx")
-model.save(model_file)
-
 
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)

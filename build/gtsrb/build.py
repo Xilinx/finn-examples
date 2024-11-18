@@ -52,16 +52,6 @@ alveo_platforms = []
 platforms_to_build = zynq_platforms + alveo_platforms
 
 
-def custom_step_update_model(model, cfg):
-    op = onnx.OperatorSetIdProto()
-    op.version = 11
-    load_model = onnx.load(model_file)
-    update_model = onnx.helper.make_model(load_model.graph, opset_imports=[op])
-    model_ref = ModelWrapper(update_model)
-
-    return model_ref
-
-
 def custom_step_add_preproc(model, cfg):
     # GTSRB data with raw uint8 pixels is divided by 255 prior to training
     # reflect this in the inference graph so we can perform inference directly
@@ -86,17 +76,14 @@ def custom_step_add_preproc(model, cfg):
 
 
 # Insert TopK node to get predicted Top-1 class
-def step_preprocess(model, cfg):
+def custom_step_add_postproc(model, cfg):
     model = model.transform(InsertTopK(k=1))
     return model
 
 
-build_dataflow_step_lookup["step_preprocess_InsertTopK"] = step_preprocess
-
 custom_build_steps = (
-    [custom_step_update_model]
-    + [custom_step_add_preproc]
-    + ["step_preprocess_InsertTopK"]
+    [custom_step_add_preproc]
+    + [custom_step_add_postproc]
     + default_build_dataflow_steps
 )
 
