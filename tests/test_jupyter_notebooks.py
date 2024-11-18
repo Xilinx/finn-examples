@@ -58,7 +58,7 @@ all_notebooks = [
         notebook_dir + "/2_imagenet_with_cnns.ipynb",
         "mobilenetv1_w4a4_imagenet",
         " ",
-        " ",
+        70.406,
     ),
     (
         notebook_dir + "/3_binarycop_mask_detection.ipynb",
