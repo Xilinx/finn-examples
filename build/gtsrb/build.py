@@ -31,13 +31,10 @@ import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
 from finn.builder.build_dataflow_config import default_build_dataflow_steps
 from qonnx.transformation.insert_topk import InsertTopK
-from finn.builder.build_dataflow_steps import build_dataflow_step_lookup
 from qonnx.core.datatype import DataType
-from qonnx.core.modelwrapper import ModelWrapper
 import os
 import shutil
 import numpy as np
-import onnx
 from onnx import helper as oh
 
 

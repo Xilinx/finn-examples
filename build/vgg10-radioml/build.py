@@ -32,9 +32,6 @@ from finn.util.basic import alveo_default_platform
 import os
 import shutil
 
-import onnx
-from qonnx.core.modelwrapper import ModelWrapper
-
 # custom steps
 from custom_steps import step_pre_streamline, step_convert_final_layers
 

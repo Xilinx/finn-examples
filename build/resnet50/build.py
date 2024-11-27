@@ -33,9 +33,6 @@ from finn.util.basic import alveo_default_platform
 import os
 import shutil
 
-import onnx
-from qonnx.core.modelwrapper import ModelWrapper
-
 # custom steps for resnet50v1.5
 from custom_steps import (
     step_resnet50_tidy,
