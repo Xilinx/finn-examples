@@ -79,9 +79,7 @@ def custom_step_add_postproc(model, cfg):
 
 
 custom_build_steps = (
-    [custom_step_add_preproc]
-    + [custom_step_add_postproc]
-    + default_build_dataflow_steps
+    [custom_step_add_preproc] + [custom_step_add_postproc] + default_build_dataflow_steps
 )
 
 
