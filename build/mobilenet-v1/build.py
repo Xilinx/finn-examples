@@ -46,7 +46,7 @@ from custom_steps import (
 )
 
 model_name = "mobilenetv1-w4a4"
-model_file = "models/%s_pre_post_tidy.onnx" % model_name
+model_file = "models/%s_pre_post_tidy_opset-11.onnx" % model_name
 
 verif_en = os.getenv("VERIFICATION_EN", "0")
 
