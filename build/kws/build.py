@@ -41,6 +41,11 @@ from glob import glob
 import os
 import shutil
 
+model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX_opset-11"
+model_file = "models/" + model_name + ".onnx"
+
+verif_en = os.getenv("VERIFICATION_EN", "0")
+
 
 # Inject the preprocessing step into FINN to enable json serialization later on
 def step_preprocess(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -60,21 +65,6 @@ build_outputs = [
     build_cfg.DataflowOutputType.BITFILE,
     build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
 ]
-verification_steps = [
-    build_cfg.VerificationStepType.QONNX_TO_FINN_PYTHON,
-    build_cfg.VerificationStepType.TIDY_UP_PYTHON,
-    build_cfg.VerificationStepType.STREAMLINED_PYTHON,
-    build_cfg.VerificationStepType.FOLDED_HLS_CPPSIM,
-]
-
-model_name = "MLP_W3A3_python_speech_features_pre-processing_QONNX_opset-11"
-model_file = "models/" + model_name + ".onnx"
-
-# Change the ONNX opset from version 9 to 11, which adds support for the TopK node
-model = ModelWrapper(model_file)
-model.model.opset_import[0].version = 11
-model_file = model_file.replace(".onnx", "_opset-11.onnx")
-model.save(model_file)
 
 
 # create a release dir, used for finn-examples release packaging
@@ -88,8 +78,6 @@ for platform_name in platforms_to_build:
     last_output_dir = "output_%s_%s" % (model_name, release_platform_name)
     # Configure build
     cfg = build_cfg.DataflowBuildConfig(
-        # steps=estimate_steps, generate_outputs=estimate_outputs,
-        verify_steps=verification_steps,
         steps=build_steps,
         generate_outputs=build_outputs,
         output_dir=last_output_dir,
@@ -98,11 +86,24 @@ for platform_name in platforms_to_build:
         board=platform_name,
         shell_flow_type=build_cfg.ShellFlowType.VIVADO_ZYNQ,
         stitched_ip_gen_dcp=True,
-        verify_save_full_context=True,
         specialize_layers_config_file="specialize_layers_config/kws_specialize_layers.json",
     )
-    # Build the model
-    build.build_dataflow_cfg(model_file, cfg)
+
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
+
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        build.build_dataflow_cfg(model_file, cfg)
+        verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
@@ -116,7 +117,6 @@ for platform_name in platforms_to_build:
         dst_file = platform_dir + "/" + f.replace("finn-accel", "kwsmlp-w3a3")
         if os.path.isfile(src_file):
             shutil.copy(src_file, dst_file)
-
 
 # Export quantized inputs
 print("Quantizing validation dataset.")

@@ -32,6 +32,11 @@ from finn.util.basic import alveo_default_platform
 import os
 import shutil
 
+# Define model name
+model_name = "unsw_nb15-mlp-w2a2"
+
+verif_en = os.getenv("VERIFICATION_EN", "0")
+
 # Which platforms to build the networks for
 zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
 alveo_platforms = []
@@ -49,9 +54,6 @@ def platform_to_shell(platform):
     else:
         raise Exception("Unknown platform, can't determine ShellFlowType")
 
-
-# Define model name
-model_name = "unsw_nb15-mlp-w2a2"
 
 # Create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
@@ -85,13 +87,28 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
+            build_cfg.DataflowOutputType.STITCHED_IP,
         ],
-        save_intermediate_models=True,
     )
 
     model = "models/%s.onnx" % model_name
     # Launch FINN compiler to generate bitfile
-    build.build_dataflow_cfg(model, cfg)
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
+
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        build.build_dataflow_cfg(model, cfg)
+        verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model, cfg)
+
     # Copy bitfiles into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"
     filtes_to_check_and_copy = ["finn-accel.bit", "finn-accel.hwh", "finn-accel.xclbin"]

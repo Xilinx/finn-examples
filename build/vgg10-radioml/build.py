@@ -36,6 +36,9 @@ import shutil
 from custom_steps import step_pre_streamline, step_convert_final_layers
 
 model_name = "radioml_w4a4_small_tidy"
+model_file = "models/%s.onnx" % model_name
+
+verif_en = os.getenv("VERIFICATION_EN", "0")
 
 # which platforms to build the networks for
 zynq_platforms = ["ZCU104"]
@@ -119,14 +122,29 @@ for platform_name in platforms_to_build:
         generate_outputs=[
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.STITCHED_IP,
-            # build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
+            build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
             build_cfg.DataflowOutputType.BITFILE,
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
             build_cfg.DataflowOutputType.PYNQ_DRIVER,
         ],
     )
-    model_file = "models/%s.onnx" % model_name
-    build.build_dataflow_cfg(model_file, cfg)
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
+
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        if "folded_hls_cppsim" in cfg.verify_steps:
+            cfg.verify_steps.remove("folded_hls_cppsim")
+        build.build_dataflow_cfg(model_file, cfg)
+        verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"

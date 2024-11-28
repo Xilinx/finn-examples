@@ -29,7 +29,9 @@ from qonnx.core.modelwrapper import ModelWrapper
 from finn.builder.build_dataflow_config import (
     DataflowBuildConfig,
     ShellFlowType,
+    VerificationStepType,
 )
+from finn.builder.build_dataflow_steps import verify_step
 from finn.transformation.streamline import Streamline
 from qonnx.transformation.double_to_single_float import DoubleToSingleFloat
 import finn.transformation.streamline.absorb as absorb
@@ -72,6 +74,10 @@ def step_mobilenet_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
         model = model.transform(GiveUniqueNodeNames())
         model = model.transform(GiveReadableTensorNames())
         model = model.transform(InferDataTypes())
+
+    if VerificationStepType.STREAMLINED_PYTHON in cfg._resolve_verification_steps():
+        verify_step(model, cfg, "streamlined_python", need_parent=False)
+
     return model
 
 
