@@ -31,6 +31,19 @@ def set_verif_steps():
     return verif_steps
 
 
+def set_finn_onnx_models():
+    finn_onnx_models = [
+        "tfc-w1a1",
+        "tfc-w1a2",
+        "tfc-w2a2",
+        "cnv-w1a1",
+        "cnv-w1a2",
+        "cnv-w2a2",
+        "radioml_w4a4_small_tidy",
+    ]
+    return finn_onnx_models
+
+
 def set_verif_io(model_name):
     io_folder = os.getenv("VERIFICATION_IO")
     # Set the paths of input/expected output files for verification,
@@ -87,6 +100,16 @@ def verify_build_output(cfg, model_name):
                     logger.info("Verification for step %-22s: SUCCESS" % step_name)
                 break
         else:
-            # File for the step was not found, so assume the step was skipped
-            logger.info("Verification for step %-22s: IO FILE NOT FOUND - SKIPPED" % step_name)
+            match step_name:
+                case "step_qonnx_to_finn" if model_name in set_finn_onnx_models():
+                    # If the model is already not in QONNX form, then the step skips
+                    logger.info(
+                        "Verification for step %-22s: MODEL ALREADY IN FINN-ONNX - SKIPPED"
+                        % step_name
+                    )
+                case _:
+                    # File for the step was not found, so assume the step was skipped
+                    logger.info(
+                        "Verification for step %-22s: IO FILE NOT FOUND - SKIPPED" % step_name
+                    )
     logger.info(" ")
