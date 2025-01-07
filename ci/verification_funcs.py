@@ -103,8 +103,13 @@ def verify_build_output(cfg, model_name):
             match step_name:
                 case "step_qonnx_to_finn" if model_name in set_finn_onnx_models():
                     # If the model is already not in QONNX form, then the step skips
-                    logger.info("Verification for step %-22s: MODEL ALREADY IN FINN-ONNX - SKIPPED" % step_name)
+                    logger.info(
+                        "Verification for step %-22s: MODEL ALREADY IN FINN-ONNX - SKIPPED"
+                        % step_name
+                    )
                 case _:
                     # File for the step was not found, so assume the step was skipped
-                    logger.info("Verification for step %-22s: IO FILE NOT FOUND - SKIPPED" % step_name)
+                    logger.info(
+                        "Verification for step %-22s: IO FILE NOT FOUND - SKIPPED" % step_name
+                    )
     logger.info(" ")
