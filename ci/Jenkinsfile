@@ -52,7 +52,7 @@ pipeline {
         script {
           env.PYNQ_ONLINE = isNodeOnline('finn-pynq')
           env.ULTRA96_ONLINE = isNodeOnline('finn-ultra96')
-          env.ALVEO_HOST_ONLINE = isNodeOnline('finn-u250')
+          env.ALVEO_HOST_ONLINE = isNodeOnline('DISABLED-finn-u250')
           env.ZCU104_ONLINE = isNodeOnline('finn-zcu104')
         }
       }
@@ -155,7 +155,7 @@ pipeline {
             }
           }
           agent {
-            label 'finn-u250'
+            label 'DISABLED-finn-u250'
           }
           environment {
             BOARD = 'xilinx_u250_gen3x16_xdma_2_1_202010_1'
