@@ -14,7 +14,7 @@ Even if an idea is already being worked on you can still create an documentation
 if you would like to open a discussion about the documentation, or want to contribute to it.
 
 ## Details
-Please add to the following sections to describe the feature as accurately as possible.
+Please add to the following sections to describe the fix as accurately as possible.
 
 ### Suggested change(s)
 Please add a brief and concise description of your suggested changes to FINN-Examples' documentation. Describe where the documentation is you're changing, as well as how you're changing it.
