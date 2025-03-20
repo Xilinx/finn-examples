@@ -102,23 +102,23 @@ _bincop_cnv_io_shape_dict = {
 
 _yolov8n_4w4a_coco_io_shape_dict = {
     # FINN DataType for input and output tensors
-    "idt" : [DataType['UINT8']],
-    "odt" : [DataType['INT21'], DataType['INT21'], DataType['INT21']],
+    "idt": [DataType["UINT8"]],
+    "odt": [DataType["INT21"], DataType["INT21"], DataType["INT21"]],
     # shapes for input and output tensors (NHWC layout)
-    "ishape_normal" : [(1, 192, 320, 3)],
-    "oshape_normal" : [(1, 24, 40, 144), (1, 12, 20, 144), (1, 6, 10, 144)],
+    "ishape_normal": [(1, 192, 320, 3)],
+    "oshape_normal": [(1, 24, 40, 144), (1, 12, 20, 144), (1, 6, 10, 144)],
     # folded / packed shapes below depend on idt/odt and input/output
     # PE/SIMD parallelization settings -- these are calculated by the
     # FINN compiler.
-    "ishape_folded" : [(1, 192, 320, 3, 1)],
-    "oshape_folded" : [(1, 24, 40, 144, 1), (1, 12, 20, 144, 1), (1, 6, 10, 144, 1)],
-    "ishape_packed" : [(1, 192, 320, 3, 1)],
-    "oshape_packed" : [(1, 24, 40, 144, 3), (1, 12, 20, 144, 3), (1, 6, 10, 144, 3)],
-    "input_dma_name" : ['idma0'],
-    "output_dma_name" : ['odma0', 'odma1', 'odma2'],
+    "ishape_folded": [(1, 192, 320, 3, 1)],
+    "oshape_folded": [(1, 24, 40, 144, 1), (1, 12, 20, 144, 1), (1, 6, 10, 144, 1)],
+    "ishape_packed": [(1, 192, 320, 3, 1)],
+    "oshape_packed": [(1, 24, 40, 144, 3), (1, 12, 20, 144, 3), (1, 6, 10, 144, 3)],
+    "input_dma_name": ["idma0"],
+    "output_dma_name": ["odma0", "odma1", "odma2"],
     "number_of_external_weights": 0,
-    "num_inputs" : 1,
-    "num_outputs" : 3,
+    "num_inputs": 1,
+    "num_outputs": 3,
 }
 
 _imagenet_top5inds_io_shape_dict = {
@@ -361,7 +361,9 @@ def yolov8n_4w4a_coco(target_platform=None, bitfile_path=None, batch_size=1):
     model_name = "yolov8n_4w4a_coco"
     filename = find_bitfile(model_name, target_platform, bitfile_path)
     quant_tail_params_dir = pk.resource_filename("finn_examples", "yolov8")
-    return DetectorDriver(filename, driver_mode, _yolov8n_4w4a_coco_io_shape_dict, quant_tail_params_dir, batch_size)
+    return DetectorDriver(
+        filename, driver_mode, _yolov8n_4w4a_coco_io_shape_dict, quant_tail_params_dir, batch_size
+    )
 
 
 def mobilenetv1_w4a4_imagenet(target_platform=None, bitfile_path=None, rt_weights_path=None):
