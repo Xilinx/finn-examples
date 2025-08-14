@@ -13,6 +13,8 @@ build/finn
 *.link_summary
 *.onnx
 *.pyc
+*.npz
+*.npy
 output_*/
 release/
 *.egg-info

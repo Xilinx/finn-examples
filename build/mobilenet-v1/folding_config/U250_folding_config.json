@@ -422,12 +422,11 @@
   "Pool_hls_0": {
     "PE": 4
   },
-  "MVAU_hls_14": {
+  "MVAU_rtl_0": {
     "PE": 4,
     "SIMD": 4,
     "ram_style": "block",
-    "mem_mode": "internal_decoupled",
-    "resType": "lut"
+    "mem_mode": "internal_decoupled"
   },
   "ChannelwiseOp_hls_0": {
     "PE": 1,

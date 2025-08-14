@@ -30,7 +30,6 @@ import finn.builder.build_dataflow as build
 import finn.builder.build_dataflow_config as build_cfg
 from finn.util.basic import alveo_default_platform
 
-# from warnings import warn # Uncomment when reintroducing ConvDoublePacked
 import os
 import shutil
 
@@ -47,6 +46,18 @@ board = "U250"
 vitis_platform = alveo_default_platform[board]
 synth_clk_period_ns = 4.0
 target_fps = 300
+
+verif_en = os.getenv("VERIFICATION_EN", "0")
+
+# which platforms to build the networks for
+zynq_platforms = []
+alveo_platforms = ["U250"]
+platforms_to_build = zynq_platforms + alveo_platforms
+
+model_file = "models/%s_exported.onnx" % model_name
+# create a release dir, used for finn-examples release packaging
+os.makedirs("release", exist_ok=True)
+
 
 resnet50_build_steps = [
     step_resnet50_tidy,
@@ -65,15 +76,6 @@ resnet50_build_steps = [
     "step_make_pynq_driver",
     "step_deployment_package",
 ]
-
-# which platforms to build the networks for
-zynq_platforms = []
-alveo_platforms = ["U250"]
-platforms_to_build = zynq_platforms + alveo_platforms
-
-model_file = "models/%s_exported.onnx" % model_name
-# create a release dir, used for finn-examples release packaging
-os.makedirs("release", exist_ok=True)
 
 
 # determine which shell flow to use for a given platform
@@ -102,6 +104,7 @@ for platform_name in platforms_to_build:
     os.makedirs(platform_dir, exist_ok=True)
 
     folding_config_file = "folding_config/U250_folding_config.json"
+    specialize_layers_config_file = "specialize_layers_config/U250_specialize_layers.json"
 
     cfg = build_cfg.DataflowBuildConfig(
         steps=resnet50_build_steps,
@@ -109,13 +112,11 @@ for platform_name in platforms_to_build:
         synth_clk_period_ns=synth_clk_period_ns,
         board=board,
         shell_flow_type=build_cfg.ShellFlowType.VITIS_ALVEO,
+        auto_fifo_depths=False,
         split_large_fifos=True,
-        specialize_layers_config_file="specialize_layers_config.json",
         vitis_platform=vitis_platform,
-        # throughput parameters (auto-folding)
-        mvau_wwidth_max=24,
-        target_fps=target_fps,
         folding_config_file=folding_config_file,
+        specialize_layers_config_file=specialize_layers_config_file,
         # enable extra performance optimizations (physopt)
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
         generate_outputs=[
@@ -125,7 +126,21 @@ for platform_name in platforms_to_build:
             build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
         ],
     )
-    build.build_dataflow_cfg(model_file, cfg)
+    if verif_en == "1":
+        # Build the model with verification
+        import sys
+
+        sys.path.append(os.path.abspath(os.getenv("FINN_EXAMPLES_ROOT") + "/ci/"))
+        from verification_funcs import init_verif, verify_build_output
+
+        cfg.verify_steps, cfg.verify_input_npy, cfg.verify_expected_output_npy = init_verif(
+            model_name
+        )
+        build.build_dataflow_cfg(model_file, cfg)
+        verify_build_output(cfg, model_name)
+    else:
+        # Build the model without verification
+        build.build_dataflow_cfg(model_file, cfg)
 
     # copy bitfiles and runtime weights into release dir if found
     bitfile_gen_dir = cfg.output_dir + "/bitfile"

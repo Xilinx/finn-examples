@@ -21,7 +21,7 @@ FINN_EXAMPLES=/path/to/finn-examples
 # cd into finn submodule
 cd $FINN_EXAMPLES/build/finn
 # launch the build on the vgg10 folder
-./run-docker.sh build_custom $FINN_EXAMPLES/build/vgg10
+./run-docker.sh build_custom $FINN_EXAMPLES/build/vgg10-radioml
 ```
 
 3. The generated outputs will be under `vgg10-radioml/output_<topology>_<board>`. You can find a description of the generated files [here](https://finn-dev.readthedocs.io/en/latest/command_line.html#simple-dataflow-build-mode).
