@@ -69,8 +69,8 @@ pip3 install finn-examples --no-build-isolation
 Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command. An example of how to run the Jupyter notebook server, assuming we are forwarding port 8888 from the target to some port on our local machine, is also shown below:
 
 ```shell
-# on PYNQ boards, first cd /home/xilinx/jupyter_notebooks
-pynq get-notebooks --from-package finn-examples -p . --force
+# on PYNQ boards
+pynq get-notebooks --from-package finn-examples -p $PYNQ_JUPYTER_NOTEBOOKS --force
 jupyter-notebook --no-browser --allow-root --port=8888
 ```
 
@@ -101,7 +101,7 @@ python3 -m pip install jupyter==1.0.0
 Retrieve the example Jupyter notebooks using the PYNQ get-notebooks command. An example of how to run the Jupyter notebook server is also shown below:
 
 ```shell
-pynq get-notebooks --from-package finn-examples -p . --force
+pynq get-notebooks --from-package finn-examples -p $PYNQ_JUPYTER_NOTEBOOKS --force
 jupyter-notebook --no-browser --port=8888
 ```
 
