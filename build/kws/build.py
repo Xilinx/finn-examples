@@ -61,15 +61,13 @@ build_steps = ["step_preprocess_InsertTopK"] + build_cfg.default_build_dataflow_
 build_outputs = [
     build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
     build_cfg.DataflowOutputType.STITCHED_IP,
-    build_cfg.DataflowOutputType.PYNQ_DRIVER,
     build_cfg.DataflowOutputType.BITFILE,
-    build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
 ]
 
 
 # create a release dir, used for finn-examples release packaging
 os.makedirs("release", exist_ok=True)
-platforms_to_build = ["Pynq-Z1"]
+platforms_to_build = ["AUP-ZU3_8GB"] #["Pynq-Z1"]
 last_output_dir = ""
 for platform_name in platforms_to_build:
     release_platform_name = platform_name

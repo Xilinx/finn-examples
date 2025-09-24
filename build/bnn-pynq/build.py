@@ -47,8 +47,8 @@ models = [
 verif_en = os.getenv("VERIFICATION_EN", "0")
 
 # which platforms to build the networks for
-zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
-alveo_platforms = ["U250"]
+zynq_platforms = ["AUP-ZU3_8GB"] #["Pynq-Z1", "Ultra96", "ZCU104"]
+alveo_platforms = [] #["U250"]
 platforms_to_build = zynq_platforms + alveo_platforms
 
 
@@ -84,11 +84,13 @@ for platform_name in platforms_to_build:
         cfg = build_cfg.DataflowBuildConfig(
             output_dir="output_%s_%s" % (model_name, release_platform_name),
             folding_config_file="folding_config/%s_folding_config.json" % model_name,
+            mvau_wwidth_max=1000,
             synth_clk_period_ns=5.0,
             board=platform_name,
             shell_flow_type=shell_flow_type,
             vitis_platform=vitis_platform,
             generate_outputs=[
+                build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
                 build_cfg.DataflowOutputType.BITFILE,
                 build_cfg.DataflowOutputType.STITCHED_IP,
             ],

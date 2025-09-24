@@ -1,33 +1,27 @@
 {
   "Defaults": {},
-  "Thresholding_rtl_0": {
-    "PE": 98
-  },
   "MVAU_hls_0": {
-    "PE": 8,
-    "SIMD": 784,
+    "PE": 64,
+    "SIMD": 600,
     "ram_style": "auto",
     "resType": "lut"
   },
   "MVAU_hls_1": {
-    "PE": 8,
+    "PE": 64,
     "SIMD": 64,
     "ram_style": "auto",
     "resType": "lut"
   },
   "MVAU_hls_2": {
-    "PE": 8,
+    "PE": 64,
     "SIMD": 64,
     "ram_style": "auto",
     "resType": "lut"
   },
   "MVAU_hls_3": {
-    "PE": 2,
+    "PE": 1,
     "SIMD": 64,
     "ram_style": "auto",
     "resType": "lut"
-  },
-  "LabelSelect_hls_0": {
-    "PE": 2
   }
 }
