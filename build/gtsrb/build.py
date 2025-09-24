@@ -44,7 +44,7 @@ model_file = "models/%s.onnx" % model_name
 verif_en = os.getenv("VERIFICATION_EN", "0")
 
 # which platforms to build the networks for
-zynq_platforms = ["Pynq-Z1"]
+zynq_platforms = ["AUP-ZU3_8GB"] #["Pynq-Z1"]
 alveo_platforms = []
 platforms_to_build = zynq_platforms + alveo_platforms
 
@@ -113,21 +113,18 @@ for platform_name in platforms_to_build:
     # set up the build configuration for this model
     cfg = build_cfg.DataflowBuildConfig(
         output_dir="output_%s_%s" % (model_name, release_platform_name),
-        target_fps=3000,
+        folding_config_file="folding_config/gtsrb_folding_config.json",
+        mvau_wwidth_max=1000,
         synth_clk_period_ns=10.0,
         board=platform_name,
         steps=custom_build_steps,
-        folding_config_file="folding_config/gtsrb_folding_config.json",
         specialize_layers_config_file="specialize_layers_config/gtsrb_specialize_layers.json",
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
         generate_outputs=[
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.STITCHED_IP,
-            build_cfg.DataflowOutputType.RTLSIM_PERFORMANCE,
             build_cfg.DataflowOutputType.BITFILE,
-            build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
-            build_cfg.DataflowOutputType.PYNQ_DRIVER,
         ],
     )
     # launch FINN compiler to build
