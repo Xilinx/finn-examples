@@ -38,7 +38,7 @@ model_name = "unsw_nb15-mlp-w2a2"
 verif_en = os.getenv("VERIFICATION_EN", "0")
 
 # Which platforms to build the networks for
-zynq_platforms = ["Pynq-Z1", "Ultra96", "ZCU104"]
+zynq_platforms = ["AUP-ZU3_8GB"] #["Pynq-Z1", "Ultra96", "ZCU104"]
 alveo_platforms = []
 
 # Note: only zynq platforms currently tested
@@ -75,18 +75,16 @@ for platform_name in platforms_to_build:
     # Set up the build configuration for this model
     cfg = build_cfg.DataflowBuildConfig(
         output_dir="output_%s_%s" % (model_name, release_platform_name),
-        mvau_wwidth_max=80,
-        target_fps=1000000,
+        folding_config_file="folding_config/cybsec_folding_config.json",
         synth_clk_period_ns=10.0,
         board=platform_name,
         shell_flow_type=shell_flow_type,
         vitis_platform=vitis_platform,
         vitis_opt_strategy=build_cfg.VitisOptStrategyCfg.PERFORMANCE_BEST,
+        specialize_layers_config_file="specialize_layers_config/cybersecurity_specialize_layers.json",
         generate_outputs=[
-            build_cfg.DataflowOutputType.PYNQ_DRIVER,
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,
             build_cfg.DataflowOutputType.BITFILE,
-            build_cfg.DataflowOutputType.DEPLOYMENT_PACKAGE,
             build_cfg.DataflowOutputType.STITCHED_IP,
         ],
     )
