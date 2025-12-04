@@ -63,18 +63,18 @@ from finn.util.pytorch import ToTensor
 
 def custom_step_export_verification(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferShapes())
-    # verify_step(model, cfg, "onnx_export", need_parent=False)
+    verify_step(model, cfg, "onnx_export", need_parent=False)
     return model
 
 
 def custom_step_qonnx_tidy_up(model: ModelWrapper, cfg: DataflowBuildConfig):
     model = model.transform(InferShapes())
+    model = model.transform(GiveUniqueParameterTensors())
     # QONNX transformations
-    model = model.transform(SubPixelToDeconvolution())
-    model = model.transform(ResizeConvolutionToDeconvolution(maintain_bit_width=False))
+    # model = model.transform(SubPixelToDeconvolution())
+    # model = model.transform(ResizeConvolutionToDeconvolution(maintain_bit_width=False))
     model = model.transform(InferShapes())
-    # verify_step(model, cfg, "tidy_up", need_parent=False)
-    return model
+    #verify_step(model, cfg, "custom_tidy_up", need_parent=False)
 
 
 def custom_step_add_pre_proc(model: ModelWrapper, cfg: DataflowBuildConfig):
