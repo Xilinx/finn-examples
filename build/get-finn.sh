@@ -28,9 +28,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # URL for git repo to be cloned
-REPO_URL=https://github.com/Xilinx/finn
+# REPO_URL=https://github.com/Xilinx/finn
+REPO_URL="https://github.com/hleblevec/finn-fork.git"
 # commit hash for repo
-REPO_COMMIT=e9985e66bbfefd4beca3e6bc6da6c9136e9a15b6
+# REPO_COMMIT=e9985e66bbfefd4beca3e6bc6da6c9136e9a15b6
+# REPO_COMMIT="24615067e47d987bd6ea4254932324cab3c04f28"
+REPO_COMMIT="7deb2969112f5f0e9c19c35db55e5a8cbb3f38e9"
 # directory (under the same folder as this script) to clone to
 REPO_DIR=finn
 
