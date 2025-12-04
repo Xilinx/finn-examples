@@ -31,7 +31,7 @@ from custom_steps import (
     custom_step_qonnx_tidy_up,
     custom_step_add_pre_proc,
     custom_step_streamline,
-    custom_step_convert_to_hls,
+    custom_step_convert_to_hw,
 )
 
 import finn.builder.build_dataflow as build
@@ -45,14 +45,15 @@ espcn_build_steps = [
     "step_qonnx_to_finn",
     "step_tidy_up",
     custom_step_streamline,
-    custom_step_convert_to_hls,
+    custom_step_convert_to_hw,
     "step_minimize_bit_width",
     "step_create_dataflow_partition",
+    "step_specialize_layers",
     "step_target_fps_parallelization",
     "step_apply_folding_config",
     "step_generate_estimate_reports",
-    "step_hls_codegen",
-    "step_hls_ipgen",
+    "step_hw_codegen",
+    "step_hw_ipgen",
     "step_set_fifo_depths",
     "step_create_stitched_ip",
     "step_measure_rtlsim_performance",
@@ -77,7 +78,6 @@ def main(model_file, output_dir, folding_config_file, board):
         auto_fifo_depths=False,
         auto_fifo_strategy = build_cfg.AutoFIFOSizingMethod.CHARACTERIZE,
         rtlsim_batch_size=100,
-        force_rtl_conv_inp_gen=False,
         max_multithreshold_bit_width = 9,
         generate_outputs=[
             build_cfg.DataflowOutputType.ESTIMATE_REPORTS,

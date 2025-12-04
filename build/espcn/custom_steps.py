@@ -47,7 +47,7 @@ from qonnx.transformation.lower_convs_to_matmul import LowerConvsToMatMul
 from qonnx.transformation.infer_data_layouts import InferDataLayouts
 
 import finn.transformation.streamline.absorb as absorb
-import finn.transformation.fpgadataflow.convert_to_hls_layers as to_hls
+import finn.transformation.fpgadataflow.convert_to_hw_layers as to_hw
 from finn.transformation.streamline import Streamline
 from finn.transformation.streamline.round_thresholds import RoundAndClipThresholds
 from finn.transformation.streamline.reorder import (
@@ -75,6 +75,7 @@ def custom_step_qonnx_tidy_up(model: ModelWrapper, cfg: DataflowBuildConfig):
     # model = model.transform(ResizeConvolutionToDeconvolution(maintain_bit_width=False))
     model = model.transform(InferShapes())
     #verify_step(model, cfg, "custom_tidy_up", need_parent=False)
+    return model
 
 
 def custom_step_add_pre_proc(model: ModelWrapper, cfg: DataflowBuildConfig):
@@ -135,15 +136,14 @@ def custom_step_streamline(model: ModelWrapper, cfg: DataflowBuildConfig):
     return model
 
 
-def custom_step_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
+def custom_step_convert_to_hw(model: ModelWrapper, cfg: DataflowBuildConfig):
     """Convert eligible nodes to `HLSCustomOp` subclasses that represent HLS
     layers. Which nodes and particular configurations can be converted to HLS
-    is limited, see the source code of the `convert_to_hls` module for more."""
+    is limited, see the source code of the `convert_to_hw` module for more."""
 
-    mem_mode = cfg.default_mem_mode.value
     if cfg.standalone_thresholds:
         # doing this first causes all threshold layers to be standalone
-        model = model.transform(to_hls.InferThresholdingLayer())
+        model = model.transform(to_hw.InferThresholdingLayer())
     need_convtranspose = len(model.get_nodes_by_op_type("ConvTranspose")) > 0
     if need_convtranspose:
         model = model.transform(InferPixelPaddingDeconv())
@@ -151,18 +151,15 @@ def custom_step_convert_to_hls(model: ModelWrapper, cfg: DataflowBuildConfig):
         model = model.transform(RoundAndClipThresholds())
     need_upsample = len(model.get_nodes_by_op_type("Resize")) > 0
     if need_upsample:
-        model = model.transform(to_hls.InferUpsample())
+        model = model.transform(to_hw.InferUpsample())
     # needed for non-bipolar MatMul layers
-    model = model.transform(to_hls.InferQuantizedMatrixVectorActivation(mem_mode))
+    model = model.transform(to_hw.InferQuantizedMatrixVectorActivation())
     # input quantization (if any) as standalone threshold
-    model = model.transform(to_hls.InferThresholdingLayer())
+    model = model.transform(to_hw.InferThresholdingLayer())
     # needed for convolutions -- TODO always exec?
     need_conv = len(model.get_nodes_by_op_type("Im2Col")) > 0
     if need_conv:
-        if cfg.force_rtl_conv_inp_gen:
-            model = model.transform(to_hls.InferConvInpGen(use_rtl_variant=True))
-        else:
-            model = model.transform(to_hls.InferConvInpGen())
+        model = model.transform(to_hw.InferConvInpGen())
     # get rid of Tranpose -> Tranpose identity seq
     model = model.transform(absorb.AbsorbConsecutiveTransposes())
     model = model.transform(absorb.AbsorbTransposeIntoMultiThreshold())
